@@ -88,14 +88,3 @@ public abstract class Room {
         this.isCleared = true;
     }
 }
-
-
-//- introductietekst
-//- opdracht <-- Hier context class
-//- controle van het antwoord <-- Hier Observable
-//- resultaat
-//- feedback
-//In de kamer 'Sprint Planning' krijgt de speler een scenario waarin hij moet inschatten welke taken in de sprint passen.
-// In de kamer 'Review' krijgt hij feedback van een klant en moet hij aangeven wat de impact is.
-// De structuur blijft hetzelfde, maar de inhoud verschilt per kamer.
-// Nieuwe kamers kunnen eenvoudig worden toegevoegd zonder aanpassing van bestaande logica.

@@ -30,7 +30,8 @@ public class Room2Daily extends Room {
     }
 
     public void result() {
-        if (correct) System.out.println("Yes. This will be Observed.");
-        else System.out.println("You have summoned your own Doom.");
+        if (correct) {
+            System.out.println("Yes. This will be Observed.");
+        } else System.out.println("You have summoned your own Doom.");
     }
 }

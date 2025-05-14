@@ -26,6 +26,7 @@ abstract public class DataSeeder {
 
         //Planning Room
         planning.addNeighboringRoom(up, dailyScrum);
+        planning.addNeighboringRoom(down, outside);
 
         //Daily Scrum Room
         dailyScrum.addNeighboringRoom(down, planning);
