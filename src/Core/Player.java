@@ -9,7 +9,6 @@ public class Player {
 
     public Player(Room room, int status) {
         this.room = room;
-        this.health = status;
     }
 
     public void setPosition(Room room) {
@@ -20,6 +19,10 @@ public class Player {
 //        System.out.println("Your current room is: " + room.getName());
         System.out.println("Your HP is: " + health);
         System.out.println("Your score is: " + score);
+    }
+
+    public void death(){
+        this.isDead = true;
     }
 }
 //Alles gebeurt in tekst (CLI)

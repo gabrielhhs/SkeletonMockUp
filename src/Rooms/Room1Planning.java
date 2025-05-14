@@ -1,15 +1,18 @@
 package Rooms;
 
+import Core.Game;
 import Question.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Room1Planning extends Room {
-    private String answer;
-    private boolean correct = false;
 
-
-    public Room1Planning() {
-        super();
+    public Room1Planning(Game game) {
+        super(game);
+        super.neighboringRooms = new HashMap<>();
     }
+//        planning.addNeighboringRoom(up, dailyScrum);
 
     void introductionText() {
         System.out.println("You have entered the Planning Room of Death.");
@@ -20,7 +23,7 @@ public class Room1Planning extends Room {
         String[] options = {"1. Snu Snu", "2. Fatality", "3. I choose to live!"};
         Question planning1 = new MultipleChoiceQuestion("Pick your method of Death:", options);
 
-        this.answer = planning1.ask();
+        answer = planning1.ask();
     }
 
     void answerCheck() {
@@ -33,19 +36,6 @@ public class Room1Planning extends Room {
     }
 
 
-
-    void feedback() {
-        if (correct) {
-            System.out.println("You have survived...This time.");
-            OpenQuestion advance1 = new OpenQuestion("Do you choose to advance to the Room of Daily Scrum Suffering? (Y/N):");
-            while (!this.answer.equals("Y")) {
-                this.answer = advance1.ask();
-            }
-            roomClear();
-            game.goNext(Room2Daily);
-        }
-        else System.out.println("You have failed your people in life, and will now suffer in death.");
-    }
 }
 //De Sprint Planning
 //Je moet inschatten welke taken passen binnen een sprint.

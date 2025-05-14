@@ -1,25 +1,62 @@
 package Rooms;
 
 import Core.*;
+import Question.OpenQuestion;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Scanner;
 
 public abstract class Room {
     protected Game game;
     protected String name;
-    private Map<String, Room> roomMap;
-    private boolean isCleared = false;
+    protected Map<String, Room> neighboringRooms;
+    protected boolean isCleared = false;
+    protected String answer;
+    protected boolean correct = false;
 
-    public Room() {
+    abstract void introductionText();
+    abstract void question();
+    abstract void answerCheck();
+    abstract void result();
+
+    public void bonfire(){
+        if (correct) {
+            System.out.println("You have survived...This time.");
+            StringBuilder sb = new StringBuilder();
+            String start = "In which door do you wish to go to. ";
+            sb.append(start);
+            for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
+                sb.append(" ").append(entry.getKey());
+            }
+
+            System.out.println(sb.toString());
+            Scanner sc = new Scanner(System.in);
+
+            String direction = sc.nextLine();
+
+            for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
+                if (direction.equals(entry.getKey())){
+                    game.goNext(entry.getValue());
+                }
+            }
+
+        }
+        else{
+            System.out.println("You have failed your people in life, and will now suffer in death.");
+        }
+    }
+
+    public Room(Game game) {
+        this.game = game;
     }
 
     public Room(Game game, String name, Map<String, Room> roomMap) {
-        this.roomMap = roomMap;
+        this.neighboringRooms = roomMap;
     }
 
-    public void addRoomMap(String direction, Room room){
-
+    public void addNeighboringRoom(String direction, Room room){
+        neighboringRooms.put(direction, room);
     }
 
     public void setName(String name) {
@@ -35,27 +72,20 @@ public abstract class Room {
     }
     public final void enter(){
         introductionText();
-        question();
-        answerCheck();
-        result();
-        feedback();
+        if (!isCleared) {
+            question();
+            answerCheck();
+            result();
+        }
+        bonfire();
     }
-    abstract void introductionText();
-    abstract void question();
-    abstract void answerCheck();
-    abstract void result();
-    abstract void feedback();
 
-    public Map<String, Room> getRoomMap() {
-        return roomMap;
+    public Map<String, Room> getNeiboringRooms() {
+        return neighboringRooms;
     }
 
     public void roomClear(){
         this.isCleared = true;
-    }
-
-    public void setRoomMap(Map<String, Room> roomMap) {
-        this.roomMap = roomMap;
     }
 }
 
