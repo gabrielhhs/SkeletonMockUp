@@ -35,7 +35,6 @@ public class Room1Planning extends Room {
         else System.out.println("You have summoned your own Doom.");
     }
 
-
 }
 //De Sprint Planning
 //Je moet inschatten welke taken passen binnen een sprint.

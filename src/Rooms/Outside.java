@@ -28,10 +28,10 @@ public class Outside extends Room{
 
     @Override
     public void bonfire(){
-        if (correct) {
+        if (correct && !isCleared) {
             StringBuilder sb = new StringBuilder();
             String start = "\nIts stormy in the world of Projectia, and your lost! \nLuckily you see a giant house in the distance." +
-                    "\nWould you like to enter?\n";
+                    "\nWould you like to enter?\n\n";
             sb.append(start);
             for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
                 sb.append(" ").append(entry.getKey());
@@ -44,12 +44,17 @@ public class Outside extends Room{
 
             for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
                 if (direction.equals(entry.getKey())){
+                    roomClear();
                     game.goNext(entry.getValue());
                 }
             }
 
-        }
-        else{
+        } else if (isCleared) {
+            System.out.println("The doors seem to be locked, might as well take a look inside.");
+            for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
+                game.goNext(entry.getValue());
+            }
+        } else{
             System.out.println("You have failed your people in life, and will now suffer in death.");
         }
     }

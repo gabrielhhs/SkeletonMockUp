@@ -5,6 +5,6 @@ public interface Question {
 }
 //        System.out.println("Will be replaced with the Question interface?");
 //        Scanner scanner = new Scanner(System.in);
-//        answer = scanner.nextLine();
+//       answer = scanner.nextLine();
 //    private String answer;
 //    private boolean correct = false;
