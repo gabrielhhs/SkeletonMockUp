@@ -15,12 +15,12 @@ public class Player {
         this.room = room;
     }
 
-    public void getInfo(){
-//        System.out.println("Your current room is: " + room.getName());
+    public void getInfo() {
+//      System.out.println("Your current room is: " + room.getName());
         System.out.println("Your HP is: " + health);
         System.out.println("Your score is: " + score);
     }
-    public void death(){
+    public void death() {
         this.isDead = true;
     }
 }

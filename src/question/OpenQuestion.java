@@ -2,14 +2,14 @@ package question;
 
 import java.util.Scanner;
 
-public class OpenQuestion implements Question{
+public class OpenQuestion implements Question {
     String question;
 
-    public OpenQuestion(String question){
+    public OpenQuestion(String question) {
         this.question = question;
     }
 
-    public String ask(){
+    public String ask() {
         Scanner scanner = new Scanner(System.in);
         System.out.println(question);
         System.out.print("Answer: ");

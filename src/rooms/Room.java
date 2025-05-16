@@ -19,7 +19,7 @@ public abstract class Room {
     abstract void answerCheck();
     abstract void result();
 
-    public void bonfire(){
+    public void bonfire() {
         if (correct) {
             System.out.println("You have survived...This time.");
             StringBuilder sb = new StringBuilder();
@@ -39,9 +39,7 @@ public abstract class Room {
                     game.goNext(entry.getValue());
                 }
             }
-
-        }
-        else{
+        } else {
             System.out.println("You have failed your people in life, and will now suffer in death.");
         }
     }
@@ -54,7 +52,7 @@ public abstract class Room {
         this.neighboringRooms = roomMap;
     }
 
-    public void addNeighboringRoom(String direction, Room room){
+    public void addNeighboringRoom(String direction, Room room) {
         neighboringRooms.put(direction, room);
     }
 
@@ -66,10 +64,11 @@ public abstract class Room {
         return name;
     }
 
-    public void setGame(Game game){
+    public void setGame(Game game) {
         this.game = game;
     }
-    public final void enter(){
+
+    public final void enter() {
         introductionText();
         if (!isCleared) {
             question();
@@ -83,7 +82,7 @@ public abstract class Room {
         return neighboringRooms;
     }
 
-    public void roomClear(){
+    public void roomClear() {
         this.isCleared = true;
     }
 }

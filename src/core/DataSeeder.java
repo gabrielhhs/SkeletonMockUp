@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 abstract public class DataSeeder {
-    public static Room seed(Game game){
-
+    public static Room seed(Game game) {
         String up = "up";
         String down = "down";
         String left = "left";
