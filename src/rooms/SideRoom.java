@@ -1,12 +1,10 @@
-package Rooms;
+package rooms;
 
-import Core.Game;
+import core.Game;
 
 import java.util.HashMap;
 
 public class SideRoom extends Room {
-
-
     public SideRoom(Game game) {
         super(game);
         super.neighboringRooms = new HashMap<>();

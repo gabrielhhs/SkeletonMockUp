@@ -1,18 +1,16 @@
-package Rooms;
+package rooms;
 
-import Core.Game;
-import Question.*;
+import core.Game;
+import question.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Room1Planning extends Room {
-
     public Room1Planning(Game game) {
         super(game);
         super.neighboringRooms = new HashMap<>();
     }
-//        planning.addNeighboringRoom(up, dailyScrum);
 
     void introductionText() {
         System.out.println("You have entered the Planning Room of Death.");
@@ -34,7 +32,6 @@ public class Room1Planning extends Room {
         if (correct) System.out.println("Yes. This will be Observed.");
         else System.out.println("You have summoned your own Doom.");
     }
-
 }
 //De Sprint Planning
 //Je moet inschatten welke taken passen binnen een sprint.

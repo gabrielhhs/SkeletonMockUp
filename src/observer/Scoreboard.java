@@ -1,4 +1,5 @@
-package Observer;
+package observer;
 
 public class Scoreboard {
+
 }
