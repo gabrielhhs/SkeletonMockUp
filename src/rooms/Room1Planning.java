@@ -6,10 +6,9 @@ import question.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Room1Planning extends Room {
+public class Room1Planning extends QuestionRoom {
     public Room1Planning(Game game) {
         super(game);
-        super.neighboringRooms = new HashMap<>();
     }
 
     void introductionText() {
@@ -17,18 +16,18 @@ public class Room1Planning extends Room {
         //todo: add option for skipping entire level straight to Bonfire is isCleared
     }
 
-    void question() {
+    String askQuestion() {
         String[] options = {"1. Snu Snu", "2. Fatality", "3. I choose to live!"};
         Question planning1 = new MultipleChoiceQuestion("Pick your method of Death:", options);
 
-        answer = planning1.ask();
+        return planning1.ask();
     }
 
-    void answerCheck() {
-        if (answer.equals("3")) correct = true;
+    boolean checkAnswer(String answer) {
+        return answer.equals("3");
     }
 
-    void result() {
+    void handleQuestionResult(boolean correct) {
         if (correct) System.out.println("Yes. This will be Observed.");
         else System.out.println("You have summoned your own Doom.");
     }

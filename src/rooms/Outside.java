@@ -2,63 +2,47 @@ package rooms;
 
 import core.Game;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Outside extends Room {
     public Outside(Game game) {
         super(game);
-        super.neighboringRooms = new HashMap<>();
     }
 
     void introductionText() {
-
+        // TODO: Implement?
     }
 
-    void question() {
+    void handleUncleared() {
+        StringBuilder sb = new StringBuilder("""
+            Its stormy in the world of Projectia, and your lost!
+            Luckily you see a giant house in the distance.
+            Would you like to enter?
+            """);
 
-    }
+        for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()){
+            sb.append(" ").append(entry.getKey());
+        }
 
-    void answerCheck() {
-        correct = true;
-    }
+        System.out.println(sb);
+        Scanner sc = new Scanner(System.in);
 
-    void result() {
+        String direction = sc.nextLine();
 
+        for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()){
+            if (direction.equals(entry.getKey())){
+                this.setCleared();
+                this.game.goNext(entry.getValue());
+            }
+        }
     }
 
     @Override
-    public void bonfire() {
-        if (correct && !isCleared) {
-            StringBuilder sb = new StringBuilder("""
-                Its stormy in the world of Projectia, and your lost!
-                Luckily you see a giant house in the distance.
-                Would you like to enter?
-                """);
-
-            for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
-                sb.append(" ").append(entry.getKey());
-            }
-
-            System.out.println(sb);
-            Scanner sc = new Scanner(System.in);
-
-            String direction = sc.nextLine();
-
-            for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
-                if (direction.equals(entry.getKey())){
-                    roomClear();
-                    game.goNext(entry.getValue());
-                }
-            }
-        } else if (isCleared) {
-            System.out.println("The doors seem to be locked, might as well take a look inside.");
-            for (Map.Entry<String, Room> entry : neighboringRooms.entrySet()){
-                game.goNext(entry.getValue());
-            }
-        } else {
-            System.out.println("You have failed your people in life, and will now suffer in death.");
+    public void feedback() {
+        System.out.println("The doors seem to be locked, might as well take a look inside.");
+        for (Room room : this.neighboringRooms.values()) {
+            this.game.goNext(room);
         }
     }
 }
