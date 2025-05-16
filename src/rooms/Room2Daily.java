@@ -1,8 +1,12 @@
 package rooms;
 
 import core.Game;
+import stratpattern.Task;
+import stratpattern.TaskHandler;
 
 public class Room2Daily extends Room {
+    private TaskHandler taskHandler = new TaskHandler();
+    //ToDo: assign task to the taskHandler in DataSeeder
 
     public Room2Daily(Game game) {
         super(game);
@@ -15,7 +19,7 @@ public class Room2Daily extends Room {
 
     @Override
     void handleUncleared() {
-        if (!this.taskHandler.startTask(this.task)){
+        if (!this.taskHandler.startTask()){
             this.game.getPlayer().damage(1);
             //ToDo: summon monster
         }

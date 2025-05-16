@@ -34,5 +34,7 @@ abstract public class DataSeeder {
         //Hidden Side Room
         sideRoom.addNeighboringRoom(left, dailyScrum);
         return outside;
+
+
     }
 }
