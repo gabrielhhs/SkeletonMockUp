@@ -8,8 +8,8 @@ public class TaskHandler {
         this.task = task;
     }
 
-    public void startTask(Task task) {
-        task.start();
+    public boolean startTask(Task task) {
+        return task.start();
     }
 
     public boolean startTask() {

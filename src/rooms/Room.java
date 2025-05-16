@@ -1,6 +1,8 @@
 package rooms;
 
 import core.*;
+import stratpattern.Task;
+import stratpattern.TaskHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,6 +14,8 @@ public abstract class Room {
     protected String name;
     protected final Map<String, Room> neighboringRooms = new HashMap<>();
     protected boolean isCleared = false;
+    protected TaskHandler taskHandler = new TaskHandler();
+    protected Task task;
 
     abstract void introductionText();
     abstract void handleUncleared();
@@ -26,9 +30,8 @@ public abstract class Room {
         }
 
         System.out.println(sb);
-        Scanner sc = new Scanner(System.in);
 
-        String direction = sc.nextLine();
+        String direction = new Scanner(System.in).nextLine();
 
         for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()){
             if (direction.equals(entry.getKey())){
@@ -70,5 +73,9 @@ public abstract class Room {
 
     public void setCleared() {
         this.isCleared = true;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 }

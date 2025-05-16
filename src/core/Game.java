@@ -20,4 +20,8 @@ public class Game {
         room.enter();
         player.setPosition(room);
     }
+
+    public Player getPlayer(){
+        return this.player;
+    }
 }

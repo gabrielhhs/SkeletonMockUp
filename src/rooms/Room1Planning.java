@@ -1,12 +1,9 @@
 package rooms;
 
 import core.Game;
-import question.*;
 
-import java.util.HashMap;
-import java.util.Map;
+public class Room1Planning extends Room {
 
-public class Room1Planning extends QuestionRoom {
     public Room1Planning(Game game) {
         super(game);
     }
@@ -16,20 +13,12 @@ public class Room1Planning extends QuestionRoom {
         //todo: add option for skipping entire level straight to Bonfire is isCleared
     }
 
-    String askQuestion() {
-        String[] options = {"1. Snu Snu", "2. Fatality", "3. I choose to live!"};
-        Question planning1 = new MultipleChoiceQuestion("Pick your method of Death:", options);
-
-        return planning1.ask();
-    }
-
-    boolean checkAnswer(String answer) {
-        return answer.equals("3");
-    }
-
-    void handleQuestionResult(boolean correct) {
-        if (correct) System.out.println("Yes. This will be Observed.");
-        else System.out.println("You have summoned your own Doom.");
+    @Override
+    void handleUncleared() {
+        if (!this.taskHandler.startTask(this.task)) {
+            this.game.getPlayer().damage(1);
+            //ToDo: summon monster for new Task
+        }
     }
 }
 //De Sprint Planning
