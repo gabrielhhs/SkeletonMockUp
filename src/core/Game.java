@@ -13,7 +13,7 @@ public class Game {
     //TODO: /\ moet overgezet worden in de DataSeeder.class
 
     public void start() {
-        roomPlanning.enter();
+        new Room1Planning(this).enter();
     }
 
     public void goNext(Room room) {

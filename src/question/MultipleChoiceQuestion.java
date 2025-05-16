@@ -17,9 +17,7 @@ public class MultipleChoiceQuestion implements Question {
             System.out.println(each);
         }
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Take your best guess: ");
-        String answer = scanner.nextLine();
-        return answer;
+        return new Scanner(System.in).nextLine();
     }
 }

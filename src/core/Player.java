@@ -6,8 +6,9 @@ public class Player {
     private Room room;
     private int health;
     private int score;
+    private boolean dead = false;
 
-    public Player(Room room, int status) {
+    public Player(Room room) {
         this.room = room;
     }
 
@@ -20,8 +21,13 @@ public class Player {
         System.out.println("Your HP is: " + health);
         System.out.println("Your score is: " + score);
     }
+
     public void markDead() {
-        this.isDead = true;
+        this.dead = true;
+    }
+
+    public boolean isDead() {
+        return this.dead;
     }
 }
 //Alles gebeurt in tekst (CLI)

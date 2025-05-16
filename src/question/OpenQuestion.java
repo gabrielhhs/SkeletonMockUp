@@ -10,10 +10,8 @@ public class OpenQuestion implements Question {
     }
 
     public String ask() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println(question);
         System.out.print("Answer: ");
-        String answer = scanner.nextLine();
-        return answer;
+        return new Scanner(System.in).nextLine();
     }
 }
