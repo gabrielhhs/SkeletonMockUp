@@ -1,6 +1,8 @@
 package rooms;
 
 import core.*;
+import stratpattern.Task;
+import stratpattern.TaskHandler;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,9 +28,8 @@ public abstract class Room {
         }
 
         System.out.println(sb);
-        Scanner sc = new Scanner(System.in);
 
-        String direction = sc.nextLine();
+        String direction = new Scanner(System.in).nextLine();
 
         for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()){
             if (direction.equals(entry.getKey())){
