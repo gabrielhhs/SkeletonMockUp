@@ -2,13 +2,13 @@ package stratpattern;
 
 import java.util.Scanner;
 
-public class MultiChoiceQuestion implements Task {
+public class MultipleChoiceQuestion implements Task {
     private String question;
-    private String [] options;
+    private String[] options;
     private int answer;
     private Scanner scan = new Scanner(System.in);
 
-    public MultiChoiceQuestion(String question, String [] options, int answer) {
+    public MultipleChoiceQuestion(String question, String[] options, int answer) {
         this.question = question;
         this.options = options;
         this.answer = answer;
