@@ -1,8 +1,8 @@
-package Rooms;
+package rooms;
 
-import Core.Game;
-import Question.OpenQuestion;
-import Question.Question;
+import core.Game;
+import question.OpenQuestion;
+import question.Question;
 
 import java.util.HashMap;
 

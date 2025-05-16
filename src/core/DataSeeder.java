@@ -1,6 +1,6 @@
-package Core;
+package core;
 
-import Rooms.*;
+import rooms.*;
 
 
 import java.util.ArrayList;

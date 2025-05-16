@@ -1,6 +1,6 @@
-package Core;
+package core;
 
-import Rooms.Room;
+import rooms.Room;
 
 public class Player {
     private Room room;

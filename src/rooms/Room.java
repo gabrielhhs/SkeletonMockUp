@@ -1,7 +1,6 @@
-package Rooms;
+package rooms;
 
-import Core.*;
-import Question.OpenQuestion;
+import core.*;
 
 import java.util.ArrayList;
 import java.util.Map;

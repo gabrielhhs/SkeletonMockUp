@@ -1,4 +1,4 @@
-package Question;
+package question;
 
 public interface Question {
     String ask();

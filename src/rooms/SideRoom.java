@@ -1,6 +1,6 @@
-package Rooms;
+package rooms;
 
-import Core.Game;
+import core.Game;
 
 import java.util.HashMap;
 

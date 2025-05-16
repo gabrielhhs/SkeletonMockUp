@@ -1,6 +1,6 @@
-package Core;
+package core;
 
-import Rooms.*;
+import rooms.*;
 
 import javax.xml.crypto.Data;
 import java.util.List;
