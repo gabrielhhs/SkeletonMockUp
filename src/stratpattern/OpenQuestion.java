@@ -16,10 +16,10 @@ public class OpenQuestion implements Task {
     @Override
     public boolean start() {
         System.out.println(this.question);
-        if (scan.nextLine().trim().equalsIgnoreCase(this.answer)){
+        if (scan.nextLine().trim().equalsIgnoreCase(this.answer)) {
             System.out.println("Well done you may live");
             return true;
-        }else {
+        } else {
             System.out.println("DIE!!");
             return false;
         }
