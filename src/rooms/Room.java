@@ -78,7 +78,7 @@ public abstract class Room {
         bonfire();
     }
 
-    public Map<String, Room> getNeiboringRooms() {
+    public Map<String, Room> getNeighboringRooms() {
         return neighboringRooms;
     }
 

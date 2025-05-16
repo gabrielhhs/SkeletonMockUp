@@ -20,7 +20,7 @@ public class Player {
         System.out.println("Your HP is: " + health);
         System.out.println("Your score is: " + score);
     }
-    public void death() {
+    public void markDead() {
         this.isDead = true;
     }
 }
