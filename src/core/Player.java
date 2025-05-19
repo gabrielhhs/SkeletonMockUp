@@ -1,12 +1,23 @@
 package core;
 
+import observer.DeathNotifier;
+import observer.Scoreboard;
 import rooms.Room;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class Player {
+    public interface Observer {
+        default void onScoreChange(Player player) {}
+        default void onHealthChange(Player player) {}
+        default void onDeath(Player player) {}
+    }
+    private final Set<Observer> observers = new HashSet(); //ToDo: assign observers in DataSeeder or wherever
     private Room currentRoom;
     private int health;
     private int maxHealth;
-    private int score;
+    private int score = 0;
     private boolean dead = false;
 
     public Player(Room room) {
@@ -14,6 +25,9 @@ public class Player {
 
         this.maxHealth = 3;
         this.health = this.maxHealth;
+
+        this.addObserver(DeathNotifier.INSTANCE);
+        this.addObserver(Scoreboard.INSTANCE);
     }
 
     public void setPosition(Room room) {
@@ -51,6 +65,7 @@ public class Player {
     public void setHealth(int health) {
         this.health = health;
         this.updateHealth();
+        for (Observer observer : this.observers) observer.onHealthChange(this);
     }
 
     private void updateHealth() {
@@ -60,6 +75,7 @@ public class Player {
 
     private void markDead() {
         this.dead = true;
+        for (Observer observer : this.observers) observer.onDeath(this);
     }
 
     public boolean isDead() {
@@ -77,6 +93,7 @@ public class Player {
     }
     public void setScore(int score) {
         this.score = score;
+        for (Observer observer : this.observers) observer.onScoreChange(this);
     }
     public void addScore(int amount) {
         if (amount < 0) throw new IllegalArgumentException("Cannot give negative score");
@@ -88,6 +105,13 @@ public class Player {
     }
     public void changeScore(int delta) {
         this.setScore(this.getScore() + delta);
+    }
+
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+    public void removeObserver(Observer observer) {
+        this.observers.remove(observer);
     }
 }
 //Alles gebeurt in tekst (CLI)
