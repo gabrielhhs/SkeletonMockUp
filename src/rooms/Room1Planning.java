@@ -19,7 +19,7 @@ public class Room1Planning extends Room {
         If you answer my question i will let you pass to the next room!
         But there not easy!
         """);
-        //ToDo: add option for skipping entire level straight to Bonfire is isCleared
+
     }
 
     @Override
