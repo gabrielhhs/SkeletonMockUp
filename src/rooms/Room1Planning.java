@@ -13,8 +13,13 @@ public class Room1Planning extends Room {
     }
 
     void introductionText() {
-        System.out.println("You have entered the Planning Room of Death.");
-        //todo: add option for skipping entire level straight to Bonfire is isCleared
+        System.out.println("""
+        I am a mysterious figure and will follow you through the rooms.
+        You've entered my planning room of death.
+        If you answer my question i will let you pass to the next room!
+        But there not easy!
+        """);
+        //ToDo: add option for skipping entire level straight to Bonfire is isCleared
     }
 
     @Override

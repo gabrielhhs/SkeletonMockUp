@@ -19,7 +19,7 @@ public abstract class Room {
     abstract void handleUncleared();
 
     public void feedback() {
-        System.out.println("You have survived...This time.");
+        System.out.println("You are allowed to pass, this time but the next time wont be so easy!");
         StringBuilder sb = new StringBuilder();
         String start = "In which door do you wish to go to. ";
         sb.append(start);

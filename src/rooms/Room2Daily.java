@@ -14,7 +14,11 @@ public class Room2Daily extends Room {
 
     @Override
     public void introductionText() {
-        System.out.println("You have entered the Room of Daily Scrum Suffering.");
+        System.out.println("""
+                HAHAHA you got through the first room!
+                This question is going to be a little bit harder.
+                BUT if you dont answer it correctly you will have to suffer for the rest of your live!
+                """);
     }
 
     @Override
