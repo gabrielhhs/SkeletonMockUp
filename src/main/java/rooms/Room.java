@@ -69,7 +69,11 @@ public abstract class Room {
         return Collections.unmodifiableMap(this.neighboringRooms);
     }
 
-    public void setCleared() {
-        this.isCleared = true;
+    public void roomClear(){
+        setCleared(true);
+    }
+
+    public void setCleared(boolean isCleared) {
+        this.isCleared = isCleared;
     }
 }

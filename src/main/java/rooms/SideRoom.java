@@ -14,6 +14,6 @@ public class SideRoom extends Room {
 
     @Override
     void handleUncleared() {
-        this.setCleared();
+        this.roomClear();
     }
 }

@@ -4,11 +4,12 @@ import rooms.*;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 abstract public class DataSeeder {
+    private static ArrayList<Room> rooms = new ArrayList<>();
+
+
+
     public static Room seed(Game game) {
         String up = "up";
         String down = "down";
@@ -16,9 +17,15 @@ abstract public class DataSeeder {
         String right = "right";
 
         Room outside = new Outside(game);
+        rooms.add(outside);
         Room planning = new Room1Planning(game);
+        rooms.add(planning);
         Room dailyScrum = new Room2Daily(game);
+        rooms.add(dailyScrum);
         Room sideRoom = new SideRoom(game);
+        rooms.add(sideRoom);
+
+        Room room = Database.setProgress("1", rooms);
 
         //Outside 'Room'
         outside.addNeighboringRoom("enter", planning);
@@ -33,7 +40,8 @@ abstract public class DataSeeder {
 
         //Hidden Side Room
         sideRoom.addNeighboringRoom(left, dailyScrum);
-        return outside;
+
+        return room;
 
 
     }

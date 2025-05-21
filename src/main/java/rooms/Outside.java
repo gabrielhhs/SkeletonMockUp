@@ -32,7 +32,7 @@ public class Outside extends Room {
 
         for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()){
             if (direction.equals(entry.getKey())){
-                this.setCleared();
+                this.roomClear();
                 this.game.goNext(entry.getValue());
             }
         }
