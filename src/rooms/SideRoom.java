@@ -1,3 +1,4 @@
+/*
 package rooms;
 
 import core.Game;
@@ -16,4 +17,4 @@ public class SideRoom extends Room {
     void handleUncleared() {
         this.setCleared();
     }
-}
+}*/

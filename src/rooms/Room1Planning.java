@@ -1,7 +1,6 @@
+/*
 package rooms;
 
-import core.Game;
-import stratpattern.Task;
 import stratpattern.TaskHandler;
 
 public class Room1Planning extends Room {
@@ -33,4 +32,4 @@ public class Room1Planning extends Room {
 //In elke kamer krijg je een of meerdere vragen of opdrachten.
 //Je mag pas naar de volgende kamer als je alle vragen/opdrachten goed hebt uitgevoerd.
 //Een fout antwoord roept een “monster” op: een belemmering (impediment!)  die iets blokkeert.
-// Je moet dan eerst de fout corrigeren of een alternatieve opdracht uitvoeren om het monster weg te krijgen.
+// Je moet dan eerst de fout corrigeren of een alternatieve opdracht uitvoeren om het monster weg te krijgen.*/

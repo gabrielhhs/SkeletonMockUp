@@ -1,7 +1,6 @@
+/*
 package rooms;
 
-import core.Game;
-import stratpattern.Task;
 import stratpattern.TaskHandler;
 
 public class Room2Daily extends Room {
@@ -24,4 +23,4 @@ public class Room2Daily extends Room {
             //ToDo: summon monster
         }
     }
-}
+}*/
