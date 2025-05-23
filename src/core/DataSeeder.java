@@ -1,24 +1,22 @@
 package core;
 
-import rooms.*;
+import rooms.Outside;
+import rooms.Room;
+import rooms.TaskRoom;
+import stratpattern.MultipleChoiceQuestion;
+import stratpattern.OpenQuestion;
 
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-abstract public class DataSeeder {
+public abstract class DataSeeder {
     public static Room seed(Game game) {
         String up = "up";
         String down = "down";
         String left = "left";
         String right = "right";
 
-        Room outside = new Outside(game);
-        Room planning = new Room1Planning(game);
-        Room dailyScrum = new Room2Daily(game);
-        Room sideRoom = new SideRoom(game);
+        Room outside = new Outside(game, "outside");
+        TaskRoom planning = new TaskRoom(game, "planning");
+        TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
+        TaskRoom sideRoom = new TaskRoom(game, "sideroom");
 
         //Outside 'Room'
         outside.addNeighboringRoom("enter", planning);
@@ -33,8 +31,25 @@ abstract public class DataSeeder {
 
         //Hidden Side Room
         sideRoom.addNeighboringRoom(left, dailyScrum);
+
+
+        //Tasks
+        MultipleChoiceQuestion planningTask = new MultipleChoiceQuestion(
+                "What is 9 + 10?",
+                new String[]{"1. 21", "2. 19", "3. I refuse to answer math questions"},
+                2, "19", planning);
+        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum);
+        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom);
+
+        //Assigning Tasks
+        planning.getTaskHandler().setTask(planningTask);
+        dailyScrum.getTaskHandler().setTask(dailyScrumTask);
+        sideRoom.getTaskHandler().setTask(sideRoomTask);
+
         return outside;
+    }
 
-
+    public static Player getPlayer(Room room) {
+        return new Player(room);
     }
 }
