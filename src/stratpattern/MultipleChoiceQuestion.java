@@ -1,17 +1,21 @@
 package stratpattern;
 
-import java.util.Scanner;
+import core.RoomStatus;
+import rooms.Room;
 
 public class MultipleChoiceQuestion implements Task {
     private String question;
     private String[] options;
-    private int answer;
-    private Scanner scan = new Scanner(System.in);
+    private String answerNum;
+    private String answerString;
+    private Room room;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer) {
+    public MultipleChoiceQuestion(String question, String[] options, int answerNum, String answerString, Room room) {
         this.question = question;
         this.options = options;
-        this.answer = answer;
+        this.answerNum = String.valueOf(answerNum);
+        this.answerString = answerString;
+        this.room = room;
     }
 
     private void askQuestion() {
@@ -22,20 +26,30 @@ public class MultipleChoiceQuestion implements Task {
         }
     }
 
-    private boolean handleAnswer() {
-        int input = this.scan.nextInt();
-        if (input == this.answer) {
+    private void handleAnswer(String input) {
+        if (input.equalsIgnoreCase(this.answerString) || input.equals(this.answerNum)) {
             System.out.println("Well done you may live");
-            return true;
+            this.room.setCleared();
+            this.room.chooseRoom();
         } else {
             System.out.println("DIE!!");
-            return false;
+            RoomStatus.CONFRONTING_QUESTION_MONSTER.setTrue();
+            this.room.getParent().getPlayer().damage(1);
+            //ToDo: implement summoning the monster
         }
     }
 
     @Override
-    public boolean start() {
+    public void consume(String input) {
+        this.handleAnswer(input);
+    }
+
+    @Override
+    public final void start() {
         askQuestion();
-        return handleAnswer();
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }
