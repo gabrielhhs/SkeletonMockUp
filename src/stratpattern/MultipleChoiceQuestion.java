@@ -6,36 +6,37 @@ import rooms.Room;
 public class MultipleChoiceQuestion implements Task {
     private String question;
     private String[] options;
-    private String answerNum;
-    private String answerString;
-    private Room room;
+    private int answer;
+    private final Room room;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answerNum, String answerString, Room room) {
+    public MultipleChoiceQuestion(String question, String[] options, int answer, Room room) {
         this.question = question;
         this.options = options;
-        this.answerNum = String.valueOf(answerNum);
-        this.answerString = answerString;
+        this.answer = answer;
         this.room = room;
     }
 
     private void askQuestion() {
         System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
-        for (var entry : this.options) {
-            System.out.println(entry);
+        for (int entry = 0; entry < this.options.length; entry++) {
+            System.out.println(entry + "." + this.options[entry]);
         }
     }
 
     private void handleAnswer(String input) {
-        if (input.equalsIgnoreCase(this.answerString) || input.equals(this.answerNum)) {
+        if (input.matches("\\d") && Integer.parseInt(input) == this.answer) {
             System.out.println("Well done you may live");
             this.room.setCleared();
             this.room.chooseRoom();
+        } else if (!input.matches("\\d")){
+            System.out.println("Choose a correct option number or DIE!! (pretty please)");
         } else {
             System.out.println("DIE!!");
-            RoomStatus.CONFRONTING_QUESTION_MONSTER.setTrue();
+            RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
             this.room.getParent().getPlayer().damage(1);
             //ToDo: implement summoning the monster
+
         }
     }
 
@@ -47,9 +48,5 @@ public class MultipleChoiceQuestion implements Task {
     @Override
     public final void start() {
         askQuestion();
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
     }
 }

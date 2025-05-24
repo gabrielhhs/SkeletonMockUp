@@ -4,7 +4,7 @@ import core.Game;
 import core.RoomStatus;
 import stratpattern.TaskHandler;
 
-public class TaskRoom extends Room{
+public class TaskRoom extends Room {
     private TaskHandler taskHandler = new TaskHandler();
     //ToDo: Assign task to taskhandler
 
@@ -19,10 +19,8 @@ public class TaskRoom extends Room{
 
     @Override
     protected void handleUncleared() {
-        if (!this.cleared) {
-            RoomStatus.IN_TASK.setTrue();
+            RoomStatus.IN_TASK.activate();
             this.taskHandler.startTask();
-        }
     }
 
     public TaskHandler getTaskHandler() {

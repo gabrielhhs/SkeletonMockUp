@@ -21,7 +21,7 @@ public class OpenQuestion implements Task {
             this.room.chooseRoom();
         } else {
             System.out.println("DIE!!");
-            RoomStatus.CONFRONTING_QUESTION_MONSTER.setTrue();
+            RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
             this.room.getParent().getPlayer().damage(1);
             //ToDo: implement summoning the monster
         }

@@ -19,6 +19,7 @@ public class Game {
     }
 
     public void start() {
+        //ToDo: assign starting status???
         this.currentRoom.enter();
         final Scanner scan = new Scanner(this.in);
         this.running = true;

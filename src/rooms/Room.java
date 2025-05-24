@@ -10,7 +10,7 @@ public abstract class Room {
     protected Game parent;
     protected String name;
     protected boolean cleared;
-    protected Map<String, Room> neighboringRooms = new HashMap<>();
+    protected final Map<String, Room> neighboringRooms = new HashMap<>();
 
     protected Room(Game parent, String name) {
         this.parent = parent;
@@ -21,10 +21,10 @@ public abstract class Room {
     protected abstract void handleUncleared();
 
     public void chooseRoom() {
-        RoomStatus.SELECTING_ROOM.setTrue();
+        RoomStatus.SELECTING_ROOM.activate();
         System.out.println("Choose which way you want to go:");
-        for (var entry : this.neighboringRooms.entrySet()) {
-            if(entry != null) System.out.println(entry.getKey());
+        for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()) {
+            System.out.println(entry.getKey());
         }
     }
 
@@ -38,21 +38,21 @@ public abstract class Room {
     }
 
     public Game getParent() {
-        return parent;
+        return this.parent;
     }
     public void setParent(Game parent) {
         this.parent = parent;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
     public void setName(String name) {
         this.name = name;
     }
 
     public boolean isCleared() {
-        return cleared;
+        return this.cleared;
     }
     public void setCleared() {
         this.cleared = true;
@@ -61,11 +61,8 @@ public abstract class Room {
     public Map<String, Room> getNeighboringRooms() {
         return this.neighboringRooms;
     }
-    public void setNeighboringRooms(Map<String, Room> neighbors) {
-        this.neighboringRooms = neighbors;
-    }
 
-    public void addNeighboringRoom(String direction, Room room) {
+    public void putNeighboringRoom(String direction, Room room) {
         this.neighboringRooms.put(direction, room);
     }
 }

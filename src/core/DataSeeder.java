@@ -6,6 +6,7 @@ import rooms.TaskRoom;
 import stratpattern.MultipleChoiceQuestion;
 import stratpattern.OpenQuestion;
 
+//ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
 public abstract class DataSeeder {
     public static Room seed(Game game) {
         String up = "up";
@@ -19,25 +20,25 @@ public abstract class DataSeeder {
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
 
         //Outside 'Room'
-        outside.addNeighboringRoom("enter", planning);
+        outside.putNeighboringRoom("enter", planning);
 
         //Planning Room
-        planning.addNeighboringRoom(up, dailyScrum);
-        planning.addNeighboringRoom(down, outside);
+        planning.putNeighboringRoom(up, dailyScrum);
+        planning.putNeighboringRoom(down, outside);
 
         //Daily Scrum Room
-        dailyScrum.addNeighboringRoom(down, planning);
-        dailyScrum.addNeighboringRoom(right, sideRoom);
+        dailyScrum.putNeighboringRoom(down, planning);
+        dailyScrum.putNeighboringRoom(right, sideRoom);
 
         //Hidden Side Room
-        sideRoom.addNeighboringRoom(left, dailyScrum);
+        sideRoom.putNeighboringRoom(left, dailyScrum);
 
 
         //Tasks
         MultipleChoiceQuestion planningTask = new MultipleChoiceQuestion(
                 "What is 9 + 10?",
-                new String[]{"1. 21", "2. 19", "3. I refuse to answer math questions"},
-                2, "19", planning);
+                new String[]{"21", "19", "I refuse to answer math questions"},
+                2, planning);
         OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum);
         OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom);
 

@@ -2,7 +2,7 @@ package rooms;
 
 import core.Game;
 
-public class Outside extends Room{
+public class Outside extends Room {
 
     public Outside(Game parent, String name) {
         super(parent, name);
