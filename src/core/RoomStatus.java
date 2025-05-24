@@ -5,7 +5,7 @@ public enum RoomStatus {
     IN_TASK,
     CONFRONTING_QUESTION_MONSTER;
 
-    private static RoomStatus currentStatus = null;
+    private static RoomStatus currentStatus;
 
     static void setCurrentStatus(RoomStatus newStatus) {
         currentStatus = newStatus;

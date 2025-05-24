@@ -35,7 +35,7 @@ public class Game {
         if (input.startsWith("/")) {handleCommand(input.substring(1)); return;}
 
         RoomStatus status = RoomStatus.getActiveStatus();
-        if (status.equals(null)) return;
+        if (status.equals(null)) throw new AssertionError("How did you get here?");
 
         switch (status) {
             case SELECTING_ROOM -> swapRoom(input);
