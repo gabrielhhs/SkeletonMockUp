@@ -1,5 +1,6 @@
 package stratpattern;
 
 public interface Task {
-    boolean start();
+    void start();
+    void consume(String input);
 }
