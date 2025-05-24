@@ -20,23 +20,24 @@ public class MultipleChoiceQuestion implements Task {
         System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
         for (int index = 0; index < this.options.length; index++) {
-            System.out.println(1 + index + "." + this.options[index]);
+            System.out.println((index + 1) + "." + this.options[index]);
         }
     }
 
     private void handleAnswer(String input) {
-        if (input.matches("\\d") && Integer.parseInt(input) == this.answer) {
-            System.out.println("Well done you may live");
-            this.room.setCleared();
-            this.room.chooseRoom();
-        } else if (!input.matches("\\d")){
-            System.out.println("Choose a correct option number or DIE!! (pretty please)");
+        if (input.matches("\\d+")) {
+            if (Integer.parseInt(input) == this.answer) {
+                System.out.println("Well done you may live");
+                this.room.setCleared();
+                this.room.chooseRoom();
+            } else {
+                System.out.println("DIE!!");
+                RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
+                this.room.getParent().getPlayer().damage(1);
+                //ToDo: implement summoning the monster
+            }
         } else {
-            System.out.println("DIE!!");
-            RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
-            this.room.getParent().getPlayer().damage(1);
-            //ToDo: implement summoning the monster
-
+            System.out.println("Choose a correct option number or DIE!! (pretty please)");
         }
     }
 
