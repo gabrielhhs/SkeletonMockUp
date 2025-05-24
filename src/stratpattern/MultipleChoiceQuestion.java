@@ -19,7 +19,7 @@ public class MultipleChoiceQuestion implements Task {
     private void askQuestion() {
         System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
-        for (int entry = 0; entry < this.options.length; entry++) {
+        for (int entry = 1; entry < this.options.length; entry++) {
             System.out.println(entry + "." + this.options[entry]);
         }
     }
