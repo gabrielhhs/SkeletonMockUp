@@ -39,8 +39,10 @@ public abstract class DataSeeder {
                 "What is 9 + 10?",
                 new String[]{"21", "19", "I refuse to answer math questions"},
                 2, planning, "It's a number");
-        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, "The answer to everything");
-        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, "Confused confusing confusion");
+        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?",
+                "42", dailyScrum, "The answer to everything");
+        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room",
+                "?", sideRoom, "Confused confusing confusion");
 
         //Assigning Tasks
         planning.getTaskHandler().setTask(planningTask);
