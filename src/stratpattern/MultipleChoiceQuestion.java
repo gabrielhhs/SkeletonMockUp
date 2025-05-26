@@ -8,12 +8,17 @@ public class MultipleChoiceQuestion implements Task {
     private String[] options;
     private int answer;
     private final Room room;
+    private String hint;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, Room room) {
+    public MultipleChoiceQuestion(String question, String[] options, int answer, Room room, String hint) {
         this.question = question;
         this.options = options;
         this.answer = answer;
         this.room = room;
+        this.hint = hint;
+    }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, Room room) {
+        this(question, options, answer, room, null);
     }
 
     private void askQuestion() {
@@ -25,7 +30,9 @@ public class MultipleChoiceQuestion implements Task {
     }
 
     private void handleAnswer(String input) {
-        if (input.matches("\\d+")) {
+        if (input.equalsIgnoreCase("hint")) {
+            System.out.printf("Hint: %s%n", this.hint == null ? "None" : this.hint);
+        } else if (input.matches("\\d+")) {
             if (Integer.parseInt(input) == this.answer) {
                 System.out.println("Well done you may live");
                 this.room.setCleared();
