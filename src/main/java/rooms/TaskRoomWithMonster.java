@@ -8,8 +8,10 @@ public class TaskRoomWithMonster extends TaskRoom{
     //ToDo: Assign task to taskhandler
     //ToDo: Assign new Question to Monster and assign Monster to 'this'
 
-    public TaskRoomWithMonster(Game game, String name) {
+    public TaskRoomWithMonster(Game game, String name, QuestionMonster monster) {
         super(game, name);
+        this.monster = monster;
+        this.monster.setParent(this);
     }
 
     public void setMonster(QuestionMonster monster) {

@@ -8,15 +8,18 @@ public class QuestionMonster{
     private Task task;
     private TaskRoomWithMonster parent;
 
-    public QuestionMonster(String name, Task task, TaskRoomWithMonster parent) {
+    public QuestionMonster(String name, Task task) {
         this.name = name;
         this.task = task;
-        this.parent = parent;
     }
 
     public void activate() {
         System.out.printf("[%s] YOU HAVE ACTIVATED MY TRAP CARD%nPrepare to face the consequences", this.name);
         this.parent.getTaskHandler().setTask(this.task);
         this.parent.handleUncleared();
+    }
+
+    public void setParent(TaskRoomWithMonster parent) {
+        this.parent = parent;
     }
 }
