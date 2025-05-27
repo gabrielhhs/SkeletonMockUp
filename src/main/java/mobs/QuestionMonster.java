@@ -12,6 +12,9 @@ public class QuestionMonster{
         this.name = name;
         this.task = task;
     }
+    public QuestionMonster(String name) {
+        this.name = name;
+    }
 
     public void activate() {
         System.out.printf("[%s] YOU HAVE ACTIVATED MY TRAP CARD%nPrepare to face the consequences", this.name);
@@ -21,5 +24,8 @@ public class QuestionMonster{
 
     public void setParent(TaskRoomWithMonster parent) {
         this.parent = parent;
+    }
+    public void setTask(Task task) {
+        this.task = task;
     }
 }
