@@ -114,7 +114,3 @@ public class Player {
         this.observers.remove(observer);
     }
 }
-//Alles gebeurt in tekst (CLI)
-//Je typt commando’s zoals: 'ga naar kamer 2'
-//Je kunt op elk moment status intypen om te zien waar je bent, hoeveel kamers je al hebt gehaald,
-// en of je nog monsters (impediments) hebt om op te lossen.
