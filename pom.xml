@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.skeletonmockup</groupId>
+    <artifactId>scrumslayer</artifactId>
+    <version>0.1.0</version>
+    <packaging>jar</packaging>
+
+    <name>Scrum-Master's_Layer</name>
+    <description>Scrum-themed dungeon crawler</description>
+    <url>https://github.com/gabrielhhs/SkeletonMockUp.git</url>
+
+    <developers>
+        <developer>
+            <name>TCAGM</name>
+            <url>https://github.com/TCAGM-Dev</url>
+        </developer>
+    </developers>
+
+    <properties>
+        <maven.compiler.source>22</maven.compiler.source>
+        <maven.compiler.target>22</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <build>
+        <finalName>${project.name}-${project.version}</finalName>
+        <outputDirectory>out/classes</outputDirectory>
+        <directory>out</directory>
+    </build>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+    </dependencies>
+</project>
