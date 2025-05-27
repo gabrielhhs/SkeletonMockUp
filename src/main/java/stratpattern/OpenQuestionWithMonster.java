@@ -23,7 +23,8 @@ public class OpenQuestionWithMonster extends OpenQuestion {
 
     private void handleFirstWrongAnswer() {
         System.out.println("You have failed you feel something something being taken away from your soul");
-        this.parent.getParent().getPlayer().addScore(-10);
+        this.parent.getParent().getPlayer().damage(1);
+        this.parent.getParent().getPlayer().removeScore(10);
         ((TaskRoomWithMonster) this.parent).activateMonster();
     }
     private void handleSecondWrongAnswer() {

@@ -21,7 +21,7 @@ public class OpenQuestion implements Task {
             this.parent.chooseRoom();
         } else {
             System.out.println("You have failed you feel something something being taken away from your soul");
-            this.parent.getParent().getPlayer().addScore(-10);
+            this.parent.getParent().getPlayer().removeScore(10);
             this.setCleared();
         }
     }

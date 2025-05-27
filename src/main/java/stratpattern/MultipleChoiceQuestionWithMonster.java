@@ -19,6 +19,7 @@ public class MultipleChoiceQuestionWithMonster extends MultipleChoiceQuestion {
         int answer = Integer.parseInt(input);
         if (answer == this.answer) {
             System.out.println("Well done you may live");
+            this.parent.getParent().getPlayer().addScore(10);
             this.parent.setCleared();
             this.parent.chooseRoom();
         } else if (!monsterActive) {
@@ -32,6 +33,7 @@ public class MultipleChoiceQuestionWithMonster extends MultipleChoiceQuestion {
         System.out.println("DIE!!");
         RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
         this.parent.getParent().getPlayer().damage(1);
+        this.parent.getParent().getPlayer().removeScore(10);
         this.monsterActive = true;
         ((TaskRoomWithMonster) this.parent).activateMonster();
     }
