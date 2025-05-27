@@ -1,30 +1,38 @@
 package stratpattern;
 
-import core.RoomStatus;
 import rooms.Room;
+import rooms.TaskRoom;
 
 public class OpenQuestion implements Task {
-    private String question;
-    private String answer;
-    private Room room;
+    protected final String question;
+    protected final String answer;
+    protected TaskRoom parent;
 
-    public OpenQuestion(String question, String answer, Room room) {
+    public OpenQuestion(String question, String answer, TaskRoom parent) {
         this.question = question;
         this.answer = answer;
-        this.room = room;
+        this.parent = parent;
     }
 
     @Override
     public void consume(String input) {
         if (input.equalsIgnoreCase(this.answer)) {
-            this.room.setCleared();
-            this.room.chooseRoom();
+            this.parent.setCleared();
+            this.parent.chooseRoom();
         } else {
-            System.out.println("DIE!!");
-            RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
-            this.room.getParent().getPlayer().damage(1);
-            //ToDo: implement summoning the monster
+            System.out.println("You have failed you feel something something being taken away from your soul");
+            this.parent.getParent().getPlayer().addScore(-10);
+            this.setCleared();
         }
+    }
+
+    protected void giveReward() {
+        //ToDo: implement
+    }
+
+    protected void setCleared() {
+        this.parent.setCleared();
+        this.parent.chooseRoom();
     }
 
     @Override

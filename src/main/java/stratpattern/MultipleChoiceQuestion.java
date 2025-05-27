@@ -1,22 +1,21 @@
 package stratpattern;
 
-import core.RoomStatus;
-import rooms.Room;
+import rooms.TaskRoom;
 
-public class MultipleChoiceQuestion implements Task {
-    private String question;
-    private String[] options;
-    private int answer;
-    private final Room room;
+public abstract class MultipleChoiceQuestion implements Task {
+    protected final String question;
+    protected final String[] options;
+    protected final int answer;
+    protected TaskRoom parent;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, Room room) {
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
         this.question = question;
         this.options = options;
         this.answer = answer;
-        this.room = room;
+        this.parent = parent;
     }
 
-    private void askQuestion() {
+    protected void askQuestion() {
         System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
         for (int index = 0; index < this.options.length; index++) {
@@ -24,26 +23,31 @@ public class MultipleChoiceQuestion implements Task {
         }
     }
 
-    private void handleAnswer(String input) {
-        if (input.matches("\\d+")) {
-            if (Integer.parseInt(input) == this.answer) {
-                System.out.println("Well done you may live");
-                this.room.setCleared();
-                this.room.chooseRoom();
-            } else {
-                System.out.println("DIE!!");
-                RoomStatus.CONFRONTING_QUESTION_MONSTER.activate();
-                this.room.getParent().getPlayer().damage(1);
-                //ToDo: implement summoning the monster
-            }
-        } else {
-            System.out.println("Choose a correct option number or DIE!! (pretty please)");
-        }
+    protected void giveReward() {
+        //ToDo: implement
+    }
+
+    protected void setCleared() {
+        this.parent.setCleared();
+        this.parent.chooseRoom();
     }
 
     @Override
     public void consume(String input) {
-        this.handleAnswer(input);
+        if (input.matches("\\d+")) {
+            if (Integer.parseInt(input) == this.answer) {
+                System.out.println("Well done you may live");
+                this.parent.getParent().getPlayer().addScore(10);
+                this.giveReward();
+                this.setCleared();
+            } else {
+                System.out.println("You have failed you feel something something being taken away from your soul");
+                this.parent.getParent().getPlayer().addScore(-10);
+                this.setCleared();
+            }
+        } else {
+            System.out.println("Choose a correct option number or DIE!! (pretty please)");
+        }
     }
 
     @Override
