@@ -3,18 +3,26 @@ package stratpattern;
 public class TaskHandler {
     private Task task;
 
-    
-    public TaskHandler() {};
+    public TaskHandler() {
+    }
+
     public TaskHandler(Task task) {
         this.task = task;
     }
 
-    public boolean startTask(Task task) {
-        return task.start();
+    public void startTask(Task task) {
+        task.start();
     }
 
-    public boolean startTask() {
-        if (this.task != null) return this.task.start();
-        return false;
+    public void startTask() {
+        if (this.task != null) this.task.start();
+    }
+
+    public void consume(String input) {
+        if (this.task != null) this.task.consume(input);
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 }
