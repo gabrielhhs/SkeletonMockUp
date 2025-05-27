@@ -17,7 +17,7 @@ public class QuestionMonster{
     }
 
     public void activate() {
-        System.out.printf("[%s] YOU HAVE ACTIVATED MY TRAP CARD%nPrepare to face the consequences", this.name);
+        System.out.printf("[%s] YOU HAVE ACTIVATED MY TRAP CARD%nPrepare to face the consequences%n", this.name);
         this.parent.getTaskHandler().setTask(this.task);
         this.parent.handleUncleared();
     }
