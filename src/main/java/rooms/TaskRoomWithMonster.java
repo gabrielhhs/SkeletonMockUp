@@ -1,12 +1,10 @@
 package rooms;
 
 import core.Game;
-import mobs.QuestionMonster;
+import entities.QuestionMonster;
 
-public class TaskRoomWithMonster extends TaskRoom{
+public class TaskRoomWithMonster extends TaskRoom {
     private QuestionMonster monster;
-    //ToDo: Assign task to taskhandler
-    //ToDo: Assign new Question to Monster and assign Monster to 'this'
 
     public TaskRoomWithMonster(Game game, String name, QuestionMonster monster) {
         super(game, name);
