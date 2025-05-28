@@ -15,23 +15,6 @@ public abstract class MultipleChoiceQuestion implements Task {
         this.parent = parent;
     }
 
-    protected void askQuestion() {
-        System.out.println("Mysterious void: ANSWER OR DIE");
-        System.out.println(this.question);
-        for (int index = 0; index < this.options.length; index++) {
-            System.out.println((index + 1) + "." + this.options[index]);
-        }
-    }
-
-    protected void giveReward() {
-        //ToDo: implement
-    }
-
-    protected void setCleared() {
-        this.parent.setCleared();
-        this.parent.chooseRoom();
-    }
-
     @Override
     public void consume(String input) {
         if (input.matches("\\d+")) {
@@ -50,8 +33,25 @@ public abstract class MultipleChoiceQuestion implements Task {
         }
     }
 
+    protected void giveReward() {
+        //ToDo: implement
+    }
+
+    protected void setCleared() {
+        this.parent.setCleared();
+        this.parent.chooseRoom();
+    }
+
     @Override
     public final void start() {
-        askQuestion();
+        System.out.println("Mysterious void: ANSWER OR DIE");
+        System.out.println(this.question);
+        for (int index = 0; index < this.options.length; index++) {
+            System.out.println((index + 1) + "." + this.options[index]);
+        }
+    }
+
+    protected TaskRoom getParent() {
+        return this.parent;
     }
 }
