@@ -3,7 +3,7 @@ package entities;
 import rooms.TaskRoomWithMonster;
 import stratpattern.Task;
 
-public class QuestionMonster{
+public class QuestionMonster {
     private String name;
     private Task task;
     private TaskRoomWithMonster parent;
