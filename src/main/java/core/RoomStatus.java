@@ -2,8 +2,7 @@ package core;
 
 public enum RoomStatus {
     SELECTING_ROOM,
-    IN_TASK,
-    CONFRONTING_QUESTION_MONSTER;
+    IN_TASK;
 
     private static RoomStatus currentStatus;
 
