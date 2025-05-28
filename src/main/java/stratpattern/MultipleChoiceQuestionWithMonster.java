@@ -3,7 +3,6 @@ package stratpattern;
 import rooms.TaskRoomWithMonster;
 
 public class MultipleChoiceQuestionWithMonster extends MultipleChoiceQuestion {
-
     public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, TaskRoomWithMonster room) {
         super(question, options, answer, room);
     }

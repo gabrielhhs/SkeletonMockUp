@@ -3,7 +3,6 @@ package stratpattern;
 import rooms.TaskRoomWithMonster;
 
 public class OpenQuestionWithMonster extends OpenQuestion {
-
     public OpenQuestionWithMonster(String question, String answer, TaskRoomWithMonster parent) {
         super(question, answer, parent);
     }
