@@ -16,7 +16,7 @@ public class OpenQuestion implements Task {
     @Override
     public void consume(String input) {
         if (input.equalsIgnoreCase(this.answer)) this.handleCorrectAnswer();
-        else this.handleWrongAnswer();
+        else { this.handleWrongAnswer(); this.setCleared(); }
     }
 
     protected void handleCorrectAnswer() {
@@ -29,7 +29,6 @@ public class OpenQuestion implements Task {
     protected void handleWrongAnswer() {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.parent.getParent().getPlayer().removeScore(10);
-        this.setCleared();
     }
 
     protected void giveReward() {

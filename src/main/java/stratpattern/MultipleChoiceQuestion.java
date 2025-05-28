@@ -18,19 +18,23 @@ public abstract class MultipleChoiceQuestion implements Task {
     @Override
     public void consume(String input) {
         if (input.matches("\\d+")) {
-            if (Integer.parseInt(input) == this.answer) {
-                System.out.println("Well done you may live");
-                this.parent.getParent().getPlayer().addScore(10);
-                this.giveReward();
-                this.setCleared();
-            } else {
-                System.out.println("You have failed you feel something being taken away from your soul");
-                this.parent.getParent().getPlayer().removeScore(10);
-                this.setCleared();
-            }
+            if (Integer.parseInt(input) == this.answer) this.handleCorrectAnswer();
+            else { this.handleWrongAnswer(); this.setCleared(); }
         } else {
             System.out.println("Choose a correct option number or DIE!! (pretty please)");
         }
+    }
+
+    protected void handleCorrectAnswer() {
+        System.out.println("Well done you may live");
+        this.parent.getParent().getPlayer().addScore(10);
+        this.giveReward();
+        this.setCleared();
+    }
+
+    protected void handleWrongAnswer() {
+        System.out.println("You have failed you feel something being taken away from your soul");
+        this.parent.getParent().getPlayer().removeScore(10);
     }
 
     protected void giveReward() {

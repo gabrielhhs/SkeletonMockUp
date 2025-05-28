@@ -7,6 +7,7 @@ public class QuestionMonster {
     private String name;
     private Task task;
     private TaskRoomWithMonster parent;
+    private boolean active = false;
 
     public QuestionMonster(String name, Task task) {
         this.name = name;
@@ -19,6 +20,7 @@ public class QuestionMonster {
     public void activate() {
         System.out.printf("[%s] YOU HAVE ACTIVATED MY TRAP CARD%nPrepare to face the consequences%n", this.name);
         this.parent.getTaskHandler().setTask(this.task);
+        this.active = true;
         this.parent.handleUncleared();
     }
 
@@ -27,5 +29,9 @@ public class QuestionMonster {
     }
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    public boolean isActive() {
+        return this.active;
     }
 }
