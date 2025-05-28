@@ -53,7 +53,7 @@ public abstract class DataSeeder {
         sideRoom.putNeighboringRoom(left, dailyScrum);
 
         //mainRoomMonster1
-        mainRoomMonster1.putNeighboringRoom(up, dailyScrum);
+        mainRoomMonster1.putNeighboringRoom(down, dailyScrum);
         mainRoomMonster1.putNeighboringRoom(right, mainRoomMonster2);
 
         //mainRoomMonster2
