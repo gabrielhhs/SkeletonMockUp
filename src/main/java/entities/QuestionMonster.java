@@ -1,4 +1,4 @@
-package mobs;
+package entities;
 
 import rooms.TaskRoomWithMonster;
 import stratpattern.Task;

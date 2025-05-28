@@ -1,6 +1,6 @@
 package core;
 
-import mobs.QuestionMonster;
+import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
