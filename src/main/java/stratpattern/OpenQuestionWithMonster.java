@@ -11,26 +11,11 @@ public class OpenQuestionWithMonster extends OpenQuestion {
 
     @Override
     public void consume(String input) {
-        if (input.equalsIgnoreCase(this.answer)) {
-            this.parent.setCleared();
-            this.parent.chooseRoom();
-        } else if (!monsterActive) {
-            handleFirstWrongAnswer();
-        } else {
-            handleSecondWrongAnswer();
+        if (input.equalsIgnoreCase(this.answer)) super.handleCorrectAnswer();
+        else if (!monsterActive) { super.handleWrongAnswer(); ((TaskRoomWithMonster) this.parent).activateMonster(); this.monsterActive = true; } //Multiline or naw? I like this
+        else {
+            System.out.println("Imagine failing twice. DIE!!");
+            this.parent.getParent().getPlayer().kill();
         }
     }
-
-    private void handleFirstWrongAnswer() {
-        System.out.println("You have failed you feel something something being taken away from your soul");
-        this.parent.getParent().getPlayer().damage(1);
-        this.parent.getParent().getPlayer().removeScore(10);
-        ((TaskRoomWithMonster) this.parent).activateMonster();
-    }
-    private void handleSecondWrongAnswer() {
-        System.out.println("Imagine failing twice. DIE!!");
-        this.parent.getParent().getPlayer().kill();
-    }
-
-
 }

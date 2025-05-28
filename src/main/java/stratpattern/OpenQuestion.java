@@ -1,6 +1,5 @@
 package stratpattern;
 
-import rooms.Room;
 import rooms.TaskRoom;
 
 public class OpenQuestion implements Task {
@@ -16,14 +15,21 @@ public class OpenQuestion implements Task {
 
     @Override
     public void consume(String input) {
-        if (input.equalsIgnoreCase(this.answer)) {
-            this.parent.setCleared();
-            this.parent.chooseRoom();
-        } else {
-            System.out.println("You have failed you feel something something being taken away from your soul");
-            this.parent.getParent().getPlayer().removeScore(10);
-            this.setCleared();
-        }
+        if (input.equalsIgnoreCase(this.answer)) this.handleCorrectAnswer();
+        else this.handleWrongAnswer();
+    }
+
+    protected void handleCorrectAnswer() {
+        System.out.println("Well done you may live");
+        this.parent.getParent().getPlayer().addScore(10);
+        this.giveReward();
+        this.setCleared();
+    }
+
+    protected void handleWrongAnswer() {
+        System.out.println("You have failed you feel something something being taken away from your soul");
+        this.parent.getParent().getPlayer().removeScore(10);
+        this.setCleared();
     }
 
     protected void giveReward() {
@@ -38,5 +44,9 @@ public class OpenQuestion implements Task {
     @Override
     public void start() {
         System.out.println(this.question);
+    }
+
+    protected TaskRoom getParent() {
+        return this.parent;
     }
 }
