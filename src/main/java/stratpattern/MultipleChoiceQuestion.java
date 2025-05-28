@@ -24,7 +24,7 @@ public abstract class MultipleChoiceQuestion implements Task {
                 this.giveReward();
                 this.setCleared();
             } else {
-                System.out.println("You have failed you feel something something being taken away from your soul");
+                System.out.println("You have failed you feel something being taken away from your soul");
                 this.parent.getParent().getPlayer().removeScore(10);
                 this.setCleared();
             }
