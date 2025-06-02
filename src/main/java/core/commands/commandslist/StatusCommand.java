@@ -12,7 +12,7 @@ public class StatusCommand implements Command {
     }
 
     @Override
-    public void run(CommandManager commandManager) {
+    public void run(CommandManager commandManager, String args) {
         Player player = commandManager.getParent().getPlayer();
         System.out.printf("HP: %s%nScore: %s", player.getHealth(), player.getScore());
     }

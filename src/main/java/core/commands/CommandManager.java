@@ -14,11 +14,21 @@ public class CommandManager {
         this.parent = parent;
     }
 
-    private void executeCommand(Command command) {
-        command.run(this);
+    private void executeCommand(Command command, String args) {
+        command.run(this, args);
     }
     public void executeCommand(String input) {
-        if (this.commandList.containsKey(input.toLowerCase())) executeCommand(this.commandList.get(input.toLowerCase()));
+        int spaceIndex = input.indexOf(' ');
+        if (spaceIndex != -1) {
+            String commandName = input.substring(0, spaceIndex);
+            String args = input.substring(spaceIndex + 1);
+            this.executeCommand(commandName, args);
+        } else {
+            this.executeCommand(input, null);
+        }
+    }
+    public void executeCommand(String commandName, String args) {
+        if (this.commandList.containsKey(commandName)) this.executeCommand(this.commandList.get(commandName), args);
         else System.out.println("Invalid Command");
     }
 
