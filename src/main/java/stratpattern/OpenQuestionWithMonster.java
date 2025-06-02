@@ -8,16 +8,16 @@ public class OpenQuestionWithMonster extends OpenQuestion {
     }
 
     @Override
-    public void consume(String input) {
+    public void handleWrongAnswer() {
         TaskRoomWithMonster parent = (TaskRoomWithMonster) this.getParent();
-        if (input.equalsIgnoreCase(this.answer)) super.handleCorrectAnswer();
-        else if (!parent.getMonster().isActive()) {
+
+        if (!parent.getMonster().isActive()) {
             super.handleWrongAnswer();
             parent.activateMonster();
-            this.parent.getParent().getPlayer().damage(1);
+            parent.getParent().getPlayer().damage(1);
         } else {
             System.out.println("Imagine failing twice. DIE!!");
-            this.parent.getParent().getPlayer().kill();
+            parent.getParent().getPlayer().kill();
         }
     }
 }

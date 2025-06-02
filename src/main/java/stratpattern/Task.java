@@ -1,6 +1,23 @@
 package stratpattern;
 
-public interface Task {
-    void start();
-    void consume(String input);
+import rooms.TaskRoom;
+
+public abstract class Task {
+    public abstract void start();
+    public abstract void consume(String input);
+
+    private final TaskRoom parent;
+
+    public Task(TaskRoom parent) {
+        this.parent = parent;
+    }
+
+    public final void setCleared() {
+        this.parent.setCleared();
+        this.parent.chooseRoom();
+    }
+
+    public final TaskRoom getParent() {
+        return this.parent;
+    }
 }
