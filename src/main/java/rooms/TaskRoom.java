@@ -5,20 +5,19 @@ import core.RoomStatus;
 import stratpattern.TaskHandler;
 
 public class TaskRoom extends Room {
-    private TaskHandler taskHandler = new TaskHandler();
-    //ToDo: Assign task to taskhandler
+    private final TaskHandler taskHandler = new TaskHandler();
 
     public TaskRoom(Game game, String name) {
         super(game, name);
     }
 
     @Override
-    protected void onEnter() {
+    public void onEnter() {
         System.out.println("Welcome to the " + this.name + " room");
     }
 
     @Override
-    protected void handleUncleared() {
+    public void handleUncleared() {
             RoomStatus.IN_TASK.activate();
             this.taskHandler.startTask();
     }
