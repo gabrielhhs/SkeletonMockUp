@@ -1,14 +1,29 @@
 package core;
 
+import core.commands.Command;
+import core.commands.commandslist.StatusCommand;
+import core.commands.commandslist.SuicideCommand;
 import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
 //ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
+    private static Set<Command> commandSet = new HashSet<>();
+    static {
+        commandSet.add(new StatusCommand("status"));
+        commandSet.add(new SuicideCommand("kill"));
+    }
+
     public static Room seed(Game game) {
+        //Commands
+        game.getCommandManager().massRegisterCommand(commandSet);
+
         String up = "up";
         String down = "down";
         String left = "left";
