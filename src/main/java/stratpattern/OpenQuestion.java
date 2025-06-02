@@ -2,42 +2,30 @@ package stratpattern;
 
 import rooms.TaskRoom;
 
-public class OpenQuestion implements Task {
+public class OpenQuestion extends QuestionTask {
     protected final String question;
     protected final String answer;
-    protected TaskRoom parent;
 
     public OpenQuestion(String question, String answer, TaskRoom parent) {
+        super(parent);
         this.question = question;
         this.answer = answer;
-        this.parent = parent;
     }
 
-    @Override
-    public void consume(String input) {
-        if (input.equalsIgnoreCase(this.answer)) this.handleCorrectAnswer();
-        else { this.handleWrongAnswer(); this.setCleared(); }
-    }
-
-    protected void handleCorrectAnswer() {
+    public void handleCorrectAnswer() {
         System.out.println("Well done you may live");
-        this.parent.getParent().getPlayer().addScore(10);
+        this.getParent().getParent().getPlayer().addScore(10);
         this.giveReward();
         this.setCleared();
     }
-
-    protected void handleWrongAnswer() {
+    public void handleWrongAnswer() {
         System.out.println("You have failed you feel something being taken away from your soul");
-        this.parent.getParent().getPlayer().removeScore(10);
+        this.getParent().getParent().getPlayer().removeScore(10);
+        this.setCleared();
     }
 
     protected void giveReward() {
         //ToDo: implement
-    }
-
-    protected void setCleared() {
-        this.parent.setCleared();
-        this.parent.chooseRoom();
     }
 
     @Override
@@ -45,7 +33,13 @@ public class OpenQuestion implements Task {
         System.out.println(this.question);
     }
 
-    protected TaskRoom getParent() {
-        return this.parent;
+    @Override
+    public boolean isValidAnswer(String input) {
+        return true;
+    }
+
+    @Override
+    public boolean isCorrectAnswer(String input) {
+        return input.equalsIgnoreCase(this.answer);
     }
 }

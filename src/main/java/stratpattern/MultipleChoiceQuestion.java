@@ -2,48 +2,33 @@ package stratpattern;
 
 import rooms.TaskRoom;
 
-public abstract class MultipleChoiceQuestion implements Task {
+public abstract class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
     protected final int answer;
-    protected TaskRoom parent;
 
     public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
+        super(parent);
         this.question = question;
         this.options = options;
         this.answer = answer;
-        this.parent = parent;
     }
 
-    @Override
-    public void consume(String input) {
-        if (input.matches("\\d+")) {
-            if (Integer.parseInt(input) == this.answer) this.handleCorrectAnswer();
-            else { this.handleWrongAnswer(); this.setCleared(); }
-        } else {
-            System.out.println("Choose a correct option number or DIE!! (pretty please)");
-        }
-    }
-
-    protected void handleCorrectAnswer() {
+    public void handleCorrectAnswer() {
         System.out.println("Well done you may live");
-        this.parent.getParent().getPlayer().addScore(10);
+        this.getParent().getParent().getPlayer().addScore(10);
         this.giveReward();
         this.setCleared();
-    }
-
-    protected void handleWrongAnswer() {
-        System.out.println("You have failed you feel something being taken away from your soul");
-        this.parent.getParent().getPlayer().removeScore(10);
     }
 
     protected void giveReward() {
         //ToDo: implement
     }
 
-    protected void setCleared() {
-        this.parent.setCleared();
-        this.parent.chooseRoom();
+    public void handleWrongAnswer() {
+        System.out.println("You have failed you feel something being taken away from your soul");
+        this.getParent().getParent().getPlayer().removeScore(10);
+        this.setCleared();
     }
 
     @Override
@@ -55,7 +40,13 @@ public abstract class MultipleChoiceQuestion implements Task {
         }
     }
 
-    protected TaskRoom getParent() {
-        return this.parent;
+    @Override
+    public boolean isValidAnswer(String input) {
+        return input.matches("\\d+");
+    }
+
+    @Override
+    public boolean isCorrectAnswer(String input) {
+        return Integer.parseInt(input) == this.answer;
     }
 }

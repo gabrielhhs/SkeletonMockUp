@@ -8,20 +8,16 @@ public class MultipleChoiceQuestionWithMonster extends MultipleChoiceQuestion {
     }
 
     @Override
-    public void consume(String input) {
+    public void handleWrongAnswer() {
         TaskRoomWithMonster parent = (TaskRoomWithMonster) this.getParent();
-        if (input.matches("\\d+")) {
-            if (Integer.parseInt(input) == this.answer) super.handleCorrectAnswer();
-            else if (!parent.getMonster().isActive()) {
-                super.handleWrongAnswer();
-                parent.activateMonster();
-                this.parent.getParent().getPlayer().damage(1);
-            } else {
-                System.out.println("Imagine failing twice. DIE!!");
-                this.parent.getParent().getPlayer().kill();
-            }
+
+        if (!parent.getMonster().isActive()) {
+            super.handleWrongAnswer();
+            parent.activateMonster();
+            this.getParent().getParent().getPlayer().damage(1);
         } else {
-            System.out.println("Choose a correct option number or DIE!! (pretty please)");
+            System.out.println("Imagine failing twice. DIE!!");
+            this.getParent().getParent().getPlayer().kill();
         }
     }
 }
