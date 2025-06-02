@@ -1,18 +1,20 @@
 package core.commands.commandslist;
 
+import core.Player;
 import core.commands.Command;
 import core.commands.CommandManager;
 
-public class SuicideCommand implements Command {
+public class StatusCommand implements Command {
     private final String keyWord;
 
-    public SuicideCommand(String keyWord) {
+    public StatusCommand(String keyWord) {
         this.keyWord = keyWord;
     }
 
     @Override
     public void run(CommandManager commandManager) {
-        commandManager.getParent().getPlayer().kill();
+        Player player = commandManager.getParent().getPlayer();
+        System.out.printf("HP: %s%nScore: %s", player.getHealth(), player.getScore());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package core.commands;
 
 public interface Command {
-    void runCommand(CommandManager commandManager);
+    void run(CommandManager commandManager);
+    String getKeyWord();
 }

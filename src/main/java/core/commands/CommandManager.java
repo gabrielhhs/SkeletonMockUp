@@ -3,8 +3,8 @@ package core.commands;
 import core.Game;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class CommandManager {
     private Map<String, Command> commandList = new HashMap<>();
@@ -14,31 +14,31 @@ public class CommandManager {
         this.parent = parent;
     }
 
-    public void consume(String input) {
+    private void executeCommand(Command command) {
+        command.run(this);
+    }
+    public void executeCommand(String input) {
         if (this.commandList.containsKey(input.toLowerCase())) executeCommand(this.commandList.get(input.toLowerCase()));
         else System.out.println("Invalid Command");
     }
 
-    public void registerCommand(String keyWord, Command command) {
-        if (this.commandList.containsKey(keyWord)) System.out.println("Command '" + keyWord + "' is taken select other keyword");
-        else this.commandList.put(keyWord, command);
-    }
-    public void massRegisterCommand(Map<String, Command> commandList) {
-        for (String key : commandList.keySet()) {
-            if (this.commandList.containsKey(key)) System.out.println("Command '" + key + "' is taken select other keyword");
-            else registerCommand(key, commandList.get(key));
-        }
+    public void registerCommand(Command command) {
+        if (this.commandList.containsKey(command.getKeyWord())) System.out.println("Command '" + command.getKeyWord() + "' is taken select other keyword");
+        else this.commandList.put(command.getKeyWord(), command);
     }
 
+    public void massRegisterCommand(Set<Command> commandList) {
+        for (Command command : commandList) {
+            if (this.commandList.containsKey(command.getKeyWord())) System.out.println("Command '" + command.getKeyWord() + "' is taken select other keyword");
+            else registerCommand(command);
+        }
+    }
     public void removeCommand(String keyWord) {
         this.commandList.remove(keyWord);
     }
-    public void massRemoveCommand(List<String> commands) {
-        for (String command : commands) removeCommand(command);
-    }
 
-    private void executeCommand(Command command) {
-        command.runCommand(this);
+    public void massRemoveCommand(Set<String> commands) {
+        for (String command : commands) removeCommand(command);
     }
 
     public Game getParent() {
