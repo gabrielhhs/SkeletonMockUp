@@ -14,16 +14,13 @@ import java.util.Set;
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
 //ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
-    private static Set<Command> commandSet = new HashSet<>();
+    private static Set<Command> COMMANDS = new HashSet<>();
     static {
-        commandSet.add(new StatusCommand("status"));
-        commandSet.add(new SuicideCommand("kill"));
+        COMMANDS.add(new StatusCommand("status"));
+        COMMANDS.add(new SuicideCommand("kill"));
     }
 
-    public static Room seed(Game game) {
-        //Commands
-        game.getCommandManager().massRegisterCommand(commandSet);
-
+    public static Room generateRooms(Game game) {
         String up = "up";
         String down = "down";
         String left = "left";
@@ -123,6 +120,10 @@ public abstract class DataSeeder {
         monster2.setTask(monsterQuestion2);
 
         return outside;
+    }
+
+    public static Set<Command> getCommands() {
+        return COMMANDS;
     }
 
     public static Player getPlayer(Room room) {

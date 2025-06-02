@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Room currentRoom = DataSeeder.seed(this);
+    private Room currentRoom = DataSeeder.generateRooms(this);
     private Player player = DataSeeder.getPlayer(this.currentRoom);
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
@@ -17,6 +17,7 @@ public class Game {
 
     public Game(InputStream in) {
         this.in = in;
+        this.commandManager.massRegisterCommand(DataSeeder.getCommands());
     }
 
     public void start() {
