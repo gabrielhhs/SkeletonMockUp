@@ -1,11 +1,11 @@
 package core;
 
+import items.Item;
 import observer.DeathNotifier;
 import observer.Scoreboard;
 import rooms.Room;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class Player {
     public interface Observer {
@@ -19,6 +19,7 @@ public class Player {
     private int maxHealth;
     private int score = 0;
     private boolean dead = false;
+    private final Map<Item, Integer> inventory = new HashMap<>();
 
     public Player(Room room) {
         this.currentRoom = room;
@@ -112,5 +113,32 @@ public class Player {
     }
     public void removeObserver(Observer observer) {
         this.observers.remove(observer);
+    }
+
+    public void giveItem(Item item, int count) {
+        if (this.inventory.containsKey(item)) {
+            this.inventory.put(item, this.inventory.get(item) + count);
+        } else {
+            this.inventory.put(item, count);
+        }
+    }
+    public void giveItem(Item item) {
+        this.giveItem(item, 1);
+    }
+
+    public void takeItem(Item item, int count) {
+        if (this.inventory.containsKey(item)) {
+            this.inventory.put(item, this.inventory.get(item) - count);
+            if (this.inventory.get(item) <= 0) this.inventory.remove(item);
+        } else {
+            throw new IllegalStateException("Cannot take items that a player does not have");
+        }
+    }
+    public void takeItem(Item item) {
+        this.takeItem(item, 1);
+    }
+
+    public Map<Item, Integer> getInventory() {
+        return Collections.unmodifiableMap(this.inventory);
     }
 }

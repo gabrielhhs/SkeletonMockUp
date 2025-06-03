@@ -75,6 +75,9 @@ public class Game {
     public Player getPlayer() {
         return this.player;
     }
+    public Room getCurrentRoom() {
+        return this.currentRoom;
+    }
 
     public CommandManager getCommandManager() {
         return this.commandManager;

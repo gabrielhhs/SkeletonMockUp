@@ -11,7 +11,7 @@ public class SuicideCommand implements Command {
     }
 
     @Override
-    public void run(CommandManager commandManager) {
+    public void run(CommandManager commandManager, String args) {
         commandManager.getParent().getPlayer().kill();
     }
 
