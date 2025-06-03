@@ -1,6 +1,7 @@
 package core;
 
 import core.commands.Command;
+import core.commands.commandslist.GambleCommand;
 import core.commands.commandslist.StatusCommand;
 import core.commands.commandslist.SuicideCommand;
 import entities.QuestionMonster;
@@ -18,6 +19,7 @@ public abstract class DataSeeder {
     static {
         COMMANDS.add(new StatusCommand("status"));
         COMMANDS.add(new SuicideCommand("kill"));
+        COMMANDS.add(new GambleCommand("gamble"));
     }
 
     public static Room generateRooms(Game game) {
