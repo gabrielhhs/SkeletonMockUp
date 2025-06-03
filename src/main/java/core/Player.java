@@ -13,7 +13,7 @@ public class Player {
         default void onHealthChange(Player player) {}
         default void onDeath(Player player) {}
     }
-    private final Set<Observer> observers = new HashSet(); //ToDo: assign observers in DataSeeder or wherever
+    private final Set<Observer> observers = new HashSet<>(); //ToDo: assign observers in DataSeeder or wherever
     private Room currentRoom;
     private int health;
     private int maxHealth;
