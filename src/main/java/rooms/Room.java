@@ -30,6 +30,7 @@ public abstract class Room {
 
     public final void enter() {
         this.onEnter();
+        parent.getPlayer().setCurrentRoom(this);
         if (this.cleared) {
             this.chooseRoom();
         } else {
@@ -54,9 +55,19 @@ public abstract class Room {
     public boolean isCleared() {
         return this.cleared;
     }
-    public void setCleared() {
+
+    public void setCleared(boolean cleared) {
+        this.cleared = cleared;
+    }
+
+    public void hasBeenCleared() {
         this.cleared = true;
     }
+
+    public boolean isCurrentRoom(String room) {
+        return room.equals(this.name);
+    }
+
 
     public Map<String, Room> getNeighboringRooms() {
         return this.neighboringRooms;

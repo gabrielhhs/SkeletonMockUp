@@ -1,21 +1,25 @@
 package core;
 
 import core.commands.Command;
-import core.commands.commandslist.InventoryCommand;
-import core.commands.commandslist.StatusCommand;
-import core.commands.commandslist.SuicideCommand;
-import core.commands.commandslist.UseCommand;
+import core.commands.commandslist.*;
 import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
+import util.PathGetter;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
 //ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
+    private static ArrayList<Room> roomList = new ArrayList<>();
     private static Set<Command> COMMANDS = new HashSet<>();
     static {
         COMMANDS.add(new StatusCommand("status"));
@@ -23,6 +27,7 @@ public abstract class DataSeeder {
         COMMANDS.add(new InventoryCommand("inventory"));
         COMMANDS.add(new InventoryCommand("inv"));
         COMMANDS.add(new UseCommand());
+        COMMANDS.add(new MenuCommand("menu"));
     }
 
     public static Room generateRooms(Game game) {
@@ -37,11 +42,17 @@ public abstract class DataSeeder {
 
         //Rooms
         Room outside = new Outside(game, "outside");
+        roomList.add(outside);
         TaskRoom planning = new TaskRoom(game, "planning");
+        roomList.add(planning);
         TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
+        roomList.add(dailyScrum);
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
+        roomList.add(sideRoom);
         TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
+        roomList.add(mainRoomMonster1);
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
+        roomList.add(mainRoomMonster2);
 
         /*
             visual overview of room path [DO NOT REMOVE]
@@ -130,6 +141,45 @@ public abstract class DataSeeder {
     public static Set<Command> getCommands() {
         return COMMANDS;
     }
+
+    public static void setRoomClears() throws FileNotFoundException {
+        for (Room room : roomList) {
+            String filePath = PathGetter.resourcePath() + "/" + room.getName() + ".txt"; // update this path
+
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line = reader.readLine();
+                if (line != null) {
+                    boolean value = Boolean.parseBoolean(line.trim());
+                    room.setCleared(value);
+                } else {
+                    System.out.println("File is empty.");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void setPosition(Player player) {
+        String filePath = PathGetter.resourcePath() + "/positionalInfo.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String currentRoom = reader.readLine();
+            String activeRoomStatus = reader.readLine();
+
+            for (Room room : roomList) {
+                if (room.isCurrentRoom(currentRoom)) player.setCurrentRoom(room);
+            }
+            RoomStatus.valueOf(activeRoomStatus).activate();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ArrayList<Room> getRoomList() {
+        return roomList;
+    }
+
+
 
     public static Player getPlayer(Room room) {
         return new Player(room);
