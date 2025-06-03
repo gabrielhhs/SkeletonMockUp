@@ -1,5 +1,6 @@
 package core;
 
+import core.commands.CommandManager;
 import rooms.Room;
 import rooms.TaskRoom;
 
@@ -8,13 +9,15 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Room currentRoom = DataSeeder.seed(this);
+    private Room currentRoom = DataSeeder.generateRooms(this);
     private Player player = DataSeeder.getPlayer(this.currentRoom);
+    private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
 
     public Game(InputStream in) {
         this.in = in;
+        this.commandManager.massRegisterCommand(DataSeeder.getCommands());
     }
 
     public void start() {
@@ -45,11 +48,7 @@ public class Game {
     }
 
     private void handleCommand(String input) {
-        switch (input) {
-            case "status" -> System.out.printf("HP: %s%nScore: %s", this.player.getHealth(), this.player.getScore());
-            case "kill" -> this.player.kill();
-            default -> System.out.println("Invalid command");
-        }
+        this.commandManager.executeCommand(input);
     }
 
     private void swapRoom(String input) {
@@ -75,5 +74,9 @@ public class Game {
 
     public Player getPlayer() {
         return this.player;
+    }
+
+    public CommandManager getCommandManager() {
+        return this.commandManager;
     }
 }
