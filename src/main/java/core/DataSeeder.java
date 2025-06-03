@@ -4,6 +4,7 @@ import core.commands.Command;
 import core.commands.commandslist.InventoryCommand;
 import core.commands.commandslist.StatusCommand;
 import core.commands.commandslist.SuicideCommand;
+import core.commands.commandslist.UseCommand;
 import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;
@@ -21,6 +22,7 @@ public abstract class DataSeeder {
         COMMANDS.add(new SuicideCommand("kill"));
         COMMANDS.add(new InventoryCommand("inventory"));
         COMMANDS.add(new InventoryCommand("inv"));
+        COMMANDS.add(new UseCommand());
     }
 
     public static Room generateRooms(Game game) {
