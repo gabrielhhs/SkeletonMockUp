@@ -13,7 +13,7 @@ public abstract class Task {
     }
 
     public final void setCleared() {
-        this.parent.hasBeenCleared();
+        this.parent.setCleared();
         this.parent.chooseRoom();
     }
 

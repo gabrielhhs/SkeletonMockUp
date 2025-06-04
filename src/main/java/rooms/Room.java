@@ -60,7 +60,7 @@ public abstract class Room {
         this.cleared = cleared;
     }
 
-    public void hasBeenCleared() {
+    public void setCleared() {
         this.cleared = true;
     }
 

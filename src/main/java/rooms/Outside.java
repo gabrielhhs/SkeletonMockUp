@@ -11,7 +11,7 @@ public class Outside extends Room {
     @Override
     protected void onEnter() {
         System.out.println("wow it looks like you are outside :O");
-        hasBeenCleared();
+        setCleared();
     }
 
     @Override
