@@ -47,6 +47,7 @@ public class Game {
             case IN_TASK -> answerQuestion(input);
             case IN_OPTION -> menuOptions(input);
             case IN_MAIN_MENU -> mainMenuOptions(input);
+            case IN_HINT ->
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
