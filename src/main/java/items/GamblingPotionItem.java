@@ -5,7 +5,7 @@ import rooms.Room;
 
 import java.util.Random;
 
-public class GamblingPotion implements Item {
+public class GamblingPotionItem implements Item {
     private static final Random random = new Random();
 
     @Override
