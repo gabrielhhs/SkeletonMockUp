@@ -4,16 +4,17 @@ import core.commands.CommandManager;
 import rooms.Room;
 import rooms.TaskRoom;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Room currentRoom = DataSeeder.generateRooms(this);
-    private Player player = DataSeeder.getPlayer(this.currentRoom);
+    private Player player = DataSeeder.getPlayer(DataSeeder.getFirstRoom());
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
+    private Menu menu = new Menu(this);
 
     public Game(InputStream in) {
         this.in = in;
@@ -21,8 +22,8 @@ public class Game {
     }
 
     public void start() {
-        //ToDo: assign starting status???
-        this.currentRoom.enter();
+        RoomStatus.IN_MAIN_MENU.activate();
+        menu.mainMenu();
         final Scanner scan = new Scanner(this.in);
         this.running = true;
         while (running) {
@@ -41,8 +42,10 @@ public class Game {
         if (status.equals(null)) throw new AssertionError("How did you get here?");
 
         switch (status) {
-            case SELECTING_ROOM -> swapRoom(input);
-            case IN_TASK -> answerQuestion(input);
+            case SELECTING_ROOM -> this.swapRoom(input);
+            case IN_TASK -> this.answerQuestion(input);
+            case IN_OPTION -> this.menuOptions(input);
+            case IN_MAIN_MENU -> this.mainMenuOptions(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
@@ -51,9 +54,27 @@ public class Game {
         this.commandManager.executeCommand(input);
     }
 
+    private void menuOptions(String input) {
+        switch (input) {
+            case "1" -> { try { menu.saving(player); } catch (IOException e) { throw new RuntimeException(e); } }
+            case "2" -> menu.mainMenu();
+            case "3" -> RoomStatus.getPreviousStatus().activate();
+            default -> System.out.println("please type one of the numbers");
+        }
+    }
+
+    private void mainMenuOptions(String input) {
+        switch (input) {
+            case "1" -> menu.loadFromSave();
+            case "2" -> menu.startNewSave();
+            case "3" -> this.stop();
+            default -> System.out.println("please type one of the numbers");
+        }
+    }
+
     private void swapRoom(String input) {
         String direction = null;
-        Map<String, Room> neighboringRooms = this.currentRoom.getNeighboringRooms();
+        Map<String, Room> neighboringRooms = player.getCurrentRoom().getNeighboringRooms();
         for (String key : neighboringRooms.keySet()) if (input.equalsIgnoreCase(key)) {
             direction = key;
             break;
@@ -62,24 +83,25 @@ public class Game {
         if (direction == null) {
             System.out.println("Invalid direction try again");
         } else {
-            this.currentRoom = neighboringRooms.get(direction);
-            this.currentRoom.enter();
+            this.player.setCurrentRoom(neighboringRooms.get(direction));
+            this.player.getCurrentRoom().enter();
         }
     }
 
     private void answerQuestion(String input) {
-        if (this.currentRoom instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
+        if (this.player.getCurrentRoom() instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
         else throw new AssertionError("How did you get here?");
     }
 
     public Player getPlayer() {
         return this.player;
     }
-    public Room getCurrentRoom() {
-        return this.currentRoom;
-    }
 
     public CommandManager getCommandManager() {
         return this.commandManager;
+    }
+
+    public Menu getMenu() {
+        return menu;
     }
 }

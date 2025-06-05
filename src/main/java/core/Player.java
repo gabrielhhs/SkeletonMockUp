@@ -13,7 +13,7 @@ public class Player {
         default void onHealthChange(Player player) {}
         default void onDeath(Player player) {}
     }
-    private final Set<Observer> observers = new HashSet(); //ToDo: assign observers in DataSeeder or wherever
+    private final Set<Observer> observers = new HashSet<>(); //ToDo: assign observers in DataSeeder or wherever
     private Room currentRoom;
     private int health;
     private int maxHealth;
@@ -29,10 +29,6 @@ public class Player {
 
         this.addObserver(DeathNotifier.INSTANCE);
         this.addObserver(Scoreboard.INSTANCE);
-    }
-
-    public void setPosition(Room room) {
-        this.currentRoom = room;
     }
 
     public String getInfo() {
@@ -140,5 +136,13 @@ public class Player {
 
     public Map<Item, Integer> getInventory() {
         return Collections.unmodifiableMap(this.inventory);
+    }
+
+    public void setCurrentRoom(Room currentRoom) {
+        this.currentRoom = currentRoom;
+    }
+
+    public Room getCurrentRoom() {
+        return currentRoom;
     }
 }
