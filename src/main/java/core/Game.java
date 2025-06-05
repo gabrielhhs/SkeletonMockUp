@@ -1,6 +1,7 @@
 package core;
 
 import core.commands.CommandManager;
+import core.hints.RandomHintProvider;
 import rooms.Room;
 import rooms.TaskRoom;
 
@@ -13,6 +14,7 @@ public class Game {
     private Room currentRoom = DataSeeder.generateRooms(this);
     private Player player = DataSeeder.getPlayer(this.currentRoom);
     private CommandManager commandManager = new CommandManager(this);
+    private RandomHintProvider hintProvider = new RandomHintProvider();
     private final InputStream in;
     private boolean running;
     private Menu menu = new Menu(this);
@@ -44,10 +46,9 @@ public class Game {
 
         switch (status) {
             case SELECTING_ROOM -> swapRoom(input);
-            case IN_TASK -> answerQuestion(input);
+            case IN_TASK, IN_HINT -> answerQuestion(input);
             case IN_OPTION -> menuOptions(input);
             case IN_MAIN_MENU -> mainMenuOptions(input);
-            case IN_HINT ->
             default -> throw new IllegalStateException("Invalid room status");
         }
     }

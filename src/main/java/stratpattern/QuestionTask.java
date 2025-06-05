@@ -2,6 +2,7 @@ package stratpattern;
 
 import core.RoomStatus;
 import core.hints.RandomHintProvider;
+import rooms.Room;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
@@ -16,13 +17,21 @@ public abstract class QuestionTask extends Task {
 	public abstract boolean isCorrectAnswer(String input);
 	public abstract void handleCorrectAnswer();
 	public abstract void handleWrongAnswer();
-	public abstract void giveHint(String input);
+
+
+	public void askHint(String input) {
+		if (input.equalsIgnoreCase("N")) RoomStatus.getPreviousStatus().activate();
+		else {
+			System.out.println(hintProvider.getHint(this.getParent().getParent().getPlayer().getCurrentRoom()).getHint());
+			RoomStatus.getPreviousStatus().activate();
+			getParent().enter();
+		}
+	}
 
 	public final void consume(String input) {
-		if (RoomStatus.IN_HINT.isActive()) giveHint(input);
+		if (RoomStatus.IN_HINT.isActive()) this.askHint(input);
 		else if (!this.isValidAnswer(input)) System.out.println("Invalid answer, please try again");
-		this.handleResult(this.isCorrectAnswer(input));
-
+		else this.handleResult(this.isCorrectAnswer(input));
 	}
 
 	public final void handleResult(boolean correct) {
