@@ -1,18 +1,19 @@
-package items;
+package items.consumables;
 
 import core.Player;
+import items.Item;
 import rooms.Room;
 
 import java.util.Random;
 
-public class SpareRibsItem implements Item {
+public class SpareRibsItem extends ConsumableItem {
     private static final Random random = new Random();
 
     @Override
     public void use(Player player, Room room) {
-        if (random.nextInt(1, 6) == 5) doDamage(player);
+        if (random.nextInt(1, 6) == 5) this.doDamage(player);
         else player.heal(1);
-        player.takeItem(this);
+        this.consumeItem(player);
     }
 
     private void doDamage(Player player) {

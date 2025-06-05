@@ -1,14 +1,15 @@
-package items;
+package items.consumables;
 
 import core.DataSeeder;
 import core.Player;
+import items.Item;
 import rooms.Room;
 import util.PathGetter;
 
 import java.io.File;
 import java.util.Objects;
 
-public class StaffOfClearingItem implements Item {
+public class StaffOfClearingItem extends ConsumableItem {
     @Override
     public void use(Player player, Room room) {
         Room startingRoom = DataSeeder.getFirstRoom();

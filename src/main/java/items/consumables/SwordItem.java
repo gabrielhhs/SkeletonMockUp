@@ -1,13 +1,14 @@
-package items;
+package items.consumables;
 
 import core.Player;
+import items.Item;
 import rooms.Room;
 import rooms.TaskRoomWithMonster;
 
-public class SwordItem implements Item {
+public class SwordItem extends ConsumableItem {
     @Override
     public void use(Player player, Room room) {
-        if (canUse(room)) { room.setCleared(); player.takeItem(this); }
+        if (canUse(room)) { room.setCleared(); this.consumeItem(player); }
         else System.out.println("Nothing happened...");
     }
 
