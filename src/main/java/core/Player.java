@@ -31,10 +31,6 @@ public class Player {
         this.addObserver(Scoreboard.INSTANCE);
     }
 
-    public void setPosition(Room room) {
-        this.currentRoom = room;
-    }
-
     public String getInfo() {
         return String.format("HP: %d%n Score: %d", this.health, this.score);
     }

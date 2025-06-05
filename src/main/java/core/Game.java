@@ -10,8 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Room currentRoom = DataSeeder.generateRooms(this);
-    private Player player = DataSeeder.getPlayer(this.currentRoom);
+    private Player player = DataSeeder.getPlayer(DataSeeder.getFirstRoom());
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
@@ -68,14 +67,14 @@ public class Game {
         switch (input) {
             case "1" -> menu.loadFromSave();
             case "2" -> menu.startNewSave();
-            case "3" -> stop();
+            case "3" -> this.stop();
             default -> System.out.println("please type one of the numbers");
         }
     }
 
     private void swapRoom(String input) {
         String direction = null;
-        Map<String, Room> neighboringRooms = this.currentRoom.getNeighboringRooms();
+        Map<String, Room> neighboringRooms = player.getCurrentRoom().getNeighboringRooms();
         for (String key : neighboringRooms.keySet()) if (input.equalsIgnoreCase(key)) {
             direction = key;
             break;
@@ -84,22 +83,20 @@ public class Game {
         if (direction == null) {
             System.out.println("Invalid direction try again");
         } else {
-            this.currentRoom = neighboringRooms.get(direction);
-            this.currentRoom.enter();
+            player.setCurrentRoom(neighboringRooms.get(direction));
+            player.getCurrentRoom().enter();
         }
     }
 
     private void answerQuestion(String input) {
-        if (this.currentRoom instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
+        if (player.getCurrentRoom() instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
         else throw new AssertionError("How did you get here?");
     }
 
     public Player getPlayer() {
         return this.player;
     }
-    public Room getCurrentRoom() {
-        return this.currentRoom;
-    }
+
 
     public CommandManager getCommandManager() {
         return this.commandManager;
@@ -107,9 +104,5 @@ public class Game {
 
     public Menu getMenu() {
         return menu;
-    }
-
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
     }
 }

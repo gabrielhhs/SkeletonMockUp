@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Menu {
     private Game game;
 
-    public Menu (Game game) {
+    public Menu(Game game) {
         this.game = game;
     }
     public void options() {
@@ -50,7 +50,7 @@ public class Menu {
         try {
             DataSeeder.setRoomClears();
             DataSeeder.setPosition(game.getPlayer());
-            game.setCurrentRoom(game.getPlayer().getCurrentRoom());
+            game.getPlayer().setCurrentRoom(game.getPlayer().getCurrentRoom());
             game.getPlayer().getCurrentRoom().enter();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);

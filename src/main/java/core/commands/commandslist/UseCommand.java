@@ -40,7 +40,7 @@ public class UseCommand implements Command {
 			return;
 		}
 
-		item.use(player, game.getCurrentRoom());
+		item.use(player, game.getPlayer().getCurrentRoom());
 	}
 
 	@Override
