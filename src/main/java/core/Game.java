@@ -42,10 +42,10 @@ public class Game {
         if (status.equals(null)) throw new AssertionError("How did you get here?");
 
         switch (status) {
-            case SELECTING_ROOM -> swapRoom(input);
-            case IN_TASK -> answerQuestion(input);
-            case IN_OPTION -> menuOptions(input);
-            case IN_MAIN_MENU -> mainMenuOptions(input);
+            case SELECTING_ROOM -> this.swapRoom(input);
+            case IN_TASK -> this.answerQuestion(input);
+            case IN_OPTION -> this.menuOptions(input);
+            case IN_MAIN_MENU -> this.mainMenuOptions(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
@@ -83,20 +83,19 @@ public class Game {
         if (direction == null) {
             System.out.println("Invalid direction try again");
         } else {
-            player.setCurrentRoom(neighboringRooms.get(direction));
-            player.getCurrentRoom().enter();
+            this.player.setCurrentRoom(neighboringRooms.get(direction));
+            this.player.getCurrentRoom().enter();
         }
     }
 
     private void answerQuestion(String input) {
-        if (player.getCurrentRoom() instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
+        if (this.player.getCurrentRoom() instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
         else throw new AssertionError("How did you get here?");
     }
 
     public Player getPlayer() {
         return this.player;
     }
-
 
     public CommandManager getCommandManager() {
         return this.commandManager;
