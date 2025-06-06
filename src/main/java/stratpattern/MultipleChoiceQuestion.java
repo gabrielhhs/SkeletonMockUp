@@ -3,7 +3,7 @@ package stratpattern;
 import core.RoomStatus;
 import rooms.TaskRoom;
 
-public abstract class MultipleChoiceQuestion extends QuestionTask {
+public class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
     protected final int answer;
