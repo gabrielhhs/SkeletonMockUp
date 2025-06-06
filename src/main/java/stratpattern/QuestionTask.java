@@ -1,14 +1,19 @@
 package stratpattern;
 
 import core.RoomStatus;
+import hints.HintProvider;
 import hints.RandomHintProvider;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
-	protected RandomHintProvider hintProvider = new RandomHintProvider();
+	private final HintProvider hintProvider;
 
-	public QuestionTask(TaskRoom parent) {
+	public QuestionTask(TaskRoom parent, HintProvider hint) {
 		super(parent);
+		this.hintProvider = hint;
+	}
+	public QuestionTask(TaskRoom parent) {
+		this(parent, null);
 	}
 
 	public abstract void start();
@@ -17,11 +22,15 @@ public abstract class QuestionTask extends Task {
 	public abstract void handleCorrectAnswer();
 	public abstract void handleWrongAnswer();
 
-
 	public void askHint(String input) {
+		if (this.hintProvider == null) {
+			System.out.println("No hints");
+			return;
+		}
+
 		if (input.equalsIgnoreCase("N")) RoomStatus.getPreviousStatus().activate();
 		else {
-			System.out.println(this.hintProvider.getHint(this.getParent().getParent().getPlayer().getCurrentRoom()).getHint());
+			System.out.println(this.hintProvider.getHint());
 			RoomStatus.getPreviousStatus().activate();
 			this.getParent().enter();
 		}
@@ -38,7 +47,7 @@ public abstract class QuestionTask extends Task {
 		else this.handleWrongAnswer();
 	}
 
-	public RandomHintProvider getHintProvider() {
+	public HintProvider getHintProvider() {
 		return hintProvider;
 	}
 }
