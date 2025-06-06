@@ -18,6 +18,6 @@ public class RandomHintProvider {
                 if (hint.getRoom().equals(room)) return hint;
             }
         }
-    return null;
+        return null;
     }
 }
