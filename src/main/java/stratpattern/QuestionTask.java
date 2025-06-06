@@ -2,7 +2,6 @@ package stratpattern;
 
 import core.RoomStatus;
 import core.hints.RandomHintProvider;
-import rooms.Room;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
@@ -22,9 +21,9 @@ public abstract class QuestionTask extends Task {
 	public void askHint(String input) {
 		if (input.equalsIgnoreCase("N")) RoomStatus.getPreviousStatus().activate();
 		else {
-			System.out.println(hintProvider.getHint(this.getParent().getParent().getPlayer().getCurrentRoom()).getHint());
+			System.out.println(this.hintProvider.getHint(this.getParent().getParent().getPlayer().getCurrentRoom()).getHint());
 			RoomStatus.getPreviousStatus().activate();
-			getParent().enter();
+			this.getParent().enter();
 		}
 	}
 
