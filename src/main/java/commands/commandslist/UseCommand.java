@@ -1,9 +1,9 @@
-package core.commands.commandslist;
+package commands.commandslist;
 
 import core.Game;
 import core.Player;
-import core.commands.Command;
-import core.commands.CommandManager;
+import commands.Command;
+import commands.CommandManager;
 import items.Item;
 
 import java.util.Map;
