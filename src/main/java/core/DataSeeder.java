@@ -199,12 +199,10 @@ public abstract class DataSeeder {
         String filePath = PathGetter.resourcePath() + "/positionalInfo.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String currentRoom = reader.readLine();
-            String activeRoomStatus = reader.readLine();
 
             for (Room room : roomList) {
                 if (room.isCurrentRoom(currentRoom)) player.setCurrentRoom(room);
             }
-            RoomStatus.valueOf(activeRoomStatus).activate();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

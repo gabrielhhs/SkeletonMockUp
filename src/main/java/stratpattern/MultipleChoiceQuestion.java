@@ -1,6 +1,6 @@
 package stratpattern;
 
-import core.RoomStatus;
+import core.GameStatus;
 import hints.HintProvider;
 import rooms.TaskRoom;
 
@@ -34,7 +34,7 @@ public class MultipleChoiceQuestion extends QuestionTask {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.getParent().getParent().getPlayer().removeScore(10);
         System.out.println("\nDo you want a hint? Y/N");
-        RoomStatus.IN_HINT.activate();
+        this.getParent().getParent().getStatusManager().set(GameStatus.IN_HINT);
     }
 
     @Override

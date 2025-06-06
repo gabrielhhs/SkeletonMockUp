@@ -14,7 +14,7 @@ public class Menu {
         this.game = game;
     }
     public void options() {
-        RoomStatus.IN_OPTION.activate();
+        this.game.getStatusManager().set(GameStatus.IN_OPTION);
         System.out.println("""
                 do you want to save, or go to the main menu?
                 1. save game
@@ -24,7 +24,7 @@ public class Menu {
     }
 
     public void mainMenu() {
-        RoomStatus.IN_MAIN_MENU.activate();
+        this.game.getStatusManager().set(GameStatus.IN_MAIN_MENU);
         System.out.println("""
                 Scrum-Masters Layer
                 
@@ -43,7 +43,7 @@ public class Menu {
         }
         try (FileWriter fileWriter = new FileWriter(PathGetter.resourcePath() + "/positionalInfo.txt")) {
             fileWriter.write(player.getCurrentRoom().getName() + "\n");
-            fileWriter.write(RoomStatus.getPreviousStatus().toString());
+            fileWriter.write(this.game.getStatusManager().getPrevious().toString());
         }
     }
 

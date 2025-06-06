@@ -1,8 +1,7 @@
 package stratpattern;
 
-import core.RoomStatus;
+import core.GameStatus;
 import hints.HintProvider;
-import hints.RandomHintProvider;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
@@ -28,16 +27,15 @@ public abstract class QuestionTask extends Task {
 			return;
 		}
 
-		if (input.equalsIgnoreCase("N")) RoomStatus.getPreviousStatus().activate();
-		else {
+		this.getParent().getParent().getStatusManager().revert();
+		if (input.equalsIgnoreCase("Y")) {
 			System.out.println(this.hintProvider.getHint());
-			RoomStatus.getPreviousStatus().activate();
 			this.getParent().enter();
 		}
 	}
 
 	public final void consume(String input) {
-		if (RoomStatus.IN_HINT.isActive()) this.askHint(input);
+		if (this.getParent().getParent().getStatusManager().is(GameStatus.IN_HINT)) this.askHint(input);
 		else if (!this.isValidAnswer(input)) System.out.println("Invalid answer, please try again");
 		else this.handleResult(this.isCorrectAnswer(input));
 	}
