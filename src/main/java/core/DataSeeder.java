@@ -2,7 +2,6 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
-import hints.FunctionalHintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
 import rooms.Outside;
