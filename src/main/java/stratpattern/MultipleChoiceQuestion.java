@@ -1,6 +1,7 @@
 package stratpattern;
 
 import core.RoomStatus;
+import hints.HintProvider;
 import rooms.TaskRoom;
 
 public class MultipleChoiceQuestion extends QuestionTask {
@@ -8,11 +9,14 @@ public class MultipleChoiceQuestion extends QuestionTask {
     protected final String[] options;
     protected final int answer;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
-        super(parent);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
+        super(parent, hint);
         this.question = question;
         this.options = options;
         this.answer = answer;
+    }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
+        this(question, options, answer, null, parent);
     }
 
     public void handleCorrectAnswer() {

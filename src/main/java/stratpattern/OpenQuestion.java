@@ -1,15 +1,19 @@
 package stratpattern;
 
+import hints.HintProvider;
 import rooms.TaskRoom;
 
 public class OpenQuestion extends QuestionTask {
     protected final String question;
     protected final String answer;
 
-    public OpenQuestion(String question, String answer, TaskRoom parent) {
-        super(parent);
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
+        super(parent, hint);
         this.question = question;
         this.answer = answer;
+    }
+    public OpenQuestion(String question, String answer, TaskRoom parent) {
+        this(question, answer, parent, null);
     }
 
     public void handleCorrectAnswer() {
