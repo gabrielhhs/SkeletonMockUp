@@ -1,11 +1,9 @@
 package core;
 
-import commands.Command;
+import commands.*;
 import commands.commandslist.*;
-import hints.FunctionalHint;
-import hints.UselessHint;
+import hints.*;
 import entities.QuestionMonster;
-import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
 import util.PathGetter;
@@ -231,6 +229,8 @@ public abstract class DataSeeder {
     }
 
     public static Player getPlayer(Room room) {
-        return new Player(room);
+        Player player = new Player(room);
+        player.giveItem(new HintJoker());
+        return player;
     }
 }

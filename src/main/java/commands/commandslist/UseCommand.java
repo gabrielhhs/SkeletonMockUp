@@ -19,13 +19,7 @@ public class UseCommand implements Command {
 			return;
 		}
 
-		String[] arguments = args.split(" ");
-		if (arguments.length > 1) {
-			System.out.printf("Usage: %s <item>", this.getKeyWord());
-			return;
-		}
-		String itemName = arguments[0];
-
+		String itemName = args;
 		Map<Item, Integer> inventory = player.getInventory();
 		Item item = null;
 		for (Item v : inventory.keySet()) {

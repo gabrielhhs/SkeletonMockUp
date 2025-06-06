@@ -17,7 +17,6 @@ public abstract class QuestionTask extends Task {
 	public abstract void handleCorrectAnswer();
 	public abstract void handleWrongAnswer();
 
-
 	public void askHint(String input) {
 		if (input.equalsIgnoreCase("N")) RoomStatus.getPreviousStatus().activate();
 		else {
