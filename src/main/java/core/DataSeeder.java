@@ -2,8 +2,6 @@ package core;
 
 import core.commands.Command;
 import core.commands.commandslist.*;
-import core.hints.FunctionalHint;
-import core.hints.UselessHint;
 import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;
@@ -16,8 +14,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.List;
 import java.util.Set;
 
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
@@ -26,9 +22,6 @@ public abstract class DataSeeder {
     private static ArrayList<Room> roomList = new ArrayList<>();
     private static Room firstRoom;
     private static Set<Command> COMMANDS = new HashSet<>();
-    private static List<UselessHint> uselessHints = new ArrayList<>();
-    private static List<FunctionalHint> functionalHints = new ArrayList<>();
-
     static {
         COMMANDS.add(new StatusCommand("status"));
         COMMANDS.add(new SuicideCommand("kill"));
@@ -36,17 +29,6 @@ public abstract class DataSeeder {
         COMMANDS.add(new InventoryCommand("inv"));
         COMMANDS.add(new UseCommand());
         COMMANDS.add(new MenuCommand("menu"));
-
-        uselessHints.add(new UselessHint("YOU CAN DO IT!!!"));
-        uselessHints.add(new UselessHint("YOU CAN NOT DO IT!!!"));
-        uselessHints.add(new UselessHint("We believe this question is too easy to give a Hint..."));
-        uselessHints.add(new UselessHint("you can do this trust me"));
-        uselessHints.add(new UselessHint("You could try that… if failing is your thing."));
-        uselessHints.add(new UselessHint("Maybe try using your brain next time"));
-        uselessHints.add(new UselessHint("Confidence is great. Maybe aim for competence too?"));
-        uselessHints.add(new UselessHint("You’re closer than you think."));
-        uselessHints.add(new UselessHint("Every expert was once where you are."));
-        uselessHints.add(new UselessHint("Take a breath. You know this."));
     }
 
     public static Room getFirstRoom() {
@@ -67,22 +49,17 @@ public abstract class DataSeeder {
         Room outside = new Outside(game, "outside");
         firstRoom = outside;
         roomList.add(outside);
-        functionalHints.add(new FunctionalHint("type enter", outside));
         TaskRoom planning = new TaskRoom(game, "planning");
         roomList.add(planning);
-        functionalHints.add(new FunctionalHint("NOT THE MEME (a shame though)", planning));
         TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
         roomList.add(dailyScrum);
-        functionalHints.add(new FunctionalHint("Really i dont know with this one", dailyScrum));
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
         roomList.add(sideRoom);
-        functionalHints.add(new FunctionalHint("?", sideRoom));
         TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
         roomList.add(mainRoomMonster1);
-        functionalHints.add(new FunctionalHint("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail", mainRoomMonster1));
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
         roomList.add(mainRoomMonster2);
-        functionalHints.add(new FunctionalHint("this dev man ...", mainRoomMonster2));
+
         /*
             visual overview of room path [DO NOT REMOVE]
             outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
@@ -167,21 +144,6 @@ public abstract class DataSeeder {
         return outside;
     }
 
-    public static void generateUselessHints() {
-        List<UselessHint> uselessHints = new ArrayList<>();
-
-        uselessHints.add(new UselessHint("YOU CAN DO IT!!!"));
-        uselessHints.add(new UselessHint("YOU CAN NOT DO IT!!!"));
-        uselessHints.add(new UselessHint("We believe this question is too easy to give a Hint..."));
-        uselessHints.add(new UselessHint("you can do this trust me"));
-        uselessHints.add(new UselessHint("You could try that… if failing is your thing."));
-        uselessHints.add(new UselessHint("Maybe try using your brain next time"));
-        uselessHints.add(new UselessHint("Confidence is great. Maybe aim for competence too?"));
-        uselessHints.add(new UselessHint("You’re closer than you think."));
-        uselessHints.add(new UselessHint("Every expert was once where you are."));
-        uselessHints.add(new UselessHint("Take a breath. You know this."));
-    }
-
     public static Set<Command> getCommands() {
         return COMMANDS;
     }
@@ -223,13 +185,7 @@ public abstract class DataSeeder {
         return roomList;
     }
 
-    public static List<UselessHint> getUselessHints() {
-        return uselessHints;
-    }
 
-    public static List<FunctionalHint> getFunctionalHints() {
-        return functionalHints;
-    }
 
     public static Player getPlayer(Room room) {
         return new Player(room);

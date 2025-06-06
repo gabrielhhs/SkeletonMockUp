@@ -1,7 +1,6 @@
 package core;
 
 import core.commands.CommandManager;
-import core.hints.RandomHintProvider;
 import rooms.Room;
 import rooms.TaskRoom;
 
@@ -44,7 +43,7 @@ public class Game {
 
         switch (status) {
             case SELECTING_ROOM -> this.swapRoom(input);
-            case IN_TASK, IN_HINT -> this.answerQuestion(input);
+            case IN_TASK -> this.answerQuestion(input);
             case IN_OPTION -> this.menuOptions(input);
             case IN_MAIN_MENU -> this.mainMenuOptions(input);
             default -> throw new IllegalStateException("Invalid room status");
