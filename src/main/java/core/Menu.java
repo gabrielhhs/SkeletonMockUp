@@ -50,8 +50,7 @@ public class Menu {
     public void loadFromSave() {
         try {
             DataSeeder.setRoomClears();
-            DataSeeder.setPosition(game.getPlayer());
-            this.game.getPlayer().setCurrentRoom(game.getPlayer().getCurrentRoom());
+            DataSeeder.setPosition(this.game.getPlayer());
             this.game.getPlayer().getCurrentRoom().enter();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
