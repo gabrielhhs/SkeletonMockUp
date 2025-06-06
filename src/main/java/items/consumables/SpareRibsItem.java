@@ -18,7 +18,7 @@ public class SpareRibsItem implements Item {
 
     private void doDamage(Player player) {
         if (random.nextFloat() < 0.04) {
-            System.out.println("A sharp bones pokes you in the cheeck. Ouch..");
+            System.out.println("A sharp bones pokes you in the cheek. Ouch..");
             player.damage(1);
         } else {
             System.out.println("You burnt your tongue (wait for it to cool down next time)");
