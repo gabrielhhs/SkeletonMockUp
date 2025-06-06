@@ -3,11 +3,11 @@ package hints;
 
 import rooms.Room;
 
-public class FunctionalHint implements Hint {
+public class FunctionalHintProvider implements HintProvider {
     private String hint;
     private Room room;
 
-    public FunctionalHint(String hint, Room room) {
+    public FunctionalHintProvider(String hint, Room room) {
         this.hint = hint;
         this.room = room;
     }
