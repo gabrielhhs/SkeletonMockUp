@@ -1,7 +1,7 @@
 package rooms;
 
 import core.Game;
-import core.RoomStatus;
+import core.GameStatus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public abstract class Room {
     protected abstract void handleUncleared();
 
     public void chooseRoom() {
-        RoomStatus.SELECTING_ROOM.activate();
+        this.parent.getStatusManager().set(GameStatus.SELECTING_ROOM);
         System.out.println("Choose which way you want to go:");
         for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()) {
             System.out.println(entry.getKey());

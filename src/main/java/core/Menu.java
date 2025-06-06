@@ -9,12 +9,11 @@ import java.util.ArrayList;
 public class Menu {
     private Game game;
 
-
     public Menu(Game game) {
         this.game = game;
     }
     public void options() {
-        RoomStatus.IN_OPTION.activate();
+        this.game.getStatusManager().set(GameStatus.IN_OPTION);
         System.out.println("""
                 do you want to save, or go to the main menu?
                 1. save game
@@ -24,7 +23,7 @@ public class Menu {
     }
 
     public void mainMenu() {
-        RoomStatus.IN_MAIN_MENU.activate();
+        this.game.getStatusManager().set(GameStatus.IN_MAIN_MENU);
         System.out.println("""
                 Scrum-Masters Layer
                 
@@ -43,17 +42,17 @@ public class Menu {
         }
         try (FileWriter fileWriter = new FileWriter(PathGetter.resourcePath() + "/positionalInfo.txt")) {
             fileWriter.write(player.getCurrentRoom().getName() + "\n");
-            fileWriter.write(RoomStatus.getPreviousStatus().toString());
+            fileWriter.write(this.game.getStatusManager().getPrevious().toString());
         }
     }
 
     public void loadFromSave() {
         try {
+            DataSeeder.setStatus(this.game.getStatusManager());
             DataSeeder.setRoomClears();
-            DataSeeder.setPosition(game.getPlayer());
-            this.game.getPlayer().setCurrentRoom(game.getPlayer().getCurrentRoom());
+            DataSeeder.setPosition(this.game.getPlayer());
             this.game.getPlayer().getCurrentRoom().enter();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

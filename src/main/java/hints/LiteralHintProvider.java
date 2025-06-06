@@ -1,9 +1,9 @@
 package hints;
 
-public class UselessHint implements Hint {
+public class LiteralHintProvider implements HintProvider {
     private String hint;
 
-    public UselessHint(String hint) {
+    public LiteralHintProvider(String hint) {
         this.hint = hint;
     }
 

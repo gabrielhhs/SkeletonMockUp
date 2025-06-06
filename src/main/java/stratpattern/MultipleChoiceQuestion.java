@@ -1,18 +1,22 @@
 package stratpattern;
 
-import core.RoomStatus;
+import core.GameStatus;
+import hints.HintProvider;
 import rooms.TaskRoom;
 
-public abstract class MultipleChoiceQuestion extends QuestionTask {
+public class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
     protected final int answer;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
-        super(parent);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
+        super(parent, hint);
         this.question = question;
         this.options = options;
         this.answer = answer;
+    }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
+        this(question, options, answer, null, parent);
     }
 
     public void handleCorrectAnswer() {
@@ -30,7 +34,7 @@ public abstract class MultipleChoiceQuestion extends QuestionTask {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.getParent().getParent().getPlayer().removeScore(10);
         System.out.println("\nDo you want a hint? Y/N");
-        RoomStatus.IN_HINT.activate();
+        this.getParent().getParent().getStatusManager().set(GameStatus.IN_HINT);
     }
 
     @Override

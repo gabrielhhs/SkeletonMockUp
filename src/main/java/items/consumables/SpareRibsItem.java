@@ -1,5 +1,6 @@
 package items.consumables;
 
+import core.Game;
 import core.Player;
 import items.Item;
 import rooms.Room;
@@ -10,7 +11,9 @@ public class SpareRibsItem implements Item {
     private static final Random random = new Random();
 
     @Override
-    public void use(Player player, Room room) {
+    public void use(Game game) {
+        Player player = game.getPlayer();
+
         if (random.nextFloat() < 0.2) this.doDamage(player);
         else player.heal(1);
         player.takeItem(this);
