@@ -24,7 +24,6 @@ import java.util.Set;
 //ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
     private static ArrayList<Room> roomList = new ArrayList<>();
-    private static Room firstRoom;
 
     private static Set<Command> COMMANDS = new HashSet<>() {{
         add(new StatusCommand("status"));
@@ -48,10 +47,6 @@ public abstract class DataSeeder {
         new LiteralHintProvider("Take a breath. You know this."),
     });
 
-    public static Room getFirstRoom() {
-        return firstRoom;
-    }
-
     public static Room generateRooms(Game game) {
         String up = "up";
         String down = "down";
@@ -64,7 +59,6 @@ public abstract class DataSeeder {
 
         //Rooms
         Room outside = new Outside(game, "outside");
-        firstRoom = outside;
         roomList.add(outside);
         TaskRoom planning = new TaskRoom(game, "planning");
         roomList.add(planning);

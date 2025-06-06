@@ -1,6 +1,7 @@
 package items.consumables;
 
 import core.DataSeeder;
+import core.Game;
 import core.Player;
 import items.Item;
 import rooms.Room;
@@ -12,15 +13,15 @@ import java.util.Objects;
 public class StaffOfClearingItem implements Item {
     @Override
     public void use(Player player, Room room) {
-        Room startingRoom = DataSeeder.getFirstRoom();
-        if (startingRoom != null) resetGame(player, startingRoom);
-        else System.out.println("Nothing happened");
+        this.resetGame(player);
     }
     
-    private void resetGame(Player player, Room startingRoom) {
+    private void resetGame(Game game) {
+        Player player = game.getPlayer();
+
         purgeDirectory(new File(PathGetter.resourcePath()));
         player.clearInventory();
-        player.setCurrentRoom(startingRoom);
+        player.setCurrentRoom(game.getInitialRoom());
 
         for (Room room : DataSeeder.getRoomList()) room.setCleared(false);
     }

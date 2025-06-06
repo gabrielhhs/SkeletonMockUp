@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Player player = DataSeeder.getPlayer(DataSeeder.generateRooms(this));
+    private final Room initialRoom = DataSeeder.generateRooms(this);
+    private Player player = DataSeeder.getPlayer(this.initialRoom);
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
@@ -72,6 +73,10 @@ public class Game {
             case "3" -> this.stop();
             default -> System.out.println("please type one of the numbers");
         }
+    }
+
+    public Room getInitialRoom() {
+        return this.initialRoom;
     }
 
     //ToDo: move logic to respective class
