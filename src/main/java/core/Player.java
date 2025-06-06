@@ -134,6 +134,10 @@ public class Player {
         this.takeItem(item, 1);
     }
 
+    public void clearInventory() {
+        this.inventory.clear();
+    }
+
     public Map<Item, Integer> getInventory() {
         return Collections.unmodifiableMap(this.inventory);
     }

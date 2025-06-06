@@ -19,6 +19,7 @@ public class StaffOfClearingItem implements Item {
     
     private void resetGame(Player player, Room startingRoom) {
         purgeDirectory(new File(PathGetter.resourcePath()));
+        player.clearInventory();
         player.setCurrentRoom(startingRoom);
 
         for (Room room : DataSeeder.getRoomList()) room.setCleared(false);
