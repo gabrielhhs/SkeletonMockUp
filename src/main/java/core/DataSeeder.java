@@ -2,8 +2,10 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
+import hints.HintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
+import hints.RandomHintProvider;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
@@ -25,7 +27,6 @@ public abstract class DataSeeder {
     private static Room firstRoom;
     private static Set<Command> COMMANDS = new HashSet<>();
     private static List<LiteralHintProvider> uselessHints = new ArrayList<>();
-    private static List<FunctionalHintProvider> functionalHints = new ArrayList<>();
 
     static {
         COMMANDS.add(new StatusCommand("status"));
@@ -65,22 +66,16 @@ public abstract class DataSeeder {
         Room outside = new Outside(game, "outside");
         firstRoom = outside;
         roomList.add(outside);
-        functionalHints.add(new FunctionalHintProvider("type enter", outside));
         TaskRoom planning = new TaskRoom(game, "planning");
         roomList.add(planning);
-        functionalHints.add(new FunctionalHintProvider("NOT THE MEME (a shame though)", planning));
         TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
         roomList.add(dailyScrum);
-        functionalHints.add(new FunctionalHintProvider("Really i dont know with this one", dailyScrum));
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
         roomList.add(sideRoom);
-        functionalHints.add(new FunctionalHintProvider("?", sideRoom));
         TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
         roomList.add(mainRoomMonster1);
-        functionalHints.add(new FunctionalHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail", mainRoomMonster1));
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
         roomList.add(mainRoomMonster2);
-        functionalHints.add(new FunctionalHintProvider("this dev man ...", mainRoomMonster2));
         /*
             visual overview of room path [DO NOT REMOVE]
             outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
@@ -119,10 +114,12 @@ public abstract class DataSeeder {
         MultipleChoiceQuestion planningTask = new MultipleChoiceQuestion(
                 "What is 9 + 10?",
                 new String[] {"21", "19", "I refuse to answer math questions"},
-                2, planning) {
-        };
-        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum);
-        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom);
+                2,
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("NOT THE MEME (a shame though)"), uselessHints}),
+                planning
+        );
+        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("Really i dont know with this one"), uselessHints}));
+        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("?"), uselessHints}));
 
         MultipleChoiceQuestionWithMonster monsterRoomQuestion1 = new MultipleChoiceQuestionWithMonster(
                 "What is the airspeed velocity of an unladen swallow? (if you do not get this reference please remove yourself from my vicinity)",
@@ -142,12 +139,14 @@ public abstract class DataSeeder {
         OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
                 "What do the Knights Who Say 'Ni!' actually want?",
                 "A shrubbery",
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), uselessHints}),
                 mainRoomMonster1
         );
 
         OpenQuestionWithMonster monsterQuestion2 = new OpenQuestionWithMonster(
                 "I ran out of question ideas",
                 "...",
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("this dev man ..."), uselessHints}),
                 mainRoomMonster2
         );
 
@@ -219,14 +218,6 @@ public abstract class DataSeeder {
 
     public static ArrayList<Room> getRoomList() {
         return roomList;
-    }
-
-    public static List<LiteralHintProvider> getUselessHints() {
-        return uselessHints;
-    }
-
-    public static List<FunctionalHintProvider> getFunctionalHints() {
-        return functionalHints;
     }
 
     public static Player getPlayer(Room room) {
