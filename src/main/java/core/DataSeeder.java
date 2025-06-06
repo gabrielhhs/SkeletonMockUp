@@ -230,7 +230,7 @@ public abstract class DataSeeder {
 
     public static Player getPlayer(Room room) {
         Player player = new Player(room);
-        player.giveItem(new JokerItem());
+        player.giveItem(new HintJoker());
         return player;
     }
 }
