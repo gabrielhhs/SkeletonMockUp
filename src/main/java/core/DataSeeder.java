@@ -1,12 +1,9 @@
 package core;
 
-import commands.Command;
+import commands.*;
 import commands.commandslist.*;
-import hints.FunctionalHint;
-import hints.JokerItem;
-import hints.UselessHint;
+import hints.*;
 import entities.QuestionMonster;
-import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
 import util.PathGetter;
