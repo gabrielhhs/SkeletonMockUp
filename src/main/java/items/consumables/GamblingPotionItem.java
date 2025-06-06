@@ -12,6 +12,7 @@ public class GamblingPotionItem implements Item {
     @Override
     public void use(Player player, Room room) {
         this.gamble(player);
+        player.takeItem(this);
     }
 
     private void gamble(Player player) {
@@ -23,7 +24,6 @@ public class GamblingPotionItem implements Item {
             case 5 -> { player.changeHealth(random.nextInt(0, 6)); System.out.println("You feel a change from deep within you"); }
             default -> System.out.println("Nothing happened"); //default option to avoid accidental bound Random.next() bound mistakes
         }
-        player.takeItem(this);
     }
 
     @Override
