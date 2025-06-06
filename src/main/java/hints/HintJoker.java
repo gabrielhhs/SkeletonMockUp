@@ -6,8 +6,7 @@ import rooms.Room;
 import rooms.TaskRoom;
 import stratpattern.QuestionTask;
 
-public class JokerItem implements Item {
-
+public class HintJoker implements Item {
     @Override
     public void use(Player player, Room room) {
         if (room instanceof TaskRoom taskRoom && !taskRoom.isCleared() && taskRoom.getTaskHandler().getTask() instanceof QuestionTask task) {
@@ -18,6 +17,6 @@ public class JokerItem implements Item {
 
     @Override
     public String getName() {
-        return "The Joker";
+        return "Clue Joker";
     }
 }
