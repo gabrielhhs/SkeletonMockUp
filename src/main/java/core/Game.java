@@ -54,6 +54,7 @@ public class Game {
         this.commandManager.executeCommand(input);
     }
 
+    //ToDo: move logic to respective class
     private void menuOptions(String input) {
         switch (input) {
             case "1" -> { try { menu.saving(player); } catch (IOException e) { throw new RuntimeException(e); } }
@@ -63,6 +64,7 @@ public class Game {
         }
     }
 
+    //ToDo: move logic to respective class
     private void mainMenuOptions(String input) {
         switch (input) {
             case "1" -> menu.loadFromSave();
@@ -72,6 +74,7 @@ public class Game {
         }
     }
 
+    //ToDo: move logic to respective class
     private void swapRoom(String input) {
         String direction = null;
         Map<String, Room> neighboringRooms = player.getCurrentRoom().getNeighboringRooms();
