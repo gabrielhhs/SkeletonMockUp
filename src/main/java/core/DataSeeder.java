@@ -3,6 +3,7 @@ package core;
 import commands.Command;
 import commands.commandslist.*;
 import hints.FunctionalHint;
+import hints.JokerItem;
 import hints.UselessHint;
 import entities.QuestionMonster;
 import rooms.Outside;
@@ -231,6 +232,8 @@ public abstract class DataSeeder {
     }
 
     public static Player getPlayer(Room room) {
-        return new Player(room);
+        Player player = new Player(room);
+        player.giveItem(new JokerItem());
+        return player;
     }
 }
