@@ -48,10 +48,11 @@ public class Menu {
 
     public void loadFromSave() {
         try {
+            DataSeeder.setStatus(this.game.getStatusManager());
             DataSeeder.setRoomClears();
             DataSeeder.setPosition(this.game.getPlayer());
             this.game.getPlayer().getCurrentRoom().enter();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

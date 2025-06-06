@@ -215,4 +215,13 @@ public abstract class DataSeeder {
     public static Player getPlayer(Room room) {
         return new Player(room);
     }
+
+    public static void setStatus(StatusManager statusManager) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(PathGetter.resourcePath() + "/positionalInfo.txt"));
+
+        reader.readLine(); // skip currentRoom value
+        GameStatus status = GameStatus.valueOf(reader.readLine());
+
+        statusManager.set(status);
+    }
 }
