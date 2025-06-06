@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Random;
 
 public class RandomHintProvider {
-    List<FunctionalHint> functionalHints = DataSeeder.getFunctionalHints();
-    List<UselessHint> uselessHints = DataSeeder.getUselessHints();
+    private List<FunctionalHint> functionalHints = DataSeeder.getFunctionalHints();
+    private List<UselessHint> uselessHints = DataSeeder.getUselessHints();
 
     public Hint getHint(Room room) {
         Random random = new Random();
