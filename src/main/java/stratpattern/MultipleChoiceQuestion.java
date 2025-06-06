@@ -29,7 +29,7 @@ public abstract class MultipleChoiceQuestion extends QuestionTask {
     public void handleWrongAnswer() {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.getParent().getParent().getPlayer().removeScore(10);
-        System.out.println("Do you want a hint? Y/N");
+        System.out.println("\nDo you want a hint? Y/N");
         RoomStatus.IN_HINT.activate();
     }
 
@@ -38,7 +38,7 @@ public abstract class MultipleChoiceQuestion extends QuestionTask {
         System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
         for (int index = 0; index < this.options.length; index++) {
-            System.out.println((index + 1) + "." + this.options[index]);
+            System.out.println((index + 1) + ". " + this.options[index]);
         }
     }
 

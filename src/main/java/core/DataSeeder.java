@@ -1,9 +1,9 @@
 package core;
 
-import core.commands.Command;
-import core.commands.commandslist.*;
-import core.hints.FunctionalHint;
-import core.hints.UselessHint;
+import commands.Command;
+import commands.commandslist.*;
+import hints.FunctionalHint;
+import hints.UselessHint;
 import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;
@@ -16,7 +16,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.List;
 import java.util.Set;
 

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Menu {
     private Game game;
 
+
     public Menu(Game game) {
         this.game = game;
     }

@@ -2,7 +2,6 @@ package hints;
 
 import core.DataSeeder;
 import rooms.Room;
-
 import java.util.List;
 import java.util.Random;
 

@@ -1,17 +1,17 @@
 package core;
 
-import core.commands.CommandManager;
-import core.hints.RandomHintProvider;
+import commands.CommandManager;
 import rooms.Room;
 import rooms.TaskRoom;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Player player = DataSeeder.getPlayer(DataSeeder.getFirstRoom());
+    private Player player = DataSeeder.getPlayer(DataSeeder.generateRooms(this));
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;

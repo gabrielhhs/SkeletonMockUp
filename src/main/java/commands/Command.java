@@ -1,4 +1,4 @@
-package core.commands;
+package commands;
 
 public interface Command {
     void run(CommandManager commandManager, String args);

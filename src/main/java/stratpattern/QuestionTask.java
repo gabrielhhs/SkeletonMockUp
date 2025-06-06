@@ -1,7 +1,7 @@
 package stratpattern;
 
 import core.RoomStatus;
-import core.hints.RandomHintProvider;
+import hints.RandomHintProvider;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
