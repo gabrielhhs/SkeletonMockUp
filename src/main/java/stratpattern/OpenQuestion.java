@@ -26,13 +26,6 @@ public class OpenQuestion extends QuestionTask {
         RoomStatus.IN_HINT.activate();
     }
 
-
-    public void giveHint(String input) {
-        if (input.equalsIgnoreCase("Y")) {
-            getHintProvider().getHint(getParent().getParent().getPlayer().getCurrentRoom());
-        }
-    }
-
     protected void giveReward() {
         //ToDo: implement
     }
