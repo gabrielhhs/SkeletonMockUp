@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 import java.util.Scanner;
-// TODO: Replace GameStatus loading
+
 public class Game {
     private final Room initialRoom = DataSeeder.generateRooms(this);
     private Player player = DataSeeder.getPlayer(this.initialRoom);
@@ -104,10 +104,6 @@ public class Game {
 
     public Player getPlayer() {
         return this.player;
-    }
-
-    public CommandManager getCommandManager() {
-        return this.commandManager;
     }
 
     public Menu getMenu() {
