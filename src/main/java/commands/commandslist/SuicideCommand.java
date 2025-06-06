@@ -1,7 +1,7 @@
-package core.commands.commandslist;
+package commands.commandslist;
 
-import core.commands.Command;
-import core.commands.CommandManager;
+import commands.Command;
+import commands.CommandManager;
 
 public class SuicideCommand implements Command {
     private final String keyWord;

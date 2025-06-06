@@ -1,5 +1,6 @@
 package stratpattern;
 
+import core.RoomStatus;
 import rooms.TaskRoom;
 
 public abstract class MultipleChoiceQuestion extends QuestionTask {
@@ -28,7 +29,8 @@ public abstract class MultipleChoiceQuestion extends QuestionTask {
     public void handleWrongAnswer() {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.getParent().getParent().getPlayer().removeScore(10);
-        this.setCleared();
+        System.out.println("\nDo you want a hint? Y/N");
+        RoomStatus.IN_HINT.activate();
     }
 
     @Override
@@ -36,7 +38,7 @@ public abstract class MultipleChoiceQuestion extends QuestionTask {
         System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
         for (int index = 0; index < this.options.length; index++) {
-            System.out.println((index + 1) + "." + this.options[index]);
+            System.out.println((index + 1) + ". " + this.options[index]);
         }
     }
 
