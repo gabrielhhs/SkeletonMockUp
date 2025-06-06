@@ -1,4 +1,4 @@
-package core.hints;
+package hints;
 
 import core.DataSeeder;
 import rooms.Room;
@@ -13,9 +13,9 @@ public class RandomHintProvider {
     public Hint getHint(Room room) {
         Random random = new Random();
         if (random.nextBoolean()) {
-            return uselessHints.get(random.nextInt(uselessHints.size()));
+            return this.uselessHints.get(random.nextInt(this.uselessHints.size()));
         } else {
-            for (FunctionalHint hint : functionalHints) {
+            for (FunctionalHint hint : this.functionalHints) {
                 if (hint.getRoom().equals(room)) return hint;
             }
         }

@@ -1,4 +1,4 @@
-package core.hints;
+package hints;
 
 public interface Hint {
     String getHint();

@@ -1,4 +1,4 @@
-package core.hints;
+package hints;
 
 public class UselessHint implements Hint {
     private String hint;

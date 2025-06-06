@@ -2,8 +2,8 @@ package core;
 
 import core.commands.Command;
 import core.commands.commandslist.*;
-import core.hints.FunctionalHint;
-import core.hints.UselessHint;
+import hints.FunctionalHint;
+import hints.UselessHint;
 import entities.QuestionMonster;
 import rooms.Outside;
 import rooms.*;

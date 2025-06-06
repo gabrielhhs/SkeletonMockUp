@@ -1,7 +1,6 @@
 package core;
 
 import core.commands.CommandManager;
-import core.hints.RandomHintProvider;
 import rooms.Room;
 import rooms.TaskRoom;
 
@@ -14,7 +13,6 @@ public class Game {
     private Room currentRoom = DataSeeder.generateRooms(this);
     private Player player = DataSeeder.getPlayer(this.currentRoom);
     private CommandManager commandManager = new CommandManager(this);
-    private RandomHintProvider hintProvider = new RandomHintProvider();
     private final InputStream in;
     private boolean running;
     private Menu menu = new Menu(this);

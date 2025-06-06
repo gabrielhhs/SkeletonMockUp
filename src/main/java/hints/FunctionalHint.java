@@ -1,4 +1,4 @@
-package core.hints;
+package hints;
 
 import rooms.Room;
 
@@ -17,6 +17,6 @@ public class FunctionalHint implements Hint {
     }
 
     public Room getRoom() {
-        return room;
+        return this.room;
     }
 }
