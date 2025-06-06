@@ -12,8 +12,8 @@ import java.util.Objects;
 
 public class StaffOfClearingItem implements Item {
     @Override
-    public void use(Player player, Room room) {
-        this.resetGame(player);
+    public void use(Game game) {
+        this.resetGame(game);
     }
     
     private void resetGame(Game game) {
