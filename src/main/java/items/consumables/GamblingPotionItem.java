@@ -6,7 +6,7 @@ import rooms.Room;
 
 import java.util.Random;
 
-public class GamblingPotionItem extends ConsumableItem {
+public class GamblingPotionItem implements Item {
     private static final Random random = new Random();
 
     @Override
@@ -23,7 +23,7 @@ public class GamblingPotionItem extends ConsumableItem {
             case 5 -> { player.changeHealth(random.nextInt(0, 6)); System.out.println("You feel a change from deep within you"); }
             default -> System.out.println("Nothing happened"); //default option to avoid accidental bound Random.next() bound mistakes
         }
-        this.consumeItem(player);
+        player.takeItem(this);
     }
 
     @Override

@@ -9,7 +9,7 @@ import util.PathGetter;
 import java.io.File;
 import java.util.Objects;
 
-public class StaffOfClearingItem extends ConsumableItem {
+public class StaffOfClearingItem implements Item {
     @Override
     public void use(Player player, Room room) {
         Room startingRoom = DataSeeder.getFirstRoom();
@@ -25,7 +25,7 @@ public class StaffOfClearingItem extends ConsumableItem {
     }
 
     private void purgeDirectory(File dir) {
-        for (File file: Objects.requireNonNull(dir.listFiles())) {
+        for (File file : Objects.requireNonNull(dir.listFiles())) {
             if (file.isDirectory())
                 purgeDirectory(file);
             file.delete();

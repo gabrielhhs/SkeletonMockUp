@@ -5,10 +5,10 @@ import items.Item;
 import rooms.Room;
 import rooms.TaskRoomWithMonster;
 
-public class SwordItem extends ConsumableItem {
+public class SwordItem implements Item {
     @Override
     public void use(Player player, Room room) {
-        if (canUse(room)) { room.setCleared(); this.consumeItem(player); }
+        if (canUse(room)) { room.setCleared(); player.takeItem(this); }
         else System.out.println("Nothing happened...");
     }
 

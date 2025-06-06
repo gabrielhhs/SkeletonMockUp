@@ -6,18 +6,18 @@ import rooms.Room;
 
 import java.util.Random;
 
-public class SpareRibsItem extends ConsumableItem {
+public class SpareRibsItem implements Item {
     private static final Random random = new Random();
 
     @Override
     public void use(Player player, Room room) {
-        if (random.nextInt(1, 6) == 5) this.doDamage(player);
+        if (random.nextFloat() < 0.2) this.doDamage(player);
         else player.heal(1);
-        this.consumeItem(player);
+        player.takeItem(this);
     }
 
     private void doDamage(Player player) {
-        if (random.nextInt(1, 26) == 25) {
+        if (random.nextFloat() < 0.04) {
             System.out.println("A sharp bones pokes you in the cheeck. Ouch..");
             player.damage(1);
         } else {
