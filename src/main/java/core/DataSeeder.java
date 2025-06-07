@@ -35,16 +35,16 @@ public abstract class DataSeeder {
     }};
 
     private static HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]{
-        new LiteralHintProvider("YOU CAN DO IT!!!"),
-        new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
-        new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
-        new LiteralHintProvider("you can do this trust me"),
-        new LiteralHintProvider("You could try that… if failing is your thing."),
-        new LiteralHintProvider("Maybe try using your brain next time"),
-        new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"),
-        new LiteralHintProvider("You’re closer than you think."),
-        new LiteralHintProvider("Every expert was once where you are."),
-        new LiteralHintProvider("Take a breath. You know this."),
+            new LiteralHintProvider("YOU CAN DO IT!!!"),
+            new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
+            new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
+            new LiteralHintProvider("you can do this trust me"),
+            new LiteralHintProvider("You could try that… if failing is your thing."),
+            new LiteralHintProvider("Maybe try using your brain next time"),
+            new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"),
+            new LiteralHintProvider("You’re closer than you think."),
+            new LiteralHintProvider("Every expert was once where you are."),
+            new LiteralHintProvider("Take a breath. You know this."),
     });
 
     public static Room generateRooms(Game game) {

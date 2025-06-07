@@ -25,4 +25,8 @@ public class TaskHandler {
     public void setTask(Task task) {
         this.task = task;
     }
+
+    public Task getTask() {
+        return this.task;
+    }
 }
