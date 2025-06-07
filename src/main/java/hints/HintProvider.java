@@ -1,5 +1,5 @@
 package hints;
 
-public interface Hint {
+public interface HintProvider {
     String getHint();
 }

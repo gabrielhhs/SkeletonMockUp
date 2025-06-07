@@ -10,11 +10,13 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Game {
-    private Player player = DataSeeder.getPlayer(DataSeeder.generateRooms(this));
+    private final Room initialRoom = DataSeeder.generateRooms(this);
+    private Player player = DataSeeder.getPlayer(this.initialRoom);
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
     private Menu menu = new Menu(this);
+    private final StatusManager status = new StatusManager();
 
     public Game(InputStream in) {
         this.in = in;
@@ -22,7 +24,7 @@ public class Game {
     }
 
     public void start() {
-        RoomStatus.IN_MAIN_MENU.activate();
+        this.status.set(GameStatus.IN_MAIN_MENU);
         menu.mainMenu();
         final Scanner scan = new Scanner(this.in);
         this.running = true;
@@ -38,7 +40,7 @@ public class Game {
         if (input.isEmpty() || input.equals(null)) return;
         if (input.startsWith("/")) {handleCommand(input.substring(1)); return;}
 
-        RoomStatus status = RoomStatus.getActiveStatus();
+        GameStatus status = this.status.get();
         if (status.equals(null)) throw new AssertionError("How did you get here?");
 
         switch (status) {
@@ -59,7 +61,7 @@ public class Game {
         switch (input) {
             case "1" -> { try { menu.saving(player); } catch (IOException e) { throw new RuntimeException(e); } }
             case "2" -> menu.mainMenu();
-            case "3" -> RoomStatus.getPreviousStatus().activate();
+            case "3" -> this.status.revert();
             default -> System.out.println("please type one of the numbers");
         }
     }
@@ -72,6 +74,10 @@ public class Game {
             case "3" -> this.stop();
             default -> System.out.println("please type one of the numbers");
         }
+    }
+
+    public Room getInitialRoom() {
+        return this.initialRoom;
     }
 
     //ToDo: move logic to respective class
@@ -100,11 +106,11 @@ public class Game {
         return this.player;
     }
 
-    public CommandManager getCommandManager() {
-        return this.commandManager;
-    }
-
     public Menu getMenu() {
         return menu;
+    }
+
+    public StatusManager getStatusManager() {
+        return this.status;
     }
 }

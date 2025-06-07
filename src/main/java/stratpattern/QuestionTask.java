@@ -1,14 +1,18 @@
 package stratpattern;
 
-import core.RoomStatus;
-import hints.RandomHintProvider;
+import core.GameStatus;
+import hints.HintProvider;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
-	protected RandomHintProvider hintProvider = new RandomHintProvider();
+	private final HintProvider hintProvider;
 
-	public QuestionTask(TaskRoom parent) {
+	public QuestionTask(TaskRoom parent, HintProvider hint) {
 		super(parent);
+		this.hintProvider = hint;
+	}
+	public QuestionTask(TaskRoom parent) {
+		this(parent, null);
 	}
 
 	public abstract void start();
@@ -17,18 +21,21 @@ public abstract class QuestionTask extends Task {
 	public abstract void handleCorrectAnswer();
 	public abstract void handleWrongAnswer();
 
-
 	public void askHint(String input) {
-		if (input.equalsIgnoreCase("N")) RoomStatus.getPreviousStatus().activate();
-		else {
-			System.out.println(this.hintProvider.getHint(this.getParent().getParent().getPlayer().getCurrentRoom()).getHint());
-			RoomStatus.getPreviousStatus().activate();
+		if (this.hintProvider == null) {
+			System.out.println("No hints");
+			return;
+		}
+
+		this.getParent().getParent().getStatusManager().revert();
+		if (input.equalsIgnoreCase("Y")) {
+			System.out.println(this.hintProvider.getHint());
 			this.getParent().enter();
 		}
 	}
 
 	public final void consume(String input) {
-		if (RoomStatus.IN_HINT.isActive()) this.askHint(input);
+		if (this.getParent().getParent().getStatusManager().is(GameStatus.IN_HINT)) this.askHint(input);
 		else if (!this.isValidAnswer(input)) System.out.println("Invalid answer, please try again");
 		else this.handleResult(this.isCorrectAnswer(input));
 	}
@@ -38,7 +45,7 @@ public abstract class QuestionTask extends Task {
 		else this.handleWrongAnswer();
 	}
 
-	public RandomHintProvider getHintProvider() {
+	public HintProvider getHintProvider() {
 		return hintProvider;
 	}
 }

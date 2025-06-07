@@ -2,9 +2,10 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
-import hints.FunctionalHint;
-import hints.UselessHint;
+import hints.HintProvider;
+import hints.LiteralHintProvider;
 import entities.QuestionMonster;
+import hints.RandomHintProvider;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
@@ -23,34 +24,28 @@ import java.util.Set;
 //ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
     private static ArrayList<Room> roomList = new ArrayList<>();
-    private static Room firstRoom;
-    private static Set<Command> COMMANDS = new HashSet<>();
-    private static List<UselessHint> uselessHints = new ArrayList<>();
-    private static List<FunctionalHint> functionalHints = new ArrayList<>();
 
-    static {
-        COMMANDS.add(new StatusCommand("status"));
-        COMMANDS.add(new SuicideCommand("kill"));
-        COMMANDS.add(new InventoryCommand("inventory"));
-        COMMANDS.add(new InventoryCommand("inv"));
-        COMMANDS.add(new UseCommand());
-        COMMANDS.add(new MenuCommand("menu"));
+    private static Set<Command> COMMANDS = new HashSet<>() {{
+        add(new StatusCommand("status"));
+        add(new SuicideCommand("kill"));
+        add(new InventoryCommand("inventory"));
+        add(new InventoryCommand("inv"));
+        add(new UseCommand());
+        add(new MenuCommand("menu"));
+    }};
 
-        uselessHints.add(new UselessHint("YOU CAN DO IT!!!"));
-        uselessHints.add(new UselessHint("YOU CAN NOT DO IT!!!"));
-        uselessHints.add(new UselessHint("We believe this question is too easy to give a Hint..."));
-        uselessHints.add(new UselessHint("you can do this trust me"));
-        uselessHints.add(new UselessHint("You could try that… if failing is your thing."));
-        uselessHints.add(new UselessHint("Maybe try using your brain next time"));
-        uselessHints.add(new UselessHint("Confidence is great. Maybe aim for competence too?"));
-        uselessHints.add(new UselessHint("You’re closer than you think."));
-        uselessHints.add(new UselessHint("Every expert was once where you are."));
-        uselessHints.add(new UselessHint("Take a breath. You know this."));
-    }
-
-    public static Room getFirstRoom() {
-        return firstRoom;
-    }
+    private static HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]{
+        new LiteralHintProvider("YOU CAN DO IT!!!"),
+        new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
+        new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
+        new LiteralHintProvider("you can do this trust me"),
+        new LiteralHintProvider("You could try that… if failing is your thing."),
+        new LiteralHintProvider("Maybe try using your brain next time"),
+        new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"),
+        new LiteralHintProvider("You’re closer than you think."),
+        new LiteralHintProvider("Every expert was once where you are."),
+        new LiteralHintProvider("Take a breath. You know this."),
+    });
 
     public static Room generateRooms(Game game) {
         String up = "up";
@@ -64,24 +59,17 @@ public abstract class DataSeeder {
 
         //Rooms
         Room outside = new Outside(game, "outside");
-        firstRoom = outside;
         roomList.add(outside);
-        functionalHints.add(new FunctionalHint("type enter", outside));
         TaskRoom planning = new TaskRoom(game, "planning");
         roomList.add(planning);
-        functionalHints.add(new FunctionalHint("NOT THE MEME (a shame though)", planning));
         TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
         roomList.add(dailyScrum);
-        functionalHints.add(new FunctionalHint("Really i dont know with this one", dailyScrum));
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
         roomList.add(sideRoom);
-        functionalHints.add(new FunctionalHint("?", sideRoom));
         TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
         roomList.add(mainRoomMonster1);
-        functionalHints.add(new FunctionalHint("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail", mainRoomMonster1));
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
         roomList.add(mainRoomMonster2);
-        functionalHints.add(new FunctionalHint("this dev man ...", mainRoomMonster2));
         /*
             visual overview of room path [DO NOT REMOVE]
             outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
@@ -120,10 +108,12 @@ public abstract class DataSeeder {
         MultipleChoiceQuestion planningTask = new MultipleChoiceQuestion(
                 "What is 9 + 10?",
                 new String[] {"21", "19", "I refuse to answer math questions"},
-                2, planning) {
-        };
-        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum);
-        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom);
+                2,
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("NOT THE MEME (a shame though)"), USELESS_HINTS}),
+                planning
+        );
+        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS}));
+        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("?"), USELESS_HINTS}));
 
         MultipleChoiceQuestionWithMonster monsterRoomQuestion1 = new MultipleChoiceQuestionWithMonster(
                 "What is the airspeed velocity of an unladen swallow? (if you do not get this reference please remove yourself from my vicinity)",
@@ -143,12 +133,14 @@ public abstract class DataSeeder {
         OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
                 "What do the Knights Who Say 'Ni!' actually want?",
                 "A shrubbery",
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), USELESS_HINTS}),
                 mainRoomMonster1
         );
 
         OpenQuestionWithMonster monsterQuestion2 = new OpenQuestionWithMonster(
                 "I ran out of question ideas",
                 "...",
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("this dev man ..."), USELESS_HINTS}),
                 mainRoomMonster2
         );
 
@@ -167,18 +159,18 @@ public abstract class DataSeeder {
     }
 
     public static void generateUselessHints() {
-        List<UselessHint> uselessHints = new ArrayList<>();
+        List<LiteralHintProvider> uselessHints = new ArrayList<>();
 
-        uselessHints.add(new UselessHint("YOU CAN DO IT!!!"));
-        uselessHints.add(new UselessHint("YOU CAN NOT DO IT!!!"));
-        uselessHints.add(new UselessHint("We believe this question is too easy to give a Hint..."));
-        uselessHints.add(new UselessHint("you can do this trust me"));
-        uselessHints.add(new UselessHint("You could try that… if failing is your thing."));
-        uselessHints.add(new UselessHint("Maybe try using your brain next time"));
-        uselessHints.add(new UselessHint("Confidence is great. Maybe aim for competence too?"));
-        uselessHints.add(new UselessHint("You’re closer than you think."));
-        uselessHints.add(new UselessHint("Every expert was once where you are."));
-        uselessHints.add(new UselessHint("Take a breath. You know this."));
+        uselessHints.add(new LiteralHintProvider("YOU CAN DO IT!!!"));
+        uselessHints.add(new LiteralHintProvider("YOU CAN NOT DO IT!!!"));
+        uselessHints.add(new LiteralHintProvider("We believe this question is too easy to give a Hint..."));
+        uselessHints.add(new LiteralHintProvider("you can do this trust me"));
+        uselessHints.add(new LiteralHintProvider("You could try that… if failing is your thing."));
+        uselessHints.add(new LiteralHintProvider("Maybe try using your brain next time"));
+        uselessHints.add(new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"));
+        uselessHints.add(new LiteralHintProvider("You’re closer than you think."));
+        uselessHints.add(new LiteralHintProvider("Every expert was once where you are."));
+        uselessHints.add(new LiteralHintProvider("Take a breath. You know this."));
     }
 
     public static Set<Command> getCommands() {
@@ -207,12 +199,10 @@ public abstract class DataSeeder {
         String filePath = PathGetter.resourcePath() + "/positionalInfo.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String currentRoom = reader.readLine();
-            String activeRoomStatus = reader.readLine();
 
             for (Room room : roomList) {
                 if (room.isCurrentRoom(currentRoom)) player.setCurrentRoom(room);
             }
-            RoomStatus.valueOf(activeRoomStatus).activate();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -222,15 +212,16 @@ public abstract class DataSeeder {
         return roomList;
     }
 
-    public static List<UselessHint> getUselessHints() {
-        return uselessHints;
-    }
-
-    public static List<FunctionalHint> getFunctionalHints() {
-        return functionalHints;
-    }
-
     public static Player getPlayer(Room room) {
         return new Player(room);
+    }
+
+    public static void setStatus(StatusManager statusManager) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(PathGetter.resourcePath() + "/positionalInfo.txt"));
+
+        reader.readLine(); // skip currentRoom value
+        GameStatus status = GameStatus.valueOf(reader.readLine());
+
+        statusManager.set(status);
     }
 }

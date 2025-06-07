@@ -1,7 +1,7 @@
 package rooms;
 
 import core.Game;
-import core.RoomStatus;
+import core.GameStatus;
 import stratpattern.TaskHandler;
 
 public class TaskRoom extends Room {
@@ -18,8 +18,8 @@ public class TaskRoom extends Room {
 
     @Override
     public void handleUncleared() {
-            RoomStatus.IN_TASK.activate();
-            this.taskHandler.startTask();
+        this.parent.getStatusManager().set(GameStatus.IN_TASK);
+        this.taskHandler.startTask();
     }
 
     public TaskHandler getTaskHandler() {
