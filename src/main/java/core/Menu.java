@@ -1,9 +1,11 @@
 package core;
 
+import items.Item;
 import rooms.Room;
 import util.PathGetter;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 public class Menu {
@@ -43,6 +45,11 @@ public class Menu {
         try (FileWriter fileWriter = new FileWriter(PathGetter.resourcePath() + "/positionalInfo.txt")) {
             fileWriter.write(player.getCurrentRoom().getName() + "\n");
             fileWriter.write(this.game.getStatusManager().getPrevious().toString());
+        }
+        try (FileWriter fileWriter = new FileWriter(PathGetter.resourcePath() + "/inventoryInfo.txt")) {
+            for (Item item : player.getInventory().keySet()) {
+                fileWriter.write(item.getName());
+            }
         }
     }
 
