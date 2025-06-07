@@ -6,6 +6,8 @@ import hints.HintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
 import hints.RandomHintProvider;
+import items.Item;
+import items.consumables.GamblingPotionItem;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Supplier;
 
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
 //ToDo: Create monster AND non monster task rooms
@@ -202,6 +205,19 @@ public abstract class DataSeeder {
 
             for (Room room : roomList) {
                 if (room.isCurrentRoom(currentRoom)) player.setCurrentRoom(room);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setInventory(Player player) {
+        String filePath = PathGetter.resourcePath() + "/inventoryInfo.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            for (Item item : player.getInventory().keySet()) {
+                Supplier<GamblingPotionItem> supplier = GamblingPotionItem::new;
+                Item instance = supplier.get();
+
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
