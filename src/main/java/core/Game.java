@@ -6,8 +6,10 @@ import rooms.TaskRoom;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Game {
     private final Room initialRoom = DataSeeder.generateRooms(this);
@@ -112,5 +114,20 @@ public class Game {
 
     public StatusManager getStatusManager() {
         return this.status;
+    }
+
+    private Set<Room> collectRooms(Room parent) {
+        Set<Room> result = new HashSet<>();
+        result.add(parent);
+
+        for (Room child : parent.getNeighboringRooms().values()) {
+            if (result.contains(child)) continue;
+            result.addAll(this.collectRooms(child));
+        }
+
+        return result;
+    }
+    public Set<Room> collectRooms() {
+        return this.collectRooms(this.getInitialRoom());
     }
 }
