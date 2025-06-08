@@ -18,7 +18,7 @@ public class EventHandler {
     public void start() {
         if (this.event != null) {
             this.parent.getParent().getStatusManager().set(GameStatus.IN_EVENT);
-            this.event.start(this);
+            this.event.start();
         }
     }
     public void start(Event event) {
@@ -32,6 +32,7 @@ public class EventHandler {
 
     public void setEvent(Event event) {
         this.event = event;
+        this.event.setParent(this);
     }
     public Event getEvent() {
         return this.event;
