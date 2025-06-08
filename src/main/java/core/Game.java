@@ -98,19 +98,18 @@ public class Game {
         return this.status;
     }
 
-    private Set<Room> collectRooms(Room parent) {
-        Set<Room> result = new HashSet<>();
-        result.add(parent);
+    private void collectRooms(Room self, Set<Room> result) {
+        if (result.contains(self)) return;
+        result.add(self);
 
-        for (Room child : parent.getNeighboringRooms().values()) {
-            if (result.contains(child)) continue;
-            result.addAll(this.collectRooms(child));
+        for (Room neighbor : self.getNeighboringRooms().values()) {
+            this.collectRooms(neighbor, result);
         }
-
-        return result;
     }
     public Set<Room> collectRooms() {
-        return this.collectRooms(this.getInitialRoom());
+        Set<Room> result = new HashSet<>();
+        this.collectRooms(this.getInitialRoom(), result);
+        return result;
     }
 
     public DataSaver getDataSaver() {
