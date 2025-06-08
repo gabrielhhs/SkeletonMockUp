@@ -18,14 +18,17 @@ public class ReverseWeepingAngelEvent extends Event {
     }
 
     @Override
+    public void end() {
+        System.out.println("You decide its better to pray than to see what is behind you");
+        this.parent.getParent().chooseRoom();
+    }
+
+    @Override
     public void consume(String input) {
         if (input.equalsIgnoreCase("Y")) {
             System.out.println("You quickly turn around, but before you can lay your eyes upon the figure the world goes black");
             this.parent.getParent().getParent().getPlayer().kill();
-        } else {
-            System.out.println("You decide its better to pray than to see what is behind you");
-            this.parent.getParent().chooseRoom();
-        }
+        } else this.end();
     }
 
     private void trackEnters() {

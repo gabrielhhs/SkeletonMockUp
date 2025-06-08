@@ -14,12 +14,12 @@ public class SpecialEventRoom extends Room {
 
     @Override
     protected void onEnter() {
-        if (this.eventHandler.getEvent() != null && this.eventHandler.getEvent().canStart()) this.eventHandler.start();
+        System.out.println("Welcome to the " + this.name + " room");
     }
 
     @Override
     protected void handleUncleared() {
-        //No existing uncleared tasks (possible)child classes should implement this
+        if (this.eventHandler.getEvent() != null && this.eventHandler.getEvent().canStart()) this.eventHandler.start();
     }
 
     public EventHandler getEventHandler() {
