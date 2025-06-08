@@ -31,10 +31,12 @@ public abstract class Room {
     public final void enter() {
         this.onEnter();
         this.parent.getPlayer().setCurrentRoom(this);
-        if (this.cleared) {
-            this.chooseRoom();
-        } else {
-            this.handleUncleared();
+        if (!this.parent.getStatusManager().is(GameStatus.IN_EVENT)) {
+            if (this.cleared) {
+                this.chooseRoom();
+            } else {
+                this.handleUncleared();
+            }
         }
     }
 
