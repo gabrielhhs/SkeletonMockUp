@@ -3,14 +3,10 @@ package saving;
 import core.Game;
 import core.GameStatus;
 import core.Player;
-import org.json.JSONException;
 import org.json.JSONObject;
 import rooms.Room;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Set;
@@ -21,6 +17,11 @@ public class JSONDataSaver implements DataSaver {
 
 	public JSONDataSaver(Path savesPath) {
 		this.savesPath = savesPath;
+		try {
+			savesPath.toFile().createNewFile();
+		} catch (IOException e) {
+			throw new SaverException(e);
+		}
 	}
 
 	private Path getSavePath(String saveName) {
