@@ -2,6 +2,12 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
+import dialogue.DialogueManager;
+import dialogue.DialogueNode;
+import entities.AssistantEntity;
+import entities.DialogueEntity;
+import events.eventtypes.AssistantEncounterEvent;
+import events.eventtypes.ReverseWeepingAngelEvent;
 import hints.HintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
@@ -56,6 +62,11 @@ public abstract class DataSeeder {
         //Monsters
         QuestionMonster monster1 = new QuestionMonster("Monstro Uno");
         QuestionMonster monster2 = new QuestionMonster("Monstro Dos");
+        AssistantEntity assistant = new AssistantEntity(); generateDialogue(assistant);
+
+        //Events
+        ReverseWeepingAngelEvent angelEvent = new ReverseWeepingAngelEvent(2);
+        AssistantEncounterEvent assistantEvent = new AssistantEncounterEvent(assistant);
 
         //Rooms
         Room outside = new Outside(game, "outside");
@@ -70,12 +81,17 @@ public abstract class DataSeeder {
         roomList.add(mainRoomMonster1);
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
         roomList.add(mainRoomMonster2);
+        TaskRoomWithEvent angelRoom = new TaskRoomWithEvent(game, "Weeping Room");
+        roomList.add(angelRoom);
+        SpecialEventRoom assistantRoom = new SpecialEventRoom(game, "The Doll Room", assistantEvent);
+
         /*
             visual overview of room path [DO NOT REMOVE]
             outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
+            angelRoom = 6; assistantRoom = 7;
 
 
-                {4}, {5}
+                {4}, {5}, {6}, {7}
                 {2}, {3}
                 {1}
                 {0}
@@ -102,6 +118,14 @@ public abstract class DataSeeder {
 
         //mainRoomMonster2
         mainRoomMonster2.putNeighboringRoom(left, mainRoomMonster1);
+        mainRoomMonster2.putNeighboringRoom(right, angelRoom);
+
+        //Angel Room
+        angelRoom.putNeighboringRoom(left, mainRoomMonster2);
+        angelRoom.putNeighboringRoom(right, assistantRoom);
+
+        //Assistant Room
+        assistantRoom.putNeighboringRoom(left, angelRoom);
 
 
         //Room Tasks
@@ -129,6 +153,13 @@ public abstract class DataSeeder {
                 mainRoomMonster2
         );
 
+        OpenQuestion angelRoomQuestion = new OpenQuestion(
+                "What are witches made of?",
+                "wood",
+                angelRoom,
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS})
+        );
+
         //Monster Tasks
         OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
                 "What do the Knights Who Say 'Ni!' actually want?",
@@ -150,10 +181,14 @@ public abstract class DataSeeder {
         sideRoom.getTaskHandler().setTask(sideRoomTask);
         mainRoomMonster1.getTaskHandler().setTask(monsterRoomQuestion1);
         mainRoomMonster2.getTaskHandler().setTask(monsterRoomQuestion2);
+        angelRoom.getTaskHandler().setTask(angelRoomQuestion);
 
         //Assigning Tasks Monsters
         monster1.setTask(monsterQuestion1);
         monster2.setTask(monsterQuestion2);
+
+        //Assigning Event
+        angelRoom.getEventHandler().setEvent(angelEvent);
 
         return outside;
     }
@@ -171,6 +206,53 @@ public abstract class DataSeeder {
         uselessHints.add(new LiteralHintProvider("You’re closer than you think."));
         uselessHints.add(new LiteralHintProvider("Every expert was once where you are."));
         uselessHints.add(new LiteralHintProvider("Take a breath. You know this."));
+    }
+
+    private static void generateDialogue(DialogueEntity entity) {
+        AssistantEntity assistant = (AssistantEntity) entity;
+        DialogueManager manager = assistant.getDialogueManager();
+        DialogueNode introNode = new DialogueNode("[Wooden doll] Its rare to see another soul enter this place\n[Assistant] Im known as the assistant");
+        introNode.addOption("1", "Introduce yourself", "explanation");
+        introNode.addOption("2", "stay silent", "explanation"); //basic etiquette skill cmon man (I need a better sleeping schedule)
+
+        DialogueNode explanationNode = new DialogueNode("[Assistant] I'm here to help you during your travels");
+        explanationNode.addOption("1", "Fucking finally took you long enough", "mean0");
+        explanationNode.addOption("2", "It's nice to finally speak to someone that doesn't want to kill me", "nice0");
+
+        DialogueNode meanDoll0 = new DialogueNode("[Assistant] Well that's kind of mean but I understand your perspective");
+        meanDoll0.addOption("1", "Well? What kind of assistance will you be providing me with?", "mean1");
+
+        DialogueNode niceDoll0 = new DialogueNode("[Assistant] Sadly it wont end here but you're in luck for I am here");
+        niceDoll0.addOption("1", "You bring me joy what kind of amazing assistance can I be expecting?", "nice1");
+
+        DialogueNode meanDoll1 = new DialogueNode("""
+                [Assistant] You should worry more about your karma rating
+                But anyway I will provide my assistance by giving you hints when you are in need
+                Simply use '/assist' and I will come to your aid
+                """);
+        meanDoll1.addOption("1", "I pray you make yourself useful", null);
+        meanDoll1.addOption("2", "Sorry about the earlier comments that was mean", "redemption");
+
+        DialogueNode niceDoll1 = new DialogueNode("""
+                [Assistant] You flatter me, I will guide you whenever you call upon me by using '/assist'
+                Sadly due to rules set by beings beyond our comprehension I can only help you twice, so make sure you decide carefully when you call me
+                """); //still lf sleep schedule
+        niceDoll1.addOption("1", "Thank you for your help I will make great use of your assistance", null);
+
+        DialogueNode meanDoll2 = new DialogueNode("[Assistant] No problems apology accepted now go forth");
+        DialogueNode meanDoll3 = new DialogueNode("[Assistant] I reiterate watch ur karma rating man");
+
+        DialogueNode niceDoll2 = new DialogueNode("[Assistant] I'm please to help");
+
+        manager.addNode(introNode, "intro");
+        manager.addNode(explanationNode, "explanation");
+        manager.addNode(meanDoll0, "mean0");
+        manager.addNode(niceDoll0, "nice0");
+        manager.addNode(niceDoll1, "nice1");
+        manager.addNode(niceDoll2, null);
+        manager.addNode(meanDoll1, "mean1");
+        manager.addNode(meanDoll2, "redemption");
+        manager.addNode(meanDoll3, null);
     }
 
     public static Set<Command> getCommands() {
