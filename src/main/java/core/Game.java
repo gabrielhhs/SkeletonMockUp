@@ -3,6 +3,7 @@ package core;
 import commands.CommandManager;
 import rooms.Room;
 import rooms.TaskRoom;
+import saving.DataSaver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,9 +20,11 @@ public class Game {
     private boolean running;
     private Menu menu = new Menu(this);
     private final StatusManager status = new StatusManager();
+    private final DataSaver saver;
 
-    public Game(InputStream in) {
+    public Game(InputStream in, DataSaver saver) {
         this.in = in;
+        this.saver = saver;
         this.commandManager.massRegisterCommand(DataSeeder.getCommands());
     }
 
@@ -129,5 +132,16 @@ public class Game {
     }
     public Set<Room> collectRooms() {
         return this.collectRooms(this.getInitialRoom());
+    }
+
+    public DataSaver getDataSaver() {
+        return this.saver;
+    }
+
+    public void save(String saveName) {
+        this.saver.save(this, saveName);
+    }
+    public void load(String saveName) {
+        this.saver.load(this, saveName);
     }
 }
