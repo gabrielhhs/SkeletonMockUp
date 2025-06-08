@@ -48,7 +48,7 @@ public abstract class Room {
 
     public final void enter() {
         this.onEnter();
-        parent.getPlayer().setCurrentRoom(this);
+        this.parent.getPlayer().setCurrentRoom(this);
         if (this.cleared) {
             this.chooseRoom();
         } else {
@@ -85,7 +85,6 @@ public abstract class Room {
     public boolean isCurrentRoom(String room) {
         return room.equals(this.name);
     }
-
 
     public Map<String, Room> getNeighboringRooms() {
         return this.neighboringRooms;
