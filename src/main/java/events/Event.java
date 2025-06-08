@@ -1,16 +1,16 @@
 package events;
 
 public abstract class Event {
-    private boolean activeOnEnter;
+    protected boolean startingConditionMet;
 
-    protected Event(boolean activateOnEnter) {
-        this.activeOnEnter = activateOnEnter;
+    protected Event(boolean startingConditionMet) {
+        this.startingConditionMet = startingConditionMet;
     }
 
     public abstract void start(EventHandler parent);
     public abstract void consume(String input);
 
-    public boolean isActiveOnEnter() {
-        return this.activeOnEnter;
+    public boolean canStart() {
+        return this.startingConditionMet;
     }
 }
