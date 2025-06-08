@@ -1,15 +1,15 @@
 package events;
 
-import rooms.SpecialEventRoom;
+import rooms.Room;
 
 public class EventHandler {
     private Event event;
-    private SpecialEventRoom parent;
+    private Room parent;
 
-    public EventHandler(SpecialEventRoom parent) {
+    public EventHandler(Room parent) {
         this.parent = parent;
     }
-    public EventHandler(SpecialEventRoom parent, Event event) {
+    public EventHandler(Room parent, Event event) {
         this(parent);
         this.event = event;
     }
@@ -33,7 +33,7 @@ public class EventHandler {
         return this.event;
     }
 
-    public SpecialEventRoom getParent() {
+    public Room getParent() {
         return this.parent;
     }
 }
