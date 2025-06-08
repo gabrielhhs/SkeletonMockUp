@@ -2,8 +2,12 @@ package core;
 
 import commands.CommandManager;
 import rooms.Room;
+import rooms.SpecialEventRoom;
+import rooms.SpecialEventRoom;
 import rooms.TaskRoom;
+import rooms.TaskRoomWithEvent;
 import saving.DataSaver;
+import rooms.TaskRoomWithEvent;
 
 import java.io.InputStream;
 import java.util.HashSet;
@@ -53,6 +57,7 @@ public class Game implements Player.Observer {
             case IN_TASK, IN_HINT -> this.answerQuestion(input);
             case IN_OPTION -> this.menu.pauseMenuOptions(input);
             case IN_MAIN_MENU -> this.menu.mainMenuOptions(input);
+            case IN_EVENT -> this.sendInputToEvent(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
@@ -70,6 +75,12 @@ public class Game implements Player.Observer {
         else throw new AssertionError("How did you get here?");
     }
 
+    private void sendInputToEvent(String input) {
+        if (this.player.getCurrentRoom() instanceof TaskRoomWithEvent room) room.getEventHandler().consume(input);
+        else if (this.player.getCurrentRoom() instanceof SpecialEventRoom room) room.getEventHandler().consume(input);
+        else System.out.println("beans debug");
+    }
+
     public Player getPlayer() {
         return this.player;
     }
@@ -80,6 +91,10 @@ public class Game implements Player.Observer {
 
     public StatusManager getStatusManager() {
         return this.status;
+    }
+
+    public CommandManager getCommandManager() {
+        return this.commandManager;
     }
 
     private void collectRooms(Room self, Set<Room> result) {
