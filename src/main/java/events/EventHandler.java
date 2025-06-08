@@ -1,5 +1,6 @@
 package events;
 
+import core.GameStatus;
 import rooms.Room;
 
 public class EventHandler {
@@ -15,7 +16,10 @@ public class EventHandler {
     }
 
     public void start() {
-        if (this.event != null) this.event.start(this);
+        if (this.event != null) {
+            this.parent.getParent().getStatusManager().set(GameStatus.IN_EVENT);
+            this.event.start(this);
+        }
     }
     public void start(Event event) {
         this.setEvent(event);
