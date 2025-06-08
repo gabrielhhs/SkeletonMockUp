@@ -2,7 +2,9 @@ package core;
 
 import commands.CommandManager;
 import rooms.Room;
+import rooms.SpecialEventRoom;
 import rooms.TaskRoom;
+import rooms.TaskRoomWithEvent;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,6 +50,7 @@ public class Game {
             case IN_TASK, IN_HINT -> this.answerQuestion(input);
             case IN_OPTION -> this.menuOptions(input);
             case IN_MAIN_MENU -> this.mainMenuOptions(input);
+            case IN_EVENT -> this.sendInputToEvent(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
@@ -97,6 +100,12 @@ public class Game {
         }
     }
 
+    private void sendInputToEvent(String input) {
+        if (this.player.getCurrentRoom() instanceof TaskRoomWithEvent room) room.getEventHandler().consume(input);
+        else if (this.player.getCurrentRoom() instanceof SpecialEventRoom room) room.getEventHandler().consume(input);
+        else System.out.println("beans debug");
+    }
+
     private void answerQuestion(String input) {
         if (this.player.getCurrentRoom() instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
         else throw new AssertionError("How did you get here?");
@@ -112,5 +121,9 @@ public class Game {
 
     public StatusManager getStatusManager() {
         return this.status;
+    }
+
+    public CommandManager getCommandManager() {
+        return this.commandManager;
     }
 }
