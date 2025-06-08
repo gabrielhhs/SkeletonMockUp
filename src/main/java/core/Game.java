@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Game {
+public class Game implements Player.Observer {
     private final Room initialRoom = DataSeeder.generateRooms(this);
     private Player player = new Player(this.initialRoom);
     private CommandManager commandManager = new CommandManager(this);
@@ -25,6 +25,7 @@ public class Game {
         this.in = in;
         this.saver = saver;
         this.commandManager.massRegisterCommand(DataSeeder.getCommands());
+        this.player.addObserver(this);
     }
 
     public void start() {
@@ -121,5 +122,10 @@ public class Game {
     }
     public void load(String saveName) {
         this.saver.load(this, saveName);
+    }
+
+    @Override
+    public void onDeath(Player player) {
+        this.stop();
     }
 }
