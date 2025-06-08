@@ -29,9 +29,9 @@ public class Menu {
 
     public void menuOptions(String input) {
         switch (input) {
-            case "1" -> this.game.save("save");
+            case "1" -> { this.game.getStatusManager().revert(); this.game.save("save"); this.game.getPlayer().getCurrentRoom().enter(); }
             case "2" -> this.mainMenu();
-            case "3" -> this.game.getStatusManager().revert();
+            case "3" -> this.game.getPlayer().getCurrentRoom().enter();
             default -> System.out.println("please type one of the numbers");
         }
     }
