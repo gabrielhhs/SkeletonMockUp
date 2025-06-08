@@ -51,7 +51,7 @@ public class Game implements Player.Observer {
         switch (status) {
             case SELECTING_ROOM -> this.swapRoom(input);
             case IN_TASK, IN_HINT -> this.answerQuestion(input);
-            case IN_OPTION -> this.menu.menuOptions(input);
+            case IN_OPTION -> this.menu.pauseMenuOptions(input);
             case IN_MAIN_MENU -> this.menu.mainMenuOptions(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
