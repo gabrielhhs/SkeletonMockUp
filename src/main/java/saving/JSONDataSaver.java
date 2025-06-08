@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import rooms.Room;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Set;
@@ -18,7 +19,7 @@ public class JSONDataSaver implements DataSaver {
 	public JSONDataSaver(Path savesPath) {
 		this.savesPath = savesPath;
 		try {
-			savesPath.toFile().createNewFile();
+			Files.createDirectory(savesPath);
 		} catch (IOException e) {
 			throw new SaverException(e);
 		}
