@@ -5,7 +5,6 @@ import rooms.Room;
 import rooms.TaskRoom;
 import saving.DataSaver;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Map;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 public class Game {
     private final Room initialRoom = DataSeeder.generateRooms(this);
-    private Player player = DataSeeder.getPlayer(this.initialRoom);
+    private Player player = new Player(this.initialRoom);
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
@@ -51,34 +50,14 @@ public class Game {
         switch (status) {
             case SELECTING_ROOM -> this.swapRoom(input);
             case IN_TASK, IN_HINT -> this.answerQuestion(input);
-            case IN_OPTION -> this.menuOptions(input);
-            case IN_MAIN_MENU -> this.mainMenuOptions(input);
+            case IN_OPTION -> this.menu.menuOptions(input);
+            case IN_MAIN_MENU -> this.menu.mainMenuOptions(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
 
     private void handleCommand(String input) {
         this.commandManager.executeCommand(input);
-    }
-
-    //ToDo: move logic to respective class
-    private void menuOptions(String input) {
-        switch (input) {
-            case "1" -> { try { menu.saving(player); } catch (IOException e) { throw new RuntimeException(e); } }
-            case "2" -> menu.mainMenu();
-            case "3" -> this.status.revert();
-            default -> System.out.println("please type one of the numbers");
-        }
-    }
-
-    //ToDo: move logic to respective class
-    private void mainMenuOptions(String input) {
-        switch (input) {
-            case "1" -> menu.loadFromSave();
-            case "2" -> menu.startNewSave();
-            case "3" -> this.stop();
-            default -> System.out.println("please type one of the numbers");
-        }
     }
 
     public Room getInitialRoom() {

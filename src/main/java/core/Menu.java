@@ -1,11 +1,5 @@
 package core;
 
-import rooms.Room;
-import util.PathGetter;
-
-import java.io.*;
-import java.util.ArrayList;
-
 public class Menu {
     private Game game;
 
@@ -33,31 +27,21 @@ public class Menu {
                 """);
     }
 
-    public void saving(Player player) throws IOException {
-        ArrayList<Room> roomList = DataSeeder.getRoomList();
-        for (Room room : roomList) {
-            try (FileWriter fileWriter = new FileWriter(PathGetter.resourcePath() + "/" + room.getName() + ".txt")) {
-                fileWriter.write(String.valueOf(room.isCleared()));
-            }
-        }
-        try (FileWriter fileWriter = new FileWriter(PathGetter.resourcePath() + "/positionalInfo.txt")) {
-            fileWriter.write(player.getCurrentRoom().getName() + "\n");
-            fileWriter.write(this.game.getStatusManager().getPrevious().toString());
+    public void menuOptions(String input) {
+        switch (input) {
+            case "1" -> this.game.save("save");
+            case "2" -> this.mainMenu();
+            case "3" -> this.game.getStatusManager().revert();
+            default -> System.out.println("please type one of the numbers");
         }
     }
 
-    public void loadFromSave() {
-        try {
-            DataSeeder.setStatus(this.game.getStatusManager());
-            DataSeeder.setRoomClears();
-            DataSeeder.setPosition(this.game.getPlayer());
-            this.game.getPlayer().getCurrentRoom().enter();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public void mainMenuOptions(String input) {
+        switch (input) {
+            case "1" -> this.game.load("save");
+            case "2" -> this.game.getPlayer().getCurrentRoom().enter();
+            case "3" -> this.game.stop();
+            default -> System.out.println("please type one of the numbers");
         }
-    }
-
-    public void startNewSave() {
-        game.getPlayer().getCurrentRoom().enter();
     }
 }

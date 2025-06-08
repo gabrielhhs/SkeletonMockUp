@@ -9,12 +9,7 @@ import hints.RandomHintProvider;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
-import util.PathGetter;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,8 +18,6 @@ import java.util.Set;
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
 //ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
-    private static ArrayList<Room> roomList = new ArrayList<>();
-
     private static Set<Command> COMMANDS = new HashSet<>() {{
         add(new StatusCommand("status"));
         add(new SuicideCommand("kill"));
@@ -59,17 +52,11 @@ public abstract class DataSeeder {
 
         //Rooms
         Room outside = new Outside(game, "outside");
-        roomList.add(outside);
         TaskRoom planning = new TaskRoom(game, "planning");
-        roomList.add(planning);
         TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
-        roomList.add(dailyScrum);
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
-        roomList.add(sideRoom);
         TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
-        roomList.add(mainRoomMonster1);
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
-        roomList.add(mainRoomMonster2);
         /*
             visual overview of room path [DO NOT REMOVE]
             outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
@@ -175,53 +162,5 @@ public abstract class DataSeeder {
 
     public static Set<Command> getCommands() {
         return COMMANDS;
-    }
-
-    public static void setRoomClears() throws FileNotFoundException {
-        for (Room room : roomList) {
-            String filePath = PathGetter.resourcePath() + "/" + room.getName() + ".txt"; // update this path
-
-            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-                String line = reader.readLine();
-                if (line != null) {
-                    boolean value = Boolean.parseBoolean(line.trim());
-                    room.setCleared(value);
-                } else {
-                    System.out.println("File is empty.");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void setPosition(Player player) {
-        String filePath = PathGetter.resourcePath() + "/positionalInfo.txt";
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String currentRoom = reader.readLine();
-
-            for (Room room : roomList) {
-                if (room.isCurrentRoom(currentRoom)) player.setCurrentRoom(room);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static ArrayList<Room> getRoomList() {
-        return roomList;
-    }
-
-    public static Player getPlayer(Room room) {
-        return new Player(room);
-    }
-
-    public static void setStatus(StatusManager statusManager) throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader(PathGetter.resourcePath() + "/positionalInfo.txt"));
-
-        reader.readLine(); // skip currentRoom value
-        GameStatus status = GameStatus.valueOf(reader.readLine());
-
-        statusManager.set(status);
     }
 }
