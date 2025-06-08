@@ -14,7 +14,7 @@ public class SpecialEventRoom extends Room {
 
     @Override
     protected void onEnter() {
-        if (this.eventHandler.getEvent() != null && this.eventHandler.getEvent().isActiveOnEnter()) this.eventHandler.start();
+        if (this.eventHandler.getEvent() != null && this.eventHandler.getEvent().canStart()) this.eventHandler.start();
     }
 
     @Override
