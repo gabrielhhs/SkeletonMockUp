@@ -48,11 +48,13 @@ public abstract class Room {
 
     public final void enter() {
         this.onEnter();
-        parent.getPlayer().setCurrentRoom(this);
-        if (this.cleared) {
-            this.chooseRoom();
-        } else {
-            this.handleUncleared();
+        this.parent.getPlayer().setCurrentRoom(this);
+        if (!this.parent.getStatusManager().is(GameStatus.IN_EVENT)) {
+            if (this.cleared) {
+                this.chooseRoom();
+            } else {
+                this.handleUncleared();
+            }
         }
     }
 
@@ -85,7 +87,6 @@ public abstract class Room {
     public boolean isCurrentRoom(String room) {
         return room.equals(this.name);
     }
-
 
     public Map<String, Room> getNeighboringRooms() {
         return this.neighboringRooms;

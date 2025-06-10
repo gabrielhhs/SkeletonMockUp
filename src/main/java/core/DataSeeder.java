@@ -2,6 +2,15 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
+import dialogue.DialogueManager;
+import dialogue.DialogueNode;
+import entities.AssistantEntity;
+import entities.DialogueEntity;
+import events.eventtypes.AssistantEncounterEvent;
+import events.eventtypes.ReverseWeepingAngelEvent;
+import entities.AssistantEntity;
+import events.eventtypes.AssistantEncounterEvent;
+import events.eventtypes.ReverseWeepingAngelEvent;
 import hints.HintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
@@ -49,6 +58,11 @@ public abstract class DataSeeder {
         //Monsters
         QuestionMonster monster1 = new QuestionMonster("Monstro Uno");
         QuestionMonster monster2 = new QuestionMonster("Monstro Dos");
+        AssistantEntity assistant = new AssistantEntity();
+
+        //Events
+        ReverseWeepingAngelEvent angelEvent = new ReverseWeepingAngelEvent(2);
+        AssistantEncounterEvent assistantEvent = new AssistantEncounterEvent(assistant);
 
         //Rooms
         Room outside = new Outside(game, "outside");
@@ -57,12 +71,16 @@ public abstract class DataSeeder {
         TaskRoom sideRoom = new TaskRoom(game, "sideroom");
         TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
         TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
+        TaskRoomWithEvent angelRoom = new TaskRoomWithEvent(game, "Weeping Room");
+        SpecialEventRoom assistantRoom = new SpecialEventRoom(game, "The Doll Room", assistantEvent);
+
         /*
             visual overview of room path [DO NOT REMOVE]
             outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
+            angelRoom = 6; assistantRoom = 7;
 
 
-                {4}, {5}
+                {4}, {5}, {6}, {7}
                 {2}, {3}
                 {1}
                 {0}
@@ -89,6 +107,14 @@ public abstract class DataSeeder {
 
         //mainRoomMonster2
         mainRoomMonster2.putNeighboringRoom(left, mainRoomMonster1);
+        mainRoomMonster2.putNeighboringRoom(right, angelRoom);
+
+        //Angel Room
+        angelRoom.putNeighboringRoom(left, mainRoomMonster2);
+        angelRoom.putNeighboringRoom(right, assistantRoom);
+
+        //Assistant Room
+        assistantRoom.putNeighboringRoom(left, angelRoom);
 
 
         //Room Tasks
@@ -116,6 +142,13 @@ public abstract class DataSeeder {
                 mainRoomMonster2
         );
 
+        OpenQuestion angelRoomQuestion = new OpenQuestion(
+                "What are witches made of?",
+                "wood",
+                angelRoom,
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS})
+        );
+
         //Monster Tasks
         OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
                 "What do the Knights Who Say 'Ni!' actually want?",
@@ -137,10 +170,14 @@ public abstract class DataSeeder {
         sideRoom.getTaskHandler().setTask(sideRoomTask);
         mainRoomMonster1.getTaskHandler().setTask(monsterRoomQuestion1);
         mainRoomMonster2.getTaskHandler().setTask(monsterRoomQuestion2);
+        angelRoom.getTaskHandler().setTask(angelRoomQuestion);
 
         //Assigning Tasks Monsters
         monster1.setTask(monsterQuestion1);
         monster2.setTask(monsterQuestion2);
+
+        //Assigning Event
+        angelRoom.getEventHandler().setEvent(angelEvent);
 
         return outside;
     }

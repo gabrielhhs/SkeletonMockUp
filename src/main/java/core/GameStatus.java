@@ -5,5 +5,6 @@ public enum GameStatus {
     IN_TASK,
     IN_OPTION,
     IN_HINT,
-    IN_MAIN_MENU
+    IN_MAIN_MENU,
+    IN_EVENT
 }
