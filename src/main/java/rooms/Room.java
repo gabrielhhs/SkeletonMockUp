@@ -28,6 +28,24 @@ public abstract class Room {
         }
     }
 
+    public void consume(String input) {
+        Room targetRoom = null;
+        for (Map.Entry<String, Room> entry : this.neighboringRooms.entrySet()) {
+            if (entry.getKey().equalsIgnoreCase(input)) {
+                targetRoom = entry.getValue();
+                break;
+            }
+        }
+
+        if (targetRoom == null) {
+            System.out.println("Invalid direction, please try again");
+            return;
+        }
+
+        this.parent.getPlayer().setCurrentRoom(targetRoom);
+        targetRoom.enter();
+    }
+
     public final void enter() {
         this.onEnter();
         parent.getPlayer().setCurrentRoom(this);

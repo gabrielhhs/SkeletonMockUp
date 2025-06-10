@@ -49,7 +49,7 @@ public class Game implements Player.Observer {
         if (status.equals(null)) throw new AssertionError("How did you get here?");
 
         switch (status) {
-            case SELECTING_ROOM -> this.swapRoom(input);
+            case SELECTING_ROOM -> this.getPlayer().getCurrentRoom().consume(input);
             case IN_TASK, IN_HINT -> this.answerQuestion(input);
             case IN_OPTION -> this.menu.pauseMenuOptions(input);
             case IN_MAIN_MENU -> this.menu.mainMenuOptions(input);
@@ -63,23 +63,6 @@ public class Game implements Player.Observer {
 
     public Room getInitialRoom() {
         return this.initialRoom;
-    }
-
-    //ToDo: move logic to respective class
-    private void swapRoom(String input) {
-        String direction = null;
-        Map<String, Room> neighboringRooms = player.getCurrentRoom().getNeighboringRooms();
-        for (String key : neighboringRooms.keySet()) if (input.equalsIgnoreCase(key)) {
-            direction = key;
-            break;
-        }
-
-        if (direction == null) {
-            System.out.println("Invalid direction try again");
-        } else {
-            this.player.setCurrentRoom(neighboringRooms.get(direction));
-            this.player.getCurrentRoom().enter();
-        }
     }
 
     private void answerQuestion(String input) {
