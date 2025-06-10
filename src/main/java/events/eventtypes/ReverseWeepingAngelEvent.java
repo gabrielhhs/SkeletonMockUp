@@ -32,7 +32,7 @@ public class ReverseWeepingAngelEvent extends Event {
     }
 
     private void trackEnters() {
-        this.totalEntries ++;
+        this.totalEntries++;
         if (this.totalEntries == this.startingBoundary) {
             this.parent.getParent().getParent().getStatusManager().set(GameStatus.IN_EVENT);
             this.start();
@@ -41,7 +41,7 @@ public class ReverseWeepingAngelEvent extends Event {
 
     @Override
     public boolean canStart() {
-        trackEnters();
+        this.trackEnters();
         return super.canStart();
     }
 }
