@@ -3,24 +3,29 @@ package core;
 import commands.CommandManager;
 import rooms.Room;
 import rooms.TaskRoom;
+import saving.DataSaver;
 
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
-public class Game {
+public class Game implements Player.Observer {
     private final Room initialRoom = DataSeeder.generateRooms(this);
-    private Player player = DataSeeder.getPlayer(this.initialRoom);
+    private Player player = new Player(this.initialRoom);
     private CommandManager commandManager = new CommandManager(this);
     private final InputStream in;
     private boolean running;
     private Menu menu = new Menu(this);
     private final StatusManager status = new StatusManager();
+    private final DataSaver saver;
 
-    public Game(InputStream in) {
+    public Game(InputStream in, DataSaver saver) {
         this.in = in;
+        this.saver = saver;
         this.commandManager.massRegisterCommand(DataSeeder.getCommands());
+        this.player.addObserver(this);
     }
 
     public void start() {
@@ -44,10 +49,10 @@ public class Game {
         if (status.equals(null)) throw new AssertionError("How did you get here?");
 
         switch (status) {
-            case SELECTING_ROOM -> this.swapRoom(input);
+            case SELECTING_ROOM -> this.getPlayer().getCurrentRoom().consume(input);
             case IN_TASK, IN_HINT -> this.answerQuestion(input);
-            case IN_OPTION -> this.menuOptions(input);
-            case IN_MAIN_MENU -> this.mainMenuOptions(input);
+            case IN_OPTION -> this.menu.pauseMenuOptions(input);
+            case IN_MAIN_MENU -> this.menu.mainMenuOptions(input);
             default -> throw new IllegalStateException("Invalid room status");
         }
     }
@@ -56,45 +61,8 @@ public class Game {
         this.commandManager.executeCommand(input);
     }
 
-    //ToDo: move logic to respective class
-    private void menuOptions(String input) {
-        switch (input) {
-            case "1" -> { try { menu.saving(player); } catch (IOException e) { throw new RuntimeException(e); } }
-            case "2" -> menu.mainMenu();
-            case "3" -> this.status.revert();
-            default -> System.out.println("please type one of the numbers");
-        }
-    }
-
-    //ToDo: move logic to respective class
-    private void mainMenuOptions(String input) {
-        switch (input) {
-            case "1" -> menu.loadFromSave();
-            case "2" -> menu.startNewSave();
-            case "3" -> this.stop();
-            default -> System.out.println("please type one of the numbers");
-        }
-    }
-
     public Room getInitialRoom() {
         return this.initialRoom;
-    }
-
-    //ToDo: move logic to respective class
-    private void swapRoom(String input) {
-        String direction = null;
-        Map<String, Room> neighboringRooms = player.getCurrentRoom().getNeighboringRooms();
-        for (String key : neighboringRooms.keySet()) if (input.equalsIgnoreCase(key)) {
-            direction = key;
-            break;
-        }
-
-        if (direction == null) {
-            System.out.println("Invalid direction try again");
-        } else {
-            this.player.setCurrentRoom(neighboringRooms.get(direction));
-            this.player.getCurrentRoom().enter();
-        }
     }
 
     private void answerQuestion(String input) {
@@ -112,5 +80,35 @@ public class Game {
 
     public StatusManager getStatusManager() {
         return this.status;
+    }
+
+    private void collectRooms(Room self, Set<Room> result) {
+        if (result.contains(self)) return;
+        result.add(self);
+
+        for (Room neighbor : self.getNeighboringRooms().values()) {
+            this.collectRooms(neighbor, result);
+        }
+    }
+    public Set<Room> collectRooms() {
+        Set<Room> result = new HashSet<>();
+        this.collectRooms(this.getInitialRoom(), result);
+        return result;
+    }
+
+    public DataSaver getDataSaver() {
+        return this.saver;
+    }
+
+    public void save(String saveName) {
+        this.saver.save(this, saveName);
+    }
+    public void load(String saveName) {
+        this.saver.load(this, saveName);
+    }
+
+    @Override
+    public void onDeath(Player player) {
+        this.stop();
     }
 }
