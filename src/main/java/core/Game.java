@@ -103,7 +103,7 @@ public class Game {
     private void sendInputToEvent(String input) {
         if (this.player.getCurrentRoom() instanceof TaskRoomWithEvent room) room.getEventHandler().consume(input);
         else if (this.player.getCurrentRoom() instanceof SpecialEventRoom room) room.getEventHandler().consume(input);
-        else System.out.println("beans debug");
+        else System.out.println("How did you get here?");
     }
 
     private void answerQuestion(String input) {
