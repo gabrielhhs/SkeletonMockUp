@@ -38,7 +38,7 @@ public class Menu {
 
     public void mainMenuOptions(String input) {
         switch (input) {
-            case "1" -> this.game.load("save");
+            case "1" -> { if (this.game.getDataSaver().saveExists("save")) this.game.load("save"); else System.out.println("No save found"); }
             case "2" -> this.game.getPlayer().getCurrentRoom().enter();
             case "3" -> this.game.stop();
             default -> System.out.println("please type one of the numbers");
