@@ -70,6 +70,23 @@ public class Game implements Player.Observer {
         return this.initialRoom;
     }
 
+    //ToDo: move logic to respective class
+    private void swapRoom(String input) {
+        String direction = null;
+        Map<String, Room> neighboringRooms = player.getCurrentRoom().getNeighboringRooms();
+        for (String key : neighboringRooms.keySet()) if (input.equalsIgnoreCase(key)) {
+            direction = key;
+            break;
+        }
+
+        if (direction == null) {
+            System.out.println("Invalid direction try again");
+        } else {
+            this.player.setCurrentRoom(neighboringRooms.get(direction));
+            this.player.getCurrentRoom().enter();
+        }
+    }
+
     private void answerQuestion(String input) {
         if (this.player.getCurrentRoom() instanceof TaskRoom taskRoom) taskRoom.getTaskHandler().consume(input);
         else throw new AssertionError("How did you get here?");

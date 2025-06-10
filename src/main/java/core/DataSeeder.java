@@ -2,6 +2,12 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
+import dialogue.DialogueManager;
+import dialogue.DialogueNode;
+import entities.AssistantEntity;
+import entities.DialogueEntity;
+import events.eventtypes.AssistantEncounterEvent;
+import events.eventtypes.ReverseWeepingAngelEvent;
 import entities.AssistantEntity;
 import events.eventtypes.AssistantEncounterEvent;
 import events.eventtypes.ReverseWeepingAngelEvent;
