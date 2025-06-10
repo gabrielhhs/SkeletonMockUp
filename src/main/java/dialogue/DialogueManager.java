@@ -21,7 +21,7 @@ public class DialogueManager {
         DialogueNode node = this.dialogueTree.get(this.currentNodeId);
         System.out.println(node.text);
 
-        if (node.options.isEmpty()) moveToNextNode();
+        if (node.options.isEmpty()) this.moveToNextNode();
         else showOptions();
     }
 
@@ -49,9 +49,9 @@ public class DialogueManager {
 
         if (nextNodeId != null) {
             this.currentNodeId = nextNodeId;
-            start();
+            this.start();
         } else {
-            endDialogue();
+            this.endDialogue();
         }
     }
 
@@ -62,13 +62,13 @@ public class DialogueManager {
         if (chosenOption != null) {
             if (chosenOption.nextNodeId != null) {
                 this.currentNodeId = chosenOption.nextNodeId;
-                start();
+                this.start();
             } else {
-                endDialogue();
+                this.endDialogue();
             }
         } else {
             System.out.println("That isn't a valid option.");
-            showOptions();
+            this.showOptions();
         }
     }
 
@@ -77,6 +77,6 @@ public class DialogueManager {
     }
 
     private void endDialogue() {
-        parent.endDialogue();
+        this.parent.endDialogue();
     }
 }
