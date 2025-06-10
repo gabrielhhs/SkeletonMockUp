@@ -11,7 +11,8 @@ public class AssistantEntity implements DialogueEntity {
         this.dialogueManager.consume(input);
     }
 
-    public void activate() {
+    @Override
+    public void startDialogue() {
         this.dialogueManager.start();
     }
 
