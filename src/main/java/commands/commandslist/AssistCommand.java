@@ -13,6 +13,10 @@ public class AssistCommand implements Command {
     private static final String[] MOTIVATIONAL_PLAN = {"google the answer", "cheat by using \"Up, Up, Down, Down, Left, Right, Left, Right, B, A,\""};
     private static final Random RANDOM = new Random();
 
+    public AssistCommand(int uses) {
+        this.uses = uses;
+    }
+
     @Override
     public void run(CommandManager commandManager, String args) {
         if (this.uses > 0) {
@@ -32,7 +36,7 @@ public class AssistCommand implements Command {
         int initialCount = player.getInventory().getOrDefault(jokerItem, 0);
 
         player.giveItem(jokerItem);
-        commandManager.executeCommand("use Clue Joker");
+        jokerItem.use(commandManager.getParent());
 
         return player.getInventory().getOrDefault(jokerItem, 0) > initialCount;
     }
