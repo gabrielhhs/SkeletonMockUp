@@ -20,7 +20,7 @@ public class AssistantEncounterEvent extends Event {
     @Override
     public void start() {
         System.out.println("As you enter you see an eerily human looking wooden figure standing in the middle of the room.");
-        this.assistant.activate();
+        this.assistant.startDialogue();
     }
 
     @Override
