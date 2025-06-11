@@ -3,15 +3,12 @@ package core;
 import commands.CommandManager;
 import rooms.Room;
 import rooms.SpecialEventRoom;
-import rooms.SpecialEventRoom;
 import rooms.TaskRoom;
 import rooms.TaskRoomWithEvent;
 import saving.DataSaver;
-import rooms.TaskRoomWithEvent;
 
 import java.io.InputStream;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
