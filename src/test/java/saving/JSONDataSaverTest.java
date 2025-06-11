@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+import org.mockito.Mock;
 import org.mockito.MockedStatic;
+import org.mockito.MockitoAnnotations;
 import rooms.*;
 
 import java.io.IOException;
@@ -22,27 +24,22 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class JSONDataSaverTest {
-    private Game mockGame;
-    private Player mockPlayer;
-    private Room mockRoom1;
-    private Room mockRoom2;
-    private Item mockItem1;
-    private Item mockItem2;
-    private StatusManager mockManager;
-    private JSONDataSaver saver;
+    @Mock private Game mockGame;
+    @Mock private Player mockPlayer;
+    @Mock private Room mockRoom1;
+    @Mock private Room mockRoom2;
+    @Mock private Item mockItem1;
+    @Mock private Item mockItem2;
+    @Mock private StatusManager mockManager;
+    @Mock private JSONDataSaver saver;
 
     @TempDir
     Path tempDir;
 
     @BeforeEach
     void setUp() {
-        mockGame = mock(Game.class);
-        mockPlayer = mock(Player.class);
-        mockRoom1 = mock(Room.class);
-        mockRoom2 = mock(Room.class);
-        mockItem1 = mock(Item.class);
-        mockItem2 = mock(Item.class);
-        mockManager = mock(StatusManager.class);
+        MockitoAnnotations.openMocks(this);
+
         Map<Item, Integer> inventory = new HashMap<>();
         inventory.put(mockItem1, 1);
         inventory.put(mockItem2, 2);
