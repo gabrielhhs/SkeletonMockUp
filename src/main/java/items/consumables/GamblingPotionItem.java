@@ -3,7 +3,6 @@ package items.consumables;
 import core.Game;
 import core.Player;
 import items.Item;
-import rooms.Room;
 
 import java.util.Random;
 

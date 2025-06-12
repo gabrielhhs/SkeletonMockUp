@@ -2,12 +2,6 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
-import dialogue.DialogueManager;
-import dialogue.DialogueNode;
-import entities.AssistantEntity;
-import entities.DialogueEntity;
-import events.eventtypes.AssistantEncounterEvent;
-import events.eventtypes.ReverseWeepingAngelEvent;
 import entities.AssistantEntity;
 import events.eventtypes.AssistantEncounterEvent;
 import events.eventtypes.ReverseWeepingAngelEvent;
@@ -19,9 +13,7 @@ import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 //ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
@@ -180,21 +172,6 @@ public abstract class DataSeeder {
         angelRoom.getEventHandler().setEvent(angelEvent);
 
         return outside;
-    }
-
-    public static void generateUselessHints() {
-        List<LiteralHintProvider> uselessHints = new ArrayList<>();
-
-        uselessHints.add(new LiteralHintProvider("YOU CAN DO IT!!!"));
-        uselessHints.add(new LiteralHintProvider("YOU CAN NOT DO IT!!!"));
-        uselessHints.add(new LiteralHintProvider("We believe this question is too easy to give a Hint..."));
-        uselessHints.add(new LiteralHintProvider("you can do this trust me"));
-        uselessHints.add(new LiteralHintProvider("You could try that… if failing is your thing."));
-        uselessHints.add(new LiteralHintProvider("Maybe try using your brain next time"));
-        uselessHints.add(new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"));
-        uselessHints.add(new LiteralHintProvider("You’re closer than you think."));
-        uselessHints.add(new LiteralHintProvider("Every expert was once where you are."));
-        uselessHints.add(new LiteralHintProvider("Take a breath. You know this."));
     }
 
     public static Set<Command> getCommands() {

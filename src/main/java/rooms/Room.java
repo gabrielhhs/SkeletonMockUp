@@ -68,9 +68,6 @@ public abstract class Room {
     public String getName() {
         return this.name;
     }
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public boolean isCleared() {
         return this.cleared;
@@ -82,10 +79,6 @@ public abstract class Room {
 
     public void setCleared() {
         this.cleared = true;
-    }
-
-    public boolean isCurrentRoom(String room) {
-        return room.equals(this.name);
     }
 
     public Map<String, Room> getNeighboringRooms() {

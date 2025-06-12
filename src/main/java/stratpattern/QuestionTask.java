@@ -44,8 +44,4 @@ public abstract class QuestionTask extends Task {
 		if (correct) this.handleCorrectAnswer();
 		else this.handleWrongAnswer();
 	}
-
-	public HintProvider getHintProvider() {
-		return hintProvider;
-	}
 }

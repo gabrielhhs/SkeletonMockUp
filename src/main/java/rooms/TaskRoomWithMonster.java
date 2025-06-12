@@ -12,9 +12,6 @@ public class TaskRoomWithMonster extends TaskRoom {
         this.monster.setParent(this);
     }
 
-    public void setMonster(QuestionMonster monster) {
-        this.monster = monster;
-    }
     public QuestionMonster getMonster() {
         return this.monster;
     }

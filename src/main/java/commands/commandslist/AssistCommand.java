@@ -46,10 +46,6 @@ public class AssistCommand implements Command {
         System.out.println("[Assistant] " + MOTIVATION_TEXT[RANDOM.nextInt(0, MOTIVATION_TEXT.length)]);
     }
 
-    public void setUses(int uses) {
-        this.uses = uses;
-    }
-
     @Override
     public String getKeyWord() {
         return "assist";
