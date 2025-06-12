@@ -1,7 +1,5 @@
 package core;
 
-import commands.Command;
-import commands.commandslist.*;
 import entities.AssistantEntity;
 import events.eventtypes.AssistantEncounterEvent;
 import events.eventtypes.ReverseWeepingAngelEvent;
@@ -17,16 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class DataSeeder {
-    private static Set<Command> COMMANDS = new HashSet<>() {{
-        add(new StatusCommand("status"));
-        add(new SuicideCommand("kill"));
-        add(new InventoryCommand("inventory"));
-        add(new InventoryCommand("inv"));
-        add(new UseCommand());
-        add(new MenuCommand("menu"));
-    }};
-
-    private static HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]{
+    private static final HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]{
             new LiteralHintProvider("YOU CAN DO IT!!!"),
             new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
             new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
@@ -170,9 +159,5 @@ public abstract class DataSeeder {
         angelRoom.getEventHandler().setEvent(angelEvent);
 
         return outside;
-    }
-
-    public static Set<Command> getCommands() {
-        return COMMANDS;
     }
 }

@@ -1,6 +1,5 @@
 package core;
 
-import items.Item;
 import observer.DeathNotifier;
 import observer.Scoreboard;
 import rooms.Room;
@@ -19,7 +18,7 @@ public class Player {
     private int maxHealth;
     private int score = 0;
     private boolean dead = false;
-    private final Map<Item, Integer> inventory = new HashMap<>();
+    private final Map<String, Integer> inventory = new HashMap<>();
 
     public Player(Room room) {
         this.currentRoom = room;
@@ -111,34 +110,34 @@ public class Player {
         this.observers.remove(observer);
     }
 
-    public void giveItem(Item item, int count) {
-        if (this.inventory.containsKey(item)) {
-            this.inventory.put(item, this.inventory.get(item) + count);
+    public void giveItem(String itemId, int count) {
+        if (this.inventory.containsKey(itemId)) {
+            this.inventory.put(itemId, this.inventory.get(itemId) + count);
         } else {
-            this.inventory.put(item, count);
+            this.inventory.put(itemId, count);
         }
     }
-    public void giveItem(Item item) {
-        this.giveItem(item, 1);
+    public void giveItem(String itemId) {
+        this.giveItem(itemId, 1);
     }
 
-    public void takeItem(Item item, int count) {
-        if (this.inventory.containsKey(item)) {
-            this.inventory.put(item, this.inventory.get(item) - count);
-            if (this.inventory.get(item) <= 0) this.inventory.remove(item);
+    public void takeItem(String itemId, int count) {
+        if (this.inventory.containsKey(itemId)) {
+            this.inventory.put(itemId, this.inventory.get(itemId) - count);
+            if (this.inventory.get(itemId) <= 0) this.inventory.remove(itemId);
         } else {
             throw new IllegalStateException("Cannot take items that a player does not have");
         }
     }
-    public void takeItem(Item item) {
-        this.takeItem(item, 1);
+    public void takeItem(String itemId) {
+        this.takeItem(itemId, 1);
     }
 
     public void clearInventory() {
         this.inventory.clear();
     }
 
-    public Map<Item, Integer> getInventory() {
+    public Map<String, Integer> getInventory() {
         return Collections.unmodifiableMap(this.inventory);
     }
 

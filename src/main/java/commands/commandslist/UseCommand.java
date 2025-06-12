@@ -7,6 +7,7 @@ import commands.CommandManager;
 import items.Item;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class UseCommand implements Command {
 	@Override
@@ -15,16 +16,17 @@ public class UseCommand implements Command {
 		Player player = game.getPlayer();
 
 		if (args == null) {
-			System.out.printf("Usage: %s <item>", this.getKeyWord());
+			System.out.printf("Usage: %s <item>", this.getId());
 			return;
 		}
 
-		String itemName = args;
-		Map<Item, Integer> inventory = player.getInventory();
+		String targetItemString = args;
+		Map<String, Integer> inventory = player.getInventory();
 		Item item = null;
-		for (Item v : inventory.keySet()) {
-			if (v.getName().equalsIgnoreCase(itemName)) {
-				item = v;
+		for (String itemId : inventory.keySet()) {
+			Optional<Item> v = game.ITEMS.get(itemId);
+			if (v.isPresent() && (v.get().getName().equalsIgnoreCase(targetItemString) || v.get().getId().equalsIgnoreCase(targetItemString))) {
+				item = v.get();
 				break;
 			}
 		}
@@ -38,7 +40,7 @@ public class UseCommand implements Command {
 	}
 
 	@Override
-	public String getKeyWord() {
+	public String getId() {
 		return "use";
 	}
 }

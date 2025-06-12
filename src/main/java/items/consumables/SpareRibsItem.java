@@ -15,7 +15,7 @@ public class SpareRibsItem implements Item {
 
         if (random.nextFloat() < 0.2) this.doDamage(player);
         else player.heal(1);
-        player.takeItem(this);
+        player.takeItem(this.getId());
     }
 
     private void doDamage(Player player) {
@@ -30,5 +30,10 @@ public class SpareRibsItem implements Item {
     @Override
     public String getName() {
         return "Spare Ribs";
+    }
+
+    @Override
+    public String getId() {
+        return "spareribs";
     }
 }

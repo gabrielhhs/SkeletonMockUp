@@ -16,7 +16,7 @@ public class SuicideCommand implements Command {
     }
 
     @Override
-    public String getKeyWord() {
+    public String getId() {
         return this.keyWord;
     }
 }

@@ -1,6 +1,10 @@
 package core;
 
+import commands.Command;
 import commands.CommandManager;
+import commands.GameCommands;
+import items.GameItems;
+import items.Item;
 import rooms.Room;
 import rooms.SpecialEventRoom;
 import rooms.TaskRoom;
@@ -14,18 +18,19 @@ import java.util.Set;
 
 public class Game implements Player.Observer {
     private final Room initialRoom = DataSeeder.generateRooms(this);
-    private Player player = new Player(this.initialRoom);
-    private CommandManager commandManager = new CommandManager(this);
+    private final Player player = new Player(this.initialRoom);
+    public final Registry<Command> COMMANDS = GameCommands.register(new Registry<>());
+    public final Registry<Item> ITEMS = GameItems.register(new Registry<>());
+    private final CommandManager commandManager = new CommandManager(this, this.COMMANDS);
     private final InputStream in;
     private boolean running;
-    private Menu menu = new Menu(this);
+    private final Menu menu = new Menu(this);
     private final StatusManager status = new StatusManager();
     private final DataSaver saver;
 
     public Game(InputStream in, DataSaver saver) {
         this.in = in;
         this.saver = saver;
-        this.commandManager.massRegisterCommand(DataSeeder.getCommands());
         this.player.addObserver(this);
     }
 
@@ -43,11 +48,11 @@ public class Game implements Player.Observer {
     }
 
     private void processInput(String input) {
-        if (input.isEmpty() || input.equals(null)) return;
+        if (input == null || input.isEmpty()) return;
         if (input.startsWith("/")) {handleCommand(input.substring(1)); return;}
 
         GameStatus status = this.status.get();
-        if (status.equals(null)) throw new AssertionError("How did you get here?");
+        if (status == null) throw new AssertionError("How did you get here?");
 
         switch (status) {
             case SELECTING_ROOM -> this.getPlayer().getCurrentRoom().consume(input);
@@ -88,10 +93,6 @@ public class Game implements Player.Observer {
 
     public StatusManager getStatusManager() {
         return this.status;
-    }
-
-    public CommandManager getCommandManager() {
-        return this.commandManager;
     }
 
     private void collectRooms(Room self, Set<Room> result) {

@@ -12,7 +12,7 @@ public class SwordItem implements Item {
         Player player = game.getPlayer();
         Room room = player.getCurrentRoom();
 
-        if (canUse(room)) { room.setCleared(); player.takeItem(this); }
+        if (canUse(room)) { room.setCleared(); player.takeItem(this.getId()); }
         else System.out.println("Nothing happened...");
     }
 
@@ -23,5 +23,10 @@ public class SwordItem implements Item {
     @Override
     public String getName() {
         return "Sword of Monster Smashing";
+    }
+
+    @Override
+    public String getId() {
+        return "sword";
     }
 }
