@@ -1,19 +1,20 @@
 package core;
 
+import commands.Command;
+import commands.commandslist.*;
+import events.Event;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-import rooms.Outside;
-import rooms.Room;
-import rooms.TaskRoom;
+import rooms.*;
 import stratpattern.MultipleChoiceQuestion;
 
 import java.util.Map;
+import java.util.Set;
 
 class DataSeederTest {
     @Mock
@@ -26,7 +27,7 @@ class DataSeederTest {
 
     @Test
     void generateRooms_shouldReturnOutsideRoom() {
-        Room result = DataSeeder.generateRooms(mockGame);
+        Room result = DataSeeder.generateRooms(this.mockGame);
         assertNotNull(result);
         assertInstanceOf(Outside.class, result);
     }
@@ -47,7 +48,7 @@ class DataSeederTest {
         String right = "right";
         String enter = "enter";
 
-        Room outside = DataSeeder.generateRooms(mockGame);
+        Room outside = DataSeeder.generateRooms(this.mockGame);
         Map<String, Room> outsideRoomList = outside.getNeighboringRooms();
 
 
@@ -95,12 +96,12 @@ class DataSeederTest {
         assertEquals("MonsterRoom1", monsterRoom1.getName());
 
 
-        // Ik stop hier want wss willen we een andere layout met andere vragen maken.
+        // Ik stop hier want wss willen we een andere layout met andere vragen/rooms maken.
     }
 
     @Test
     void generateRoom_shouldAsignTaskToRoom() {
-        Room outside = DataSeeder.generateRooms(mockGame);
+        Room outside = DataSeeder.generateRooms(this.mockGame);
         Map<String, Room> outsideRoomList = outside.getNeighboringRooms();
         Room planning = null;
 
@@ -110,17 +111,101 @@ class DataSeederTest {
                 break;
             }
         }
-        assertNotNull(planning);
-        assertInstanceOf(MultipleChoiceQuestion.class, planning.k());
+        TaskRoom taskPlanning = (TaskRoom) planning;
+        assert taskPlanning != null;
+        assertNotNull(taskPlanning.getTaskHandler().getTask());
+        assertInstanceOf(MultipleChoiceQuestion.class, taskPlanning.getTaskHandler().getTask());
     }
 
+    @Test
+    void generateRoom_shouldCreateMonsterWithTask() {
+        Room outside = DataSeeder.generateRooms(this.mockGame);
+        Map<String, Room> outsideRoomList = outside.getNeighboringRooms();
+        Room planning = null;
+
+        for (Map.Entry<String, Room> entry : outsideRoomList.entrySet()) {
+            if (entry.getKey().equals("enter")) planning = entry.getValue();
+        }
+
+        assert planning != null;
+        Map<String, Room> planningRoomList = planning.getNeighboringRooms();
+        Room dailyScrum = null;
+
+        for (Map.Entry<String, Room> entry : planningRoomList.entrySet()) {
+            if (entry.getKey().equals("up")) dailyScrum = entry.getValue();
+        }
+
+        assert dailyScrum != null;
+        Map<String, Room> dailyScrumRoomList = dailyScrum.getNeighboringRooms();
+        Room mainMonsterRoom = null;
+
+        for (Map.Entry<String, Room> entry : dailyScrumRoomList.entrySet()) {
+            if (entry.getKey().equals("up")) mainMonsterRoom = entry.getValue();
+        }
+
+        assertNotNull(mainMonsterRoom);
+        assertInstanceOf(TaskRoomWithMonster.class, mainMonsterRoom);
+    }
+
+    @Test
+    void generateRoom_shouldCreateRoomWithEvents() {
+        Room outside = DataSeeder.generateRooms(this.mockGame);
+        Map<String, Room> outsideRoomList = outside.getNeighboringRooms();
+        Room planning = null;
+
+        for (Map.Entry<String, Room> entry : outsideRoomList.entrySet()) {
+            if (entry.getKey().equals("enter")) planning = entry.getValue();
+        }
+
+        assert planning != null;
+        Map<String, Room> planningRoomList = planning.getNeighboringRooms();
+        Room dailyScrum = null;
+
+        for (Map.Entry<String, Room> entry : planningRoomList.entrySet()) {
+            if (entry.getKey().equals("up")) dailyScrum = entry.getValue();
+        }
+
+        assert dailyScrum != null;
+        Map<String, Room> dailyScrumRoomList = dailyScrum.getNeighboringRooms();
+        Room monsterRoom1 = null;
+
+        for (Map.Entry<String, Room> entry : dailyScrumRoomList.entrySet()) {
+            if (entry.getKey().equals("up")) monsterRoom1 = entry.getValue();
+        }
+
+        assert monsterRoom1 != null;
+        Map<String, Room> monsterRoom1List = monsterRoom1.getNeighboringRooms();
+        Room monsterRoom2 = null;
+
+        for (Map.Entry<String, Room> entry : monsterRoom1List.entrySet()) {
+            if (entry.getKey().equals("right")) monsterRoom2 = entry.getValue();
+        }
+
+        assert monsterRoom2 != null;
+        Map<String, Room> monsterRoom2List = monsterRoom2.getNeighboringRooms();
+        Room angelRoom = null;
+
+        for (Map.Entry<String, Room> entry : monsterRoom2List.entrySet()) {
+            if (entry.getKey().equals("right")) angelRoom = entry.getValue();
+        }
+        TaskRoomWithEvent eventAngel = (TaskRoomWithEvent) angelRoom;
+        assertNotNull(angelRoom);
+        assertInstanceOf(Event.class, eventAngel.getEventHandler().getEvent());
+    }
 
     @Test
     void generateUselessHints() {
-
+        assertDoesNotThrow(DataSeeder::generateUselessHints);
     }
 
     @Test
     void getCommands() {
+        Set<Command> commands = DataSeeder.getCommands();
+
+        assertTrue(commands.stream().anyMatch(c -> c instanceof StatusCommand));
+        assertTrue(commands.stream().anyMatch(c -> c instanceof SuicideCommand));
+        assertTrue(commands.stream().anyMatch(c -> c instanceof InventoryCommand));
+        assertTrue(commands.stream().anyMatch(c -> c instanceof UseCommand));
+        assertTrue(commands.stream().anyMatch(c -> c instanceof MenuCommand));
     }
 }

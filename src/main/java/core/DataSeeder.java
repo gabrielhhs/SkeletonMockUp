@@ -1,5 +1,7 @@
 package core;
 
+import commands.Command;
+import commands.commandslist.*;
 import entities.AssistantEntity;
 import events.eventtypes.AssistantEncounterEvent;
 import events.eventtypes.ReverseWeepingAngelEvent;
