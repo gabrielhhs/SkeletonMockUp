@@ -48,11 +48,11 @@ public class Game implements Player.Observer {
     }
 
     private void processInput(String input) {
-        if (input.equals(null) || input.isEmpty()) return;
+        if (input == null || input.isEmpty()) return;
         if (input.startsWith("/")) {handleCommand(input.substring(1)); return;}
 
         GameStatus status = this.status.get();
-        if (status.equals(null)) throw new AssertionError("How did you get here?");
+        if (status == null) throw new AssertionError("How did you get here?");
 
         switch (status) {
             case SELECTING_ROOM -> this.getPlayer().getCurrentRoom().consume(input);
