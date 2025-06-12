@@ -18,13 +18,13 @@ import java.util.Set;
 
 public class Game implements Player.Observer {
     private final Room initialRoom = DataSeeder.generateRooms(this);
-    private Player player = new Player(this.initialRoom);
+    private final Player player = new Player(this.initialRoom);
     public final Registry<Command> COMMANDS = GameCommands.register(new Registry<>());
     public final Registry<Item> ITEMS = GameItems.register(new Registry<>());
-    private CommandManager commandManager = new CommandManager(this, this.COMMANDS);
+    private final CommandManager commandManager = new CommandManager(this, this.COMMANDS);
     private final InputStream in;
     private boolean running;
-    private Menu menu = new Menu(this);
+    private final Menu menu = new Menu(this);
     private final StatusManager status = new StatusManager();
     private final DataSaver saver;
 
@@ -48,7 +48,7 @@ public class Game implements Player.Observer {
     }
 
     private void processInput(String input) {
-        if (input.isEmpty() || input.equals(null)) return;
+        if (input.equals(null) || input.isEmpty()) return;
         if (input.startsWith("/")) {handleCommand(input.substring(1)); return;}
 
         GameStatus status = this.status.get();
@@ -93,10 +93,6 @@ public class Game implements Player.Observer {
 
     public StatusManager getStatusManager() {
         return this.status;
-    }
-
-    public CommandManager getCommandManager() {
-        return this.commandManager;
     }
 
     private void collectRooms(Room self, Set<Room> result) {

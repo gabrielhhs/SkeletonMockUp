@@ -8,7 +8,7 @@ import entities.DialogueEntity;
 import events.Event;
 
 public class AssistantEncounterEvent extends Event {
-    private AssistantEntity assistant;
+    private final AssistantEntity assistant;
 
     public AssistantEncounterEvent(AssistantEntity assistant) {
         super(true);

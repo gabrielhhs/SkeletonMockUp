@@ -1,6 +1,5 @@
 package core;
 
-import items.Item;
 import observer.DeathNotifier;
 import observer.Scoreboard;
 import rooms.Room;

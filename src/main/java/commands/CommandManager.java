@@ -4,7 +4,7 @@ import core.Game;
 import core.Registry;
 
 public class CommandManager {
-    private Game parent;
+    private final Game parent;
     private final Registry<Command> commandRegistry;
 
     public CommandManager(Game parent, Registry<Command> registry) {
@@ -27,15 +27,12 @@ public class CommandManager {
     }
     public void executeCommand(String commandName, String args) {
         this.commandRegistry.get(commandName).ifPresentOrElse(
-            command -> command.run(this, args),
+            command -> this.executeCommand(command, args),
             () -> System.out.println("Invalid command")
         );
     }
 
     public Game getParent() {
         return this.parent;
-    }
-    public Registry<Command> getRegistry() {
-        return this.commandRegistry;
     }
 }

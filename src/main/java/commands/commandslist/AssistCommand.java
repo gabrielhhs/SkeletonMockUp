@@ -8,7 +8,7 @@ import items.consumables.HintJoker;
 import java.util.Random;
 
 public class AssistCommand implements Command {
-    private int uses = 2;
+    private int uses;
     private static final String[] MOTIVATION_TEXT = { "Im proud of you", "You can do it", "I believe in you" };
     private static final String[] MOTIVATIONAL_PLAN = {"google the answer", "cheat by using \"Up, Up, Down, Down, Left, Right, Left, Right, B, A,\""};
     private static final Random RANDOM = new Random();
@@ -23,17 +23,17 @@ public class AssistCommand implements Command {
             HintJoker jokerItem = new HintJoker();
             if (this.jokerUsed(commandManager, jokerItem)) commandManager.getParent().getPlayer().takeItem(jokerItem.getId());
             else { this.uses-- ; this.printExtraMotivation(); }
-        } else System.out.println("You cannot use this command any more");;
+        } else System.out.println("You cannot use this command any more");
     }
 
     private boolean jokerUsed(CommandManager commandManager, HintJoker jokerItem) {
         Player player = commandManager.getParent().getPlayer();
-        int initialCount = player.getInventory().getOrDefault(jokerItem, 0);
+        int initialCount = player.getInventory().getOrDefault(jokerItem.getId(), 0);
 
         player.giveItem(jokerItem.getId());
         jokerItem.use(commandManager.getParent());
 
-        return player.getInventory().getOrDefault(jokerItem, 0) > initialCount;
+        return player.getInventory().getOrDefault(jokerItem.getId(), 0) > initialCount;
     }
 
     private void printExtraMotivation() {
