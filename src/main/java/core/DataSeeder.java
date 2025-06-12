@@ -11,8 +11,9 @@ import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
 
-//ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
-//ToDo: Create monster AND non monster task rooms
+import java.util.HashSet;
+import java.util.Set;
+
 public abstract class DataSeeder {
     private static final HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]{
             new LiteralHintProvider("YOU CAN DO IT!!!"),
