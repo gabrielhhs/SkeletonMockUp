@@ -10,12 +10,17 @@ public class HintJoker implements Item {
     public void use(Game game) {
         if (game.getPlayer().getCurrentRoom() instanceof TaskRoom taskRoom && !taskRoom.isCleared() && taskRoom.getTaskHandler().getTask() instanceof QuestionTask task) {
             task.askHint("Y");
-            game.getPlayer().takeItem(this);
+            game.getPlayer().takeItem(this.getId());
         } else System.out.println("Nothing happened");
     }
 
     @Override
     public String getName() {
         return "Clue Joker";
+    }
+
+    @Override
+    public String getId() {
+        return "hint_joker";
     }
 }

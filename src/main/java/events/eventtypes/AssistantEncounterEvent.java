@@ -25,7 +25,7 @@ public class AssistantEncounterEvent extends Event {
 
     @Override
     public void end() {
-        this.parent.getParent().getParent().getCommandManager().registerCommand(new AssistCommand(2)); //ToDo: decide on a final default value
+        this.parent.getParent().getParent().COMMANDS.register(new AssistCommand(2)); //ToDo: decide on a final default value
         this.parent.getParent().getParent().getStatusManager().revert();
         this.parent.getParent().setCleared();
         this.parent.getParent().enter();

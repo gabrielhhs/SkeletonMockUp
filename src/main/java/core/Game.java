@@ -1,6 +1,10 @@
 package core;
 
+import commands.Command;
 import commands.CommandManager;
+import commands.GameCommands;
+import items.GameItems;
+import items.Item;
 import rooms.Room;
 import rooms.SpecialEventRoom;
 import rooms.TaskRoom;
@@ -15,7 +19,9 @@ import java.util.Set;
 public class Game implements Player.Observer {
     private final Room initialRoom = DataSeeder.generateRooms(this);
     private Player player = new Player(this.initialRoom);
-    private CommandManager commandManager = new CommandManager(this);
+    public final Registry<Command> COMMANDS = GameCommands.register(new Registry<>());
+    public final Registry<Item> ITEMS = GameItems.register(new Registry<>());
+    private CommandManager commandManager = new CommandManager(this, this.COMMANDS);
     private final InputStream in;
     private boolean running;
     private Menu menu = new Menu(this);
@@ -25,7 +31,6 @@ public class Game implements Player.Observer {
     public Game(InputStream in, DataSaver saver) {
         this.in = in;
         this.saver = saver;
-        this.commandManager.massRegisterCommand(DataSeeder.getCommands());
         this.player.addObserver(this);
     }
 

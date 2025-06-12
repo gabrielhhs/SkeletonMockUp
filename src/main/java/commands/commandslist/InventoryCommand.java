@@ -21,13 +21,13 @@ public class InventoryCommand implements Command {
 		Player player = game.getPlayer();
 
 		System.out.println("Inventory:");
-		for (Map.Entry<Item, Integer> stack : player.getInventory().entrySet()) {
-			System.out.printf("%sx %s", stack.getValue(), stack.getKey().getName());
+		for (Map.Entry<String, Integer> stack : player.getInventory().entrySet()) {
+			System.out.printf("%sx %s", stack.getValue(), commandManager.getParent().ITEMS.get(stack.getKey()).map(Item::getName));
 		}
 	}
 
 	@Override
-	public String getKeyWord() {
+	public String getId() {
 		return this.keyWord;
 	}
 }
