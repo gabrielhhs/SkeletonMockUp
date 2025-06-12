@@ -16,8 +16,6 @@ import stratpattern.*;
 import java.util.HashSet;
 import java.util.Set;
 
-//ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
-//ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
     private static Set<Command> COMMANDS = new HashSet<>() {{
         add(new StatusCommand("status"));
