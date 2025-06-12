@@ -80,7 +80,9 @@ public class JSONDataSaver implements DataSaver {
 			}
 			player.setHealth(playerObject.getInt("health"));
 			player.setScore(playerObject.getInt("score"));
-			// TODO: Put items in a registry to be able to retrieve them
+
+			JSONObject inventoryObject = playerObject.getJSONObject("inventory");
+			for (String itemId : inventoryObject.keySet()) game.ITEMS.get(itemId).ifPresent(_ -> player.giveItem(itemId, inventoryObject.getInt(itemId)));
 		}
 	}
 
