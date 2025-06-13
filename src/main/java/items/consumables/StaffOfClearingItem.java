@@ -25,4 +25,9 @@ public class StaffOfClearingItem implements Item {
     public String getName() {
         return "Staff of Clearing™";
     }
+
+    @Override
+    public String getId() {
+        return "clearing_staff";
+    }
 }

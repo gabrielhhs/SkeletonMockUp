@@ -18,7 +18,7 @@ public class StatusCommand implements Command {
     }
 
     @Override
-    public String getKeyWord() {
+    public String getId() {
         return this.keyWord;
     }
 }

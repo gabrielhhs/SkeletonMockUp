@@ -14,7 +14,7 @@ public class GamblingPotionItem implements Item {
         Player player = game.getPlayer();
 
         this.gamble(player);
-        player.takeItem(this);
+        player.takeItem(this.getId());
     }
 
     private void gamble(Player player) {
@@ -31,5 +31,10 @@ public class GamblingPotionItem implements Item {
     @Override
     public String getName() {
         return "Potion";
+    }
+
+    @Override
+    public String getId() {
+        return "gambling_potion";
     }
 }

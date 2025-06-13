@@ -11,6 +11,8 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -80,7 +82,9 @@ public class JSONDataSaver implements DataSaver {
 			}
 			player.setHealth(playerObject.getInt("health"));
 			player.setScore(playerObject.getInt("score"));
-			// TODO: Put items in a registry to be able to retrieve them
+
+			JSONObject inventoryObject = playerObject.getJSONObject("inventory");
+			for (String itemId : inventoryObject.keySet()) game.ITEMS.get(itemId).ifPresent(_ -> player.giveItem(itemId, inventoryObject.getInt(itemId)));
 		}
 	}
 
@@ -110,8 +114,10 @@ public class JSONDataSaver implements DataSaver {
 
 	@Override
 	public Set<String> getSaves() {
-		return Arrays.stream(this.savesPath.toFile().listFiles())
-			.map(file -> file.getName())
+		File[] files = this.savesPath.toFile().listFiles();
+		if (files == null || files.length == 0) return new HashSet<>();
+		return Arrays.stream(files)
+			.map(File::getName)
 			.collect(Collectors.toSet());
 	}
 
