@@ -5,7 +5,7 @@ import java.util.Random;
 public class RandomHintProvider implements HintProvider {
     private final HintProvider[] providers;
 
-    public RandomHintProvider(HintProvider[] providers) {
+    public RandomHintProvider(HintProvider... providers) {
         this.providers = providers;
     }
 
