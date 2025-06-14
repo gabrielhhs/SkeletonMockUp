@@ -1,0 +1,15 @@
+package saving.mockclasses;
+
+import core.GameStatus;
+import core.StatusManager;
+
+public class StatusManagerStub extends StatusManager {
+    public boolean getCalled = false;
+
+    @Override
+    public boolean is(GameStatus status) {
+        System.out.println("[STUB] StatusManagerStub.get() in StatusManager called." + status.toString());
+        this.getCalled = true;
+        return false;
+    }
+}
