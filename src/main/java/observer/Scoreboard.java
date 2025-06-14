@@ -2,12 +2,17 @@ package observer;
 
 import core.Player;
 
+import java.io.PrintStream;
+
 public class Scoreboard implements Player.Observer {
-    public static final Scoreboard INSTANCE = new Scoreboard();
-    private Scoreboard() {}
+    private final PrintStream output;
+
+    public Scoreboard(PrintStream output) {
+        this.output = output;
+    }
 
     @Override
     public void onScoreChange(Player player) {
-        System.out.printf("Your new score is: %d%n", player.getScore());
+        output.printf("Your new score is: %d%n", player.getScore());
     }
 }
