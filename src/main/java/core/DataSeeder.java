@@ -2,12 +2,6 @@ package core;
 
 import commands.Command;
 import commands.commandslist.*;
-import dialogue.DialogueManager;
-import dialogue.DialogueNode;
-import entities.AssistantEntity;
-import entities.DialogueEntity;
-import events.eventtypes.AssistantEncounterEvent;
-import events.eventtypes.ReverseWeepingAngelEvent;
 import entities.AssistantEntity;
 import events.eventtypes.AssistantEncounterEvent;
 import events.eventtypes.ReverseWeepingAngelEvent;
@@ -36,7 +30,7 @@ public abstract class DataSeeder {
         add(new MenuCommand("menu"));
     }};
 
-    private static HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]{
+    private static HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]   {
             new LiteralHintProvider("YOU CAN DO IT!!!"),
             new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
             new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
