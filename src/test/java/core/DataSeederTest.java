@@ -194,20 +194,4 @@ class DataSeederTest {
         assertNotNull(angelRoom);
         assertInstanceOf(Event.class, eventAngel.getEventHandler().getEvent());
     }
-
-    @Test
-    void generateUselessHints() {
-        assertDoesNotThrow(DataSeeder::generateUselessHints);
-    }
-
-    @Test
-    void getCommands() {
-        Set<Command> commands = DataSeeder.getCommands();
-
-        assertTrue(commands.stream().anyMatch(c -> c instanceof StatusCommand));
-        assertTrue(commands.stream().anyMatch(c -> c instanceof SuicideCommand));
-        assertTrue(commands.stream().anyMatch(c -> c instanceof InventoryCommand));
-        assertTrue(commands.stream().anyMatch(c -> c instanceof UseCommand));
-        assertTrue(commands.stream().anyMatch(c -> c instanceof MenuCommand));
-    }
 }

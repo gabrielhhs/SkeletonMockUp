@@ -13,7 +13,7 @@ public class StatusManagerStub extends StatusManager {
 
     @Override
     public boolean is(GameStatus status) {
-        System.out.println("StatusManagerStub.get() in StatusManager called." + status.toString());
+        System.out.println("StatusManagerStub.is() in StatusManager called." + status.toString());
         this.getCalled = true;
         return false;
     }
