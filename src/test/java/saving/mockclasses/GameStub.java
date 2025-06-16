@@ -25,7 +25,7 @@ public class GameStub extends Game {
     public Set<Room> testRooms = new HashSet<>();
     public boolean runningState = false;
 
-    public GameStub(PlayerMock player) {
+    public GameStub(PlayerSpy player) {
         super(new GameStub.EmptyInputStream(), new DataSaverStub());
         this.testPlayer = player;
     }

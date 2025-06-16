@@ -2,7 +2,7 @@ package saving;
 
 import org.junit.jupiter.api.Test;
 import saving.mockclasses.GameStub;
-import saving.mockclasses.PlayerMock;
+import saving.mockclasses.PlayerSpy;
 import saving.mockclasses.RoomSpy;
 import saving.mockclasses.ScoreboardMock;
 
@@ -17,7 +17,7 @@ public class ScoreBoardTest {
         ByteArrayOutputStream getFuckingJuked = new ByteArrayOutputStream();
         GameStub mockGame = new GameStub();
         RoomSpy mockRoom = new RoomSpy(mockGame, "testRoom");
-        PlayerMock mockPlayer = new PlayerMock(mockRoom);
+        PlayerSpy mockPlayer = new PlayerSpy(mockRoom);
         ScoreboardMock mockScoreboard = new ScoreboardMock(new PrintStream(getFuckingJuked), mockPlayer.getScore());
         mockPlayer.addObserver(mockScoreboard);
 
@@ -31,7 +31,7 @@ public class ScoreBoardTest {
         ByteArrayOutputStream getFuckingJuked = new ByteArrayOutputStream();
         GameStub mockGame = new GameStub();
         RoomSpy mockRoom = new RoomSpy(mockGame, "testRoom");
-        PlayerMock mockPlayer = new PlayerMock(mockRoom);
+        PlayerSpy mockPlayer = new PlayerSpy(mockRoom);
         ScoreboardMock mockScoreboard = new ScoreboardMock(new PrintStream(getFuckingJuked), mockPlayer.getScore());
         mockPlayer.addObserver(mockScoreboard);
 

@@ -4,10 +4,10 @@ import core.Player;
 import rooms.Room;
 
 
-public class PlayerMock extends Player {
+public class PlayerSpy extends Player {
     public boolean setCurrentRoomCalled = false;
 
-    public PlayerMock(Room room) {
+    public PlayerSpy(Room room) {
         super(room);
     }
 

@@ -2,11 +2,12 @@ package saving;
 
 
 import core.Game;
+import core.StatusManager;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import saving.mockclasses.GameStub;
-import saving.mockclasses.PlayerStub;
+import saving.mockclasses.PlayerSpy;
 import saving.mockclasses.RoomStub;
 import saving.mockclasses.StatusManagerStub;
 
@@ -16,7 +17,7 @@ class RoomStubTest {
     void enter_shouldCallOnEnterAndStartHandleUncleared() {
         RoomStub mockRoom = new RoomStub(null, "Test Room"); // Temporary null Game
         mockRoom.simulateUnclearedState();
-        PlayerStub mockPlayer = new PlayerStub(mockRoom);
+        PlayerSpy mockPlayer = new PlayerSpy(mockRoom);
         GameStub gameMock = new GameStub(mockPlayer);
         mockRoom.setParent(gameMock);
         StatusManagerStub mockManager = new StatusManagerStub();
@@ -35,7 +36,7 @@ class RoomStubTest {
     void enter_shouldCallOnEnterAndStartChooseRoom() {
         RoomStub mockRoom = new RoomStub(null, "Test Room"); // Temporary null Game
         mockRoom.simulateClearedState();
-        PlayerStub mockPlayer = new PlayerStub(mockRoom);
+        PlayerSpy mockPlayer = new PlayerSpy(mockRoom);
         GameStub gameMock = new GameStub(mockPlayer);
         mockRoom.setParent(gameMock);
         StatusManagerStub mockManager = new StatusManagerStub();
@@ -65,8 +66,10 @@ class RoomStubTest {
 
     @Test
     void handleUncleared_whenEntered() {
-        Game gameMock = new GameStub();
+        GameStub gameMock = new GameStub();
         RoomStub room = new RoomStub(gameMock, "Test Room");
+        StatusManager manager = new StatusManagerStub();
+        gameMock.setTestStatusManager(manager);
         room.simulateUnclearedState();
 
         room.enter();

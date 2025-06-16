@@ -44,7 +44,6 @@ class JSONDataSaverTest {
         inventory.put(this.mockItem2, 2);
 
         when(this.mockGame.getPlayer()).thenReturn(this.mockPlayer);
-        when(this.mockPlayer.getInventory()).thenReturn(inventory);
         when(this.mockRoom1.isCleared()).thenReturn(true);
         when(this.mockRoom2.isCleared()).thenReturn(false);
         when(this.mockRoom1.getName()).thenReturn("testRoom1");

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import saving.mockclasses.GameStub;
-import saving.mockclasses.PlayerMock;
+import saving.mockclasses.PlayerSpy;
 import saving.mockclasses.RoomSpy;
 import saving.mockclasses.StatusManagerStub;
 
@@ -16,7 +16,7 @@ class RoomTest {
     void enter_shouldCallOnEnterAndStartHandleUncleared() {
         RoomSpy mockRoom = new RoomSpy(null, "Test Room");
         mockRoom.simulateUnclearedState();
-        PlayerMock mockPlayer = new PlayerMock(mockRoom);
+        PlayerSpy mockPlayer = new PlayerSpy(mockRoom);
         GameStub gameMock = new GameStub(mockPlayer);
         mockRoom.setParent(gameMock);
         StatusManagerStub mockManager = new StatusManagerStub();
@@ -35,7 +35,7 @@ class RoomTest {
     void enter_shouldCallOnEnterAndStartChooseRoom() {
         RoomSpy mockRoom = new RoomSpy(null, "Test Room");
         mockRoom.simulateClearedState();
-        PlayerMock mockPlayer = new PlayerMock(mockRoom);
+        PlayerSpy mockPlayer = new PlayerSpy(mockRoom);
         GameStub gameMock = new GameStub(mockPlayer);
         mockRoom.setParent(gameMock);
         StatusManagerStub mockManager = new StatusManagerStub();
