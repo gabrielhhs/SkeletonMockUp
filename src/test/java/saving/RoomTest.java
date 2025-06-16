@@ -13,7 +13,7 @@ import saving.mockclasses.StatusManagerStub;
 class RoomTest {
 
     @Test
-    void enter_shouldCallOnEnterAndStartHandleUncleared()
+    void enter_shouldCallOnEnterAndStartHandleUncleared(){
         RoomStub mockRoom = new RoomStub(null, "Test Room");
         mockRoom.simulateUnclearedState();
         PlayerMock mockPlayer = new PlayerMock(mockRoom);
