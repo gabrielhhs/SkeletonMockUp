@@ -13,11 +13,9 @@ import java.util.Set;
 public class GameStub extends Game {
     public boolean startCalled = false;
     public boolean stopCalled = false;
-    public boolean processInputCalled = false;
     public boolean saveCalled = false;
     public boolean loadCalled = false;
     public boolean playerCalled = false;
-    public String lastProcessedInput;
     public String lastSaveName;
     public String lastLoadName;
 
@@ -43,52 +41,52 @@ public class GameStub extends Game {
 
     @Override
     public void start() {
-        startCalled = true;
-        runningState = true;
+        this.startCalled = true;
+        this.runningState = true;
     }
 
     @Override
     public void stop() {
-        stopCalled = true;
-        runningState = false;
+        this.stopCalled = true;
+        this.runningState = false;
     }
 
     @Override
     public Room getInitialRoom() {
-        return testInitialRoom;
+        return this.testInitialRoom;
     }
 
     @Override
     public Player getPlayer() {
-        playerCalled = true;
-        return testPlayer;
+        this.playerCalled = true;
+        return this.testPlayer;
     }
 
     @Override
     public StatusManager getStatusManager() {
-        return testStatusManager;
+        return this.testStatusManager;
     }
 
     @Override
     public Set<Room> collectRooms() {
-        return testRooms;
+        return this.testRooms;
     }
 
     @Override
     public void save(String saveName) {
-        saveCalled = true;
-        lastSaveName = saveName;
+        this.saveCalled = true;
+        this.lastSaveName = saveName;
     }
 
     @Override
     public void load(String saveName) {
-        loadCalled = true;
-        lastLoadName = saveName;
+        this.loadCalled = true;
+        this.lastLoadName = saveName;
     }
 
     @Override
     public void onDeath(Player player) {
-        stop();
+        this.stop();
     }
 
     public void setCurrentRoom(Room room) {

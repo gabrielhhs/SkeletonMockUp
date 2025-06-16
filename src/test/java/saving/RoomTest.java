@@ -7,14 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import saving.mockclasses.GameStub;
 import saving.mockclasses.PlayerMock;
-import saving.mockclasses.RoomStub;
+import saving.mockclasses.RoomSpy;
 import saving.mockclasses.StatusManagerStub;
 
 class RoomTest {
 
     @Test
-    void enter_shouldCallOnEnterAndStartHandleUncleared(){
-        RoomStub mockRoom = new RoomStub(null, "Test Room");
+    void enter_shouldCallOnEnterAndStartHandleUncleared() {
+        RoomSpy mockRoom = new RoomSpy(null, "Test Room");
         mockRoom.simulateUnclearedState();
         PlayerMock mockPlayer = new PlayerMock(mockRoom);
         GameStub gameMock = new GameStub(mockPlayer);
@@ -33,7 +33,7 @@ class RoomTest {
 
     @Test
     void enter_shouldCallOnEnterAndStartChooseRoom() {
-        RoomStub mockRoom = new RoomStub(null, "Test Room");
+        RoomSpy mockRoom = new RoomSpy(null, "Test Room");
         mockRoom.simulateClearedState();
         PlayerMock mockPlayer = new PlayerMock(mockRoom);
         GameStub gameMock = new GameStub(mockPlayer);
@@ -53,8 +53,8 @@ class RoomTest {
     @Test
     void consume_shouldTrackInput() {
         Game gameMock = new GameStub();
-        RoomStub room = new RoomStub(gameMock, "Test Room");
-        RoomStub neighbor = new RoomStub(gameMock, "Neighbor");
+        RoomSpy room = new RoomSpy(gameMock, "Test Room");
+        RoomSpy neighbor = new RoomSpy(gameMock, "Neighbor");
         room.addNeighbor("up", neighbor);
 
         room.consume("up");
@@ -65,12 +65,15 @@ class RoomTest {
 
     @Test
     void handleUncleared_whenEntered() {
-        Game gameMock = new GameStub();
-        RoomStub room = new RoomStub(gameMock, "Test Room");
-        room.simulateUnclearedState();
+        GameStub gameStub = new GameStub();
+        RoomSpy roomSpy = new RoomSpy(gameStub, "Test Room");
+        StatusManagerStub managerStub = new StatusManagerStub();
+        managerStub.setStatus(false);
+        gameStub.setTestStatusManager(managerStub);
+        roomSpy.simulateUnclearedState();
 
-        room.enter();
+        roomSpy.enter();
 
-        assertTrue(room.handleUnclearedCalled);
+        assertTrue(roomSpy.handleUnclearedCalled);
     }
 }

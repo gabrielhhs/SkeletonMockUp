@@ -13,7 +13,7 @@ public class PlayerMock extends Player {
 
     @Override
     public void setCurrentRoom(Room currentRoom) {
-        System.out.println("[MOCK] Player.setCurrentRoom Called.");
+        System.out.println("Player.setCurrentRoom Called.");
         this.setCurrentRoomCalled = true;
         super.setCurrentRoom(currentRoom);
     }

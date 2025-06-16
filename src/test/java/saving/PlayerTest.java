@@ -4,18 +4,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import saving.mockclasses.GameStub;
 import saving.mockclasses.PlayerMock;
-import saving.mockclasses.RoomStub;
+import saving.mockclasses.RoomSpy;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PlayerTest {  // Don't extend Player
+public class PlayerTest {
     private GameStub game;
     private PlayerMock player;
 
     @BeforeEach
     void setUp() {
         game = new GameStub();
-        RoomStub roomStub = new RoomStub(game, "testRoom");
-        player = new PlayerMock(roomStub);
+        RoomSpy roomSpy = new RoomSpy(game, "testRoom");
+        player = new PlayerMock(roomSpy);
     }
 
     @Test
