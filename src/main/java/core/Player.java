@@ -38,6 +38,9 @@ public class Player {
     public int getHealth() {
         return this.health;
     }
+    public int getMaxHealth() {
+        return this.maxHealth;
+    }
 
     public void damage(int amount) {
         if (amount < 0) throw new IllegalArgumentException("Cannot damage a negative amount");

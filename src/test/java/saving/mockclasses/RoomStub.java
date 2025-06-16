@@ -4,7 +4,6 @@ import core.Game;
 import rooms.Room;
 
 public class RoomStub extends Room {
-
     public boolean onEnterCalled = false;
     public boolean handleUnclearedCalled = false;
     public boolean enterCalled = false;
@@ -19,12 +18,12 @@ public class RoomStub extends Room {
     @Override
     protected void onEnter() {
         onEnterCalled = true;
-        System.out.println("[STUB] RoomStub.onEnter() called");
+        System.out.println("[MOCK] RoomStub.onEnter() called");
     }
 
     @Override
     protected void handleUncleared() {
-        System.out.println("[STUB] RoomStub.handleUncleared() called");
+        System.out.println("[MOCK] RoomStub.handleUncleared() called");
         handleUnclearedCalled = true;
     }
 
@@ -44,7 +43,6 @@ public class RoomStub extends Room {
         lastConsumeInput = input;
     }
 
-    // Test helper methods
     public void addNeighbor(String direction, Room room) {
         this.putNeighboringRoom(direction, room);
     }
@@ -52,9 +50,8 @@ public class RoomStub extends Room {
     public void simulateUnclearedState() {
         super.setCleared(false);
     }
-
     public void simulateClearedState() {
-        this.setCleared(true);
+        super.setCleared(true);
     }
 }
 

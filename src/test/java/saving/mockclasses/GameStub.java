@@ -21,14 +21,13 @@ public class GameStub extends Game {
     public String lastSaveName;
     public String lastLoadName;
 
-    // Configurable test data
     public Room testInitialRoom;
     public Player testPlayer;
     public StatusManager testStatusManager;
     public Set<Room> testRooms = new HashSet<>();
     public boolean runningState = false;
 
-    public GameStub(PlayerStub player) {
+    public GameStub(PlayerMock player) {
         super(new GameStub.EmptyInputStream(), new DataSaverStub());
         this.testPlayer = player;
     }
@@ -92,7 +91,6 @@ public class GameStub extends Game {
         stop();
     }
 
-    // Test helper methods
     public void setCurrentRoom(Room room) {
         this.testPlayer.setCurrentRoom(room);
     }
@@ -105,11 +103,10 @@ public class GameStub extends Game {
         this.testRooms.add(room);
     }
 
-    // Stub implementations of dependencies
     private static class EmptyInputStream extends InputStream {
         @Override
         public int read() {
-            return -1; // EOF
+            return -1;
         }
     }
 }

@@ -20,5 +20,4 @@ public class ScoreboardMock extends Scoreboard {
         super.onScoreChange(player);
         scoreDifference = player.getScore() - startScore;
     }
-
 }
