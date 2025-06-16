@@ -1,9 +1,9 @@
 // this is wrong mb, too proud to let it go
 
-package core;
+package useslibrary;
 
-import commands.Command;
-import commands.commandslist.*;
+import core.DataSeeder;
+import core.Game;
 import events.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,6 @@ import rooms.*;
 import stratpattern.MultipleChoiceQuestion;
 
 import java.util.Map;
-import java.util.Set;
 
 class DataSeederTest {
     @Mock
@@ -35,14 +34,11 @@ class DataSeederTest {
     }
 
     @Test
-    void generateRooms_shouldCreateRoomConnections() throws Exception {
+    void generateRooms_shouldCreateRoomConnections() {
         Room planning = null;
         Room dailyScrum = null;
         Room sideRoom = null;
         Room monsterRoom1 = null;
-        Room monsterRoom2 = null;
-        Room angelRoom = null;
-        Room assistantRoom = null;
 
         String up = "up";
         String down = "down";

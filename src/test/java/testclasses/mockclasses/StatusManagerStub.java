@@ -1,4 +1,4 @@
-package saving.mockclasses;
+package testclasses.mockclasses;
 
 import core.GameStatus;
 import core.StatusManager;

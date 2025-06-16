@@ -1,10 +1,10 @@
-package saving;
+package testclasses;
 
 import org.junit.jupiter.api.Test;
-import saving.mockclasses.GameStub;
-import saving.mockclasses.PlayerSpy;
-import saving.mockclasses.RoomSpy;
-import saving.mockclasses.ScoreboardMock;
+import testclasses.mockclasses.GameStub;
+import testclasses.mockclasses.PlayerSpy;
+import testclasses.mockclasses.RoomSpy;
+import testclasses.mockclasses.ScoreboardMock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

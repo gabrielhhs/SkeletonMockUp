@@ -1,11 +1,11 @@
-package saving;
+package testclasses;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import saving.mockclasses.GameStub;
-import saving.mockclasses.PlayerSpy;
-import saving.mockclasses.RoomSpy;
+import testclasses.mockclasses.GameStub;
+import testclasses.mockclasses.PlayerSpy;
+import testclasses.mockclasses.RoomSpy;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
