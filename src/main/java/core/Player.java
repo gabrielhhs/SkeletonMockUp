@@ -26,9 +26,8 @@ public class Player {
         this.maxHealth = 3;
         this.health = this.maxHealth;
 
-        this.addObserver(DeathNotifier.INSTANCE);
-        Scoreboard scoreBoard = new Scoreboard(System.out);
-        this.addObserver(scoreBoard);
+        this.addObserver(new DeathNotifier(System.out));
+        this.addObserver(new Scoreboard(System.out));
     }
 
     public String getInfo() {
