@@ -1,19 +1,22 @@
 package stratpattern;
 
 import hints.HintProvider;
+import rewards.RewardProvider;
 import rooms.TaskRoom;
 
 public class OpenQuestion extends QuestionTask {
     protected final String question;
     protected final String answer;
+    protected final RewardProvider rewardProvider;
 
-    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider rewardProvider) {
         super(parent, hint);
         this.question = question;
         this.answer = answer;
+        this.rewardProvider = rewardProvider;
     }
-    public OpenQuestion(String question, String answer, TaskRoom parent) {
-        this(question, answer, parent, null);
+    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider rewardProvider) {
+        this(question, answer, parent, null, rewardProvider);
     }
 
     public void handleCorrectAnswer() {
@@ -29,7 +32,7 @@ public class OpenQuestion extends QuestionTask {
     }
 
     protected void giveReward() {
-        //ToDo: implement
+        this.getParent().getParent().getPlayer().giveItem(rewardProvider.reward());
     }
 
     @Override

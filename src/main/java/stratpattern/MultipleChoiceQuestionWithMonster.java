@@ -1,14 +1,15 @@
 package stratpattern;
 
 import hints.HintProvider;
+import rewards.RewardProvider;
 import rooms.TaskRoomWithMonster;
 
 public class MultipleChoiceQuestionWithMonster extends MultipleChoiceQuestion {
-    public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, HintProvider hint, TaskRoomWithMonster room) {
-        super(question, options, answer, hint, room);
+    public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, HintProvider hint, TaskRoomWithMonster room, RewardProvider provider) {
+        super(question, options, answer, hint, room, provider);
     }
-    public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, TaskRoomWithMonster room) {
-        this(question, options, answer, null, room);
+    public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, TaskRoomWithMonster room, RewardProvider provider) {
+        this(question, options, answer, null, room, provider);
     }
 
     @Override

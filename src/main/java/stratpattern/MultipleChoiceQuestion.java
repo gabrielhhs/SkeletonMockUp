@@ -3,20 +3,23 @@ package stratpattern;
 import core.GameStatus;
 import hints.HintProvider;
 import rooms.TaskRoom;
+import rewards.RewardProvider;
 
 public class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
     protected final int answer;
+    protected final RewardProvider rewardProvider;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider rewardProvider) {
         super(parent, hint);
         this.question = question;
         this.options = options;
         this.answer = answer;
+        this.rewardProvider = rewardProvider;
     }
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
-        this(question, options, answer, null, parent);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider rewardProvider) {
+        this(question, options, answer, null, parent, rewardProvider);
     }
 
     public void handleCorrectAnswer() {
@@ -27,7 +30,7 @@ public class MultipleChoiceQuestion extends QuestionTask {
     }
 
     protected void giveReward() {
-        //ToDo: implement
+        this.getParent().getParent().getPlayer().giveItem(rewardProvider.reward());
     }
 
     public void handleWrongAnswer() {

@@ -7,12 +7,10 @@ import hints.HintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
 import hints.RandomHintProvider;
+import rewards.*;
 import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class DataSeeder {
     private static HintProvider USELESS_HINTS = new RandomHintProvider(
@@ -33,6 +31,9 @@ public abstract class DataSeeder {
         String down = "down";
         String left = "left";
         String right = "right";
+
+        //TODO:
+        //Item IDs (create array)
 
         //Monsters
         QuestionMonster monster1 = new QuestionMonster("Monstro Uno");
@@ -102,30 +103,34 @@ public abstract class DataSeeder {
                 new String[] {"21", "19", "I refuse to answer math questions"},
                 2,
                 new RandomHintProvider(new LiteralHintProvider("NOT THE MEME (a shame though)"), USELESS_HINTS),
-                planning
+                planning,
+                new SpecificReward("gambling_potion")
         );
-        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS));
-        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new LiteralHintProvider("?"), USELESS_HINTS));
+        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS), new SpecificReward("hint_joker"));
+        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new LiteralHintProvider("?"), USELESS_HINTS), new SpecificReward("hint_joker"));
 
         MultipleChoiceQuestionWithMonster monsterRoomQuestion1 = new MultipleChoiceQuestionWithMonster(
                 "What is the airspeed velocity of an unladen swallow? (if you do not get this reference please remove yourself from my vicinity)",
                 new String[] {"Over 9000", "African or European?", "I don’t know that—AAAAHHHH (gets yeeted)"},
                 2,
-                mainRoomMonster1
+                mainRoomMonster1,
+                new SpecificReward("hint_joker")
         );
 
         MultipleChoiceQuestionWithMonster monsterRoomQuestion2 = new MultipleChoiceQuestionWithMonster(
                 "What is love?",
                 new String[] {"Baby don’t hurt me", "A social construct", "Just a burning memory"},
                 1,
-                mainRoomMonster2
+                mainRoomMonster2,
+                new SpecificReward("sword")
         );
 
         OpenQuestion angelRoomQuestion = new OpenQuestion(
                 "What are witches made of?",
                 "wood",
                 angelRoom,
-                new RandomHintProvider(new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS)
+                new RandomHintProvider(new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS),
+                new SpecificReward("gambling_potion")
         );
 
         //Monster Tasks
@@ -133,14 +138,16 @@ public abstract class DataSeeder {
                 "What do the Knights Who Say 'Ni!' actually want?",
                 "A shrubbery",
                 new RandomHintProvider(new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), USELESS_HINTS),
-                mainRoomMonster1
+                mainRoomMonster1,
+                new SpecificReward("gambling_potion")
         );
 
         OpenQuestionWithMonster monsterQuestion2 = new OpenQuestionWithMonster(
                 "I ran out of question ideas",
                 "...",
                 new RandomHintProvider(new LiteralHintProvider("this dev man ..."), USELESS_HINTS),
-                mainRoomMonster2
+                mainRoomMonster2,
+                new SpecificReward("gambling_potion")
         );
 
         //Assigning Tasks Rooms
