@@ -14,30 +14,30 @@ public class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        game = new GameStub();
-        RoomSpy roomSpy = new RoomSpy(game, "testRoom");
-        player = new PlayerSpy(roomSpy);
+        this.game = new GameStub();
+        RoomSpy roomSpy = new RoomSpy(this.game, "testRoom");
+        this.player = new PlayerSpy(roomSpy);
     }
 
     @Test
     void markDead_shouldKillPlayerIfHealthIsZero() {
-        player.damage(4);
-        assertTrue(player.isDead());
+        this.player.damage(4);
+        assertTrue(this.player.isDead());
     }
     @Test
     void markDead_shouldNotKillPlayerIfHealthIsOne() {
-        player.damage(2);
-        assertFalse(player.isDead());
+        this.player.damage(2);
+        assertFalse(this.player.isDead());
     }
     @Test
     void updateHealth_shouldCapAtMaxHealth() {
-        player.heal(4);
-        assertEquals(player.getHealth(), player.getMaxHealth());
+        this.player.heal(4);
+        assertEquals(this.player.getHealth(), this.player.getMaxHealth());
     }
     @Test
     void updateHealth_shouldCapAtMaxHealthWhenFullHeal() {
-        player.heal();
-        assertEquals(player.getMaxHealth(), player.getHealth());
+        this.player.heal();
+        assertEquals(this.player.getMaxHealth(), this.player.getHealth());
     }
 
     @Nested
