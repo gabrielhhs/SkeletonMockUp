@@ -6,7 +6,7 @@ public class RandomRewardProvider {
     private final String[] pool;
     private final Random random = new Random();
 
-    public RandomRewardProvider(String[] pool) {
+    public RandomRewardProvider(String... pool) {
         this.pool = pool;
     }
 
