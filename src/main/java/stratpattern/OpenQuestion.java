@@ -9,13 +9,13 @@ public class OpenQuestion extends QuestionTask {
     protected final String question;
     protected final String answer;
 
-    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider provider) {
-        super(parent, hint, provider);
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider reward) {
+        super(parent, hint, reward);
         this.question = question;
         this.answer = answer;
     }
-    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider provider) {
-        this(question, answer, parent, null, provider);
+    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider reward) {
+        this(question, answer, parent, null, reward);
     }
     public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
         this(question, answer, parent, hint, null);

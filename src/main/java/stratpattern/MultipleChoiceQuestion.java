@@ -11,14 +11,14 @@ public class MultipleChoiceQuestion extends QuestionTask {
     protected final String[] options;
     protected final int answer;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider provider) {
-        super(parent, hint, provider);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider reward) {
+        super(parent, hint, reward);
         this.question = question;
         this.options = options;
         this.answer = answer;
     }
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider provider) {
-        this(question, options, answer, null, parent, provider);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider reward) {
+        this(question, options, answer, null, parent, reward);
     }
     public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
         this(question, options, answer, hint, parent, null);

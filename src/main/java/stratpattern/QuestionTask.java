@@ -35,8 +35,8 @@ public abstract class QuestionTask extends Task {
 	public abstract void handleWrongAnswer();
 
 	public void giveReward(Player player) {
-			if (this.rewardProvider == null) { System.out.println("You leave empty handed."); }
-			else { player.giveItem(rewardProvider.getReward()); }
+		if (this.rewardProvider == null) { System.out.println("You leave empty handed."); }
+		else { player.giveItem(rewardProvider.getReward()); }
 	}
 
 	public void askHint(String input) {
