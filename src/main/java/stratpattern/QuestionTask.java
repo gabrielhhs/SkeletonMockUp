@@ -1,18 +1,31 @@
 package stratpattern;
 
 import core.GameStatus;
+import core.Player;
 import hints.HintProvider;
+import rewards.RewardProvider;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
 	private final HintProvider hintProvider;
+	private final RewardProvider rewardProvider;
 
-	public QuestionTask(TaskRoom parent, HintProvider hint) {
+	public QuestionTask(TaskRoom parent, HintProvider hint, RewardProvider rewardProvider) {
 		super(parent);
 		this.hintProvider = hint;
+		this.rewardProvider = rewardProvider;
 	}
+
+	public QuestionTask(TaskRoom parent, RewardProvider rewardProvider) {
+		this(parent, null, rewardProvider);
+	}
+
+	public QuestionTask(TaskRoom parent, HintProvider hintProvider) {
+		this(parent, hintProvider,null);
+	}
+
 	public QuestionTask(TaskRoom parent) {
-		this(parent, null);
+		this(parent, null, null);
 	}
 
 	public abstract void start();
@@ -20,6 +33,11 @@ public abstract class QuestionTask extends Task {
 	public abstract boolean isCorrectAnswer(String input);
 	public abstract void handleCorrectAnswer();
 	public abstract void handleWrongAnswer();
+
+	public void giveReward(Player player) {
+			if (this.rewardProvider == null) { System.out.println("You leave empty handed."); }
+			else { player.giveItem(rewardProvider.getReward()); }
+	}
 
 	public void askHint(String input) {
 		if (this.hintProvider == null) {

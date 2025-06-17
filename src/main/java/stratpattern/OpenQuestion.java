@@ -1,5 +1,6 @@
 package stratpattern;
 
+import core.Player;
 import hints.HintProvider;
 import rewards.RewardProvider;
 import rooms.TaskRoom;
@@ -7,32 +8,33 @@ import rooms.TaskRoom;
 public class OpenQuestion extends QuestionTask {
     protected final String question;
     protected final String answer;
-    protected final RewardProvider rewardProvider;
 
-    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider rewardProvider) {
-        super(parent, hint);
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider provider) {
+        super(parent, hint, provider);
         this.question = question;
         this.answer = answer;
-        this.rewardProvider = rewardProvider;
     }
-    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider rewardProvider) {
-        this(question, answer, parent, null, rewardProvider);
+    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider provider) {
+        this(question, answer, parent, null, provider);
+    }
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
+        this(question, answer, parent, hint, null);
+    }
+    public OpenQuestion(String question, String answer, TaskRoom parent) {
+        this(question, answer, parent, null, null);
     }
 
     public void handleCorrectAnswer() {
         System.out.println("Well done you may live");
-        this.getParent().getParent().getPlayer().addScore(10);
-        this.giveReward();
+        Player player = this.getParent().getParent().getPlayer();
+        player.addScore(10);
+        this.giveReward(player);
         this.setCleared();
     }
     public void handleWrongAnswer() {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.getParent().getParent().getPlayer().removeScore(10);
         this.setCleared();
-    }
-
-    protected void giveReward() {
-        this.getParent().getParent().getPlayer().giveItem(rewardProvider.reward());
     }
 
     @Override

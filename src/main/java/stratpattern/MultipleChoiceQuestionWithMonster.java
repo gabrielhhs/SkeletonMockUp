@@ -11,6 +11,12 @@ public class MultipleChoiceQuestionWithMonster extends MultipleChoiceQuestion {
     public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, TaskRoomWithMonster room, RewardProvider provider) {
         this(question, options, answer, null, room, provider);
     }
+    public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, HintProvider hint, TaskRoomWithMonster room) {
+        this(question, options, answer, hint, room, null);
+    }
+    public MultipleChoiceQuestionWithMonster(String question, String[] options, int answer, TaskRoomWithMonster room) {
+        this(question, options, answer, null, room, null);
+    }
 
     @Override
     public void handleWrongAnswer() {

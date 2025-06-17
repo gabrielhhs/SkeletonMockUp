@@ -1,6 +1,7 @@
 package stratpattern;
 
 import core.GameStatus;
+import core.Player;
 import hints.HintProvider;
 import rooms.TaskRoom;
 import rewards.RewardProvider;
@@ -9,28 +10,29 @@ public class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
     protected final int answer;
-    protected final RewardProvider rewardProvider;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider rewardProvider) {
-        super(parent, hint);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider provider) {
+        super(parent, hint, provider);
         this.question = question;
         this.options = options;
         this.answer = answer;
-        this.rewardProvider = rewardProvider;
     }
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider rewardProvider) {
-        this(question, options, answer, null, parent, rewardProvider);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider provider) {
+        this(question, options, answer, null, parent, provider);
+    }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
+        this(question, options, answer, hint, parent, null);
+    }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
+        this(question, options, answer, null, parent, null);
     }
 
     public void handleCorrectAnswer() {
         System.out.println("Well done you may live");
-        this.getParent().getParent().getPlayer().addScore(10);
-        this.giveReward();
+        Player player = this.getParent().getParent().getPlayer();
+        player.addScore(10);
+        this.giveReward(player);
         this.setCleared();
-    }
-
-    protected void giveReward() {
-        this.getParent().getParent().getPlayer().giveItem(rewardProvider.reward());
     }
 
     public void handleWrongAnswer() {
