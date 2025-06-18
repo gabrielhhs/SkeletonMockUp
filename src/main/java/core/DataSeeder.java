@@ -1,5 +1,13 @@
 package core;
 
+import commands.Command;
+import commands.commandslist.*;
+import dialogue.DialogueManager;
+import dialogue.DialogueNode;
+import entities.AssistantEntity;
+import entities.DialogueEntity;
+import events.eventtypes.AssistantEncounterEvent;
+import events.eventtypes.ReverseWeepingAngelEvent;
 import entities.AssistantEntity;
 import events.eventtypes.AssistantEncounterEvent;
 import events.eventtypes.ReverseWeepingAngelEvent;
@@ -11,22 +19,35 @@ import rooms.Outside;
 import rooms.*;
 import stratpattern.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+//ToDo: Possibly split each room into a respective class (Room1Planning.java, Room2Daily.java, SideRoom.java) (pray for our fallen soldiers)
+//ToDo: Create monster AND non monster task rooms
 public abstract class DataSeeder {
-    private static HintProvider USELESS_HINTS = new RandomHintProvider(
-      new LiteralHintProvider("YOU CAN DO IT!!!"),
-			new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
-			new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
-			new LiteralHintProvider("you can do this trust me"),
-			new LiteralHintProvider("You could try that… if failing is your thing."),
-			new LiteralHintProvider("Maybe try using your brain next time"),
-			new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"),
-			new LiteralHintProvider("You’re closer than you think."),
-			new LiteralHintProvider("Every expert was once where you are."),
-			new LiteralHintProvider("Take a breath. You know this.")
-    );
+    private static Set<Command> COMMANDS = new HashSet<>() {{
+        add(new StatusCommand("status"));
+        add(new SuicideCommand("kill"));
+        add(new InventoryCommand("inventory"));
+        add(new InventoryCommand("inv"));
+        add(new UseCommand());
+        add(new MenuCommand("menu"));
+    }};
+
+    private static HintProvider USELESS_HINTS = new RandomHintProvider(new HintProvider[]   {
+            new LiteralHintProvider("YOU CAN DO IT!!!"),
+            new LiteralHintProvider("YOU CAN NOT DO IT!!!"),
+            new LiteralHintProvider("We believe this question is too easy to give a Hint..."),
+            new LiteralHintProvider("you can do this trust me"),
+            new LiteralHintProvider("You could try that… if failing is your thing."),
+            new LiteralHintProvider("Maybe try using your brain next time"),
+            new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"),
+            new LiteralHintProvider("You’re closer than you think."),
+            new LiteralHintProvider("Every expert was once where you are."),
+            new LiteralHintProvider("Take a breath. You know this."),
+    });
 
     public static Room generateRooms(Game game) {
         String up = "up";
@@ -101,11 +122,11 @@ public abstract class DataSeeder {
                 "What is 9 + 10?",
                 new String[] {"21", "19", "I refuse to answer math questions"},
                 2,
-                new RandomHintProvider(new LiteralHintProvider("NOT THE MEME (a shame though)"), USELESS_HINTS),
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("NOT THE MEME (a shame though)"), USELESS_HINTS}),
                 planning
         );
-        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS));
-        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new LiteralHintProvider("?"), USELESS_HINTS));
+        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS}));
+        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("?"), USELESS_HINTS}));
 
         MultipleChoiceQuestionWithMonster monsterRoomQuestion1 = new MultipleChoiceQuestionWithMonster(
                 "What is the airspeed velocity of an unladen swallow? (if you do not get this reference please remove yourself from my vicinity)",
@@ -125,21 +146,21 @@ public abstract class DataSeeder {
                 "What are witches made of?",
                 "wood",
                 angelRoom,
-                new RandomHintProvider(new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS)
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS})
         );
 
         //Monster Tasks
         OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
                 "What do the Knights Who Say 'Ni!' actually want?",
                 "A shrubbery",
-                new RandomHintProvider(new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), USELESS_HINTS),
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), USELESS_HINTS}),
                 mainRoomMonster1
         );
 
         OpenQuestionWithMonster monsterQuestion2 = new OpenQuestionWithMonster(
                 "I ran out of question ideas",
                 "...",
-                new RandomHintProvider(new LiteralHintProvider("this dev man ..."), USELESS_HINTS),
+                new RandomHintProvider(new HintProvider[]{new LiteralHintProvider("this dev man ..."), USELESS_HINTS}),
                 mainRoomMonster2
         );
 
@@ -159,5 +180,24 @@ public abstract class DataSeeder {
         angelRoom.getEventHandler().setEvent(angelEvent);
 
         return outside;
+    }
+
+    public static void generateUselessHints() {
+        List<LiteralHintProvider> uselessHints = new ArrayList<>();
+
+        uselessHints.add(new LiteralHintProvider("YOU CAN DO IT!!!"));
+        uselessHints.add(new LiteralHintProvider("YOU CAN NOT DO IT!!!"));
+        uselessHints.add(new LiteralHintProvider("We believe this question is too easy to give a Hint..."));
+        uselessHints.add(new LiteralHintProvider("you can do this trust me"));
+        uselessHints.add(new LiteralHintProvider("You could try that… if failing is your thing."));
+        uselessHints.add(new LiteralHintProvider("Maybe try using your brain next time"));
+        uselessHints.add(new LiteralHintProvider("Confidence is great. Maybe aim for competence too?"));
+        uselessHints.add(new LiteralHintProvider("You’re closer than you think."));
+        uselessHints.add(new LiteralHintProvider("Every expert was once where you are."));
+        uselessHints.add(new LiteralHintProvider("Take a breath. You know this."));
+    }
+
+    public static Set<Command> getCommands() {
+        return COMMANDS;
     }
 }
