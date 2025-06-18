@@ -7,21 +7,21 @@ import rooms.TaskRoom;
 
 public class OpenQuestion extends QuestionTask {
     protected final String question;
-    protected final String answer;
+    protected final String[] answers;
 
-    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider reward) {
+    public OpenQuestion(TaskRoom parent, HintProvider hint, RewardProvider reward, String question, String... answers) {
         super(parent, hint, reward);
         this.question = question;
-        this.answer = answer;
+        this.answers = answers;
     }
-    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider reward) {
-        this(question, answer, parent, null, reward);
+    public OpenQuestion(TaskRoom parent, RewardProvider reward, String question, String... answers) {
+        this(parent, null, reward, question, answers);
     }
-    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
-        this(question, answer, parent, hint, null);
+    public OpenQuestion(TaskRoom parent, HintProvider hint, String question, String... answers) {
+        this(parent, hint, null, question, answers);
     }
-    public OpenQuestion(String question, String answer, TaskRoom parent) {
-        this(question, answer, parent, null, null);
+    public OpenQuestion(TaskRoom parent, String question, String... answers) {
+        this(parent, null, null, question, answers);
     }
 
     public void handleCorrectAnswer() {
@@ -49,6 +49,7 @@ public class OpenQuestion extends QuestionTask {
 
     @Override
     public boolean isCorrectAnswer(String input) {
-        return input.equalsIgnoreCase(this.answer);
+        for (String answer : this.answers) if (answer.equalsIgnoreCase(input)) return true;
+        return false;
     }
 }

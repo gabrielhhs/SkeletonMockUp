@@ -5,17 +5,17 @@ import rewards.RewardProvider;
 import rooms.TaskRoomWithMonster;
 
 public class OpenQuestionWithMonster extends OpenQuestion {
-    public OpenQuestionWithMonster(String question, String answer, HintProvider hint, TaskRoomWithMonster parent, RewardProvider reward) {
-        super(question, answer, parent, hint, reward);
+    public OpenQuestionWithMonster(HintProvider hint, TaskRoomWithMonster parent, RewardProvider reward, String question, String... answers) {
+        super(parent, hint, reward, question, answers);
     }
-    public OpenQuestionWithMonster(String question, String answer, TaskRoomWithMonster parent, RewardProvider reward) {
-        this(question, answer, null, parent, reward);
+    public OpenQuestionWithMonster(TaskRoomWithMonster parent, RewardProvider reward, String question, String... answers) {
+        this(null, parent, reward, question, answers);
     }
-    public OpenQuestionWithMonster(String question, String answer, HintProvider hint,TaskRoomWithMonster parent) {
-        this(question, answer, hint, parent, null);
+    public OpenQuestionWithMonster(HintProvider hint,TaskRoomWithMonster parent, String question, String... answers) {
+        this(hint, parent, null, question, answers);
     }
-    public OpenQuestionWithMonster(String question, String answer, TaskRoomWithMonster parent) {
-        this(question, answer, null, parent, null);
+    public OpenQuestionWithMonster(TaskRoomWithMonster parent, String question, String... answers) {
+        this(null, parent, null, question, answers);
     }
 
     @Override
