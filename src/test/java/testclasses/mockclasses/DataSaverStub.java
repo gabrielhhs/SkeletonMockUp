@@ -14,5 +14,6 @@ class DataSaverStub implements DataSaver {
     public Set<String> getSaves() { return Set.of(); }
     @Override
     public boolean saveExists(String saveName) { return false; }
-    @
+    @Override
+    public void deleteSave() {}
 }

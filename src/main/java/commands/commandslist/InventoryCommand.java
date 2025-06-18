@@ -21,7 +21,12 @@ public class InventoryCommand implements Command {
 		Player player = game.getPlayer();
 
 		System.out.println("Inventory:");
-		for (Map.Entry<String, Integer> stack : player.getInventory().entrySet()) {
+		Map<String, Integer> inventory = player.getInventory();
+		if (inventory.isEmpty()) {
+			System.out.println("Empty");
+			return;
+		}
+		for (Map.Entry<String, Integer> stack : inventory.entrySet()) {
 			System.out.printf("%sx %s", stack.getValue(), commandManager.getParent().ITEMS.get(stack.getKey()).map(Item::getName).get());
 		}
 	}

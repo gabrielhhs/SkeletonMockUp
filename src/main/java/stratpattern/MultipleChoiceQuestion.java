@@ -64,7 +64,6 @@ public class MultipleChoiceQuestion extends QuestionTask {
 
     @Override
     public final void start() {
-        System.out.println("Mysterious void: ANSWER OR DIE");
         System.out.println(this.question);
         for (int index = 0; index < this.options.length; index++) {
             System.out.println((index + 1) + ". " + this.options[index]);

@@ -80,25 +80,6 @@ public abstract class DataSeeder {
         TaskRoom retrospectiveRoom = new TaskRoom(game, "retrospective");
         TaskRoom tiaRoom = new TaskRoom(game, "tia room");
         Room endingRoom = new EndingRoom(game);
-
-        /*
-            visual overview of room path [DO NOT REMOVE]
-            outside = 0; planning = 1; dailyScrum = 2; assistant? = 3; scrumBoard = 4; sprintReview = 5;
-            genericRoom1 = 6; retrospective = 7; tiaRoom = 8; :thumbsup:
-
-                 end
-                  |
-                 {8}
-                  |
-         - {6} - {7} - {5}
-            |           |
-           {4} - {2} - {3} -
-            U     |
-                 {1}
-                  |
-                 {0}     {?}
-         */
-        //Neighboring Rooms
         /*
             ItemId:
             gambling_potion
@@ -108,7 +89,11 @@ public abstract class DataSeeder {
             sword
          */
         // TODO: assign to QuestionTasks
-        String[] genericItemPool = {"spareribs", "clearing_staff", "gambling_potion"};
+        RewardProvider genericItemPool = new RandomRewardProvider(
+                new SpecificReward("spareribs"),
+                new SpecificReward("clearing_staff"),
+                new SpecificReward("gambling_potion")
+        );
         String specialSwordItem = "sword";
         String specialJokerItem = "hint_joker";
         //MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent, RewardProvider reward)
@@ -145,6 +130,7 @@ public abstract class DataSeeder {
         Task scrumBoardQuestion = new OpenQuestion(
                 scrumBoardRoom,
                 new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Most scrum masters keep track of things on their scrum boards")),
+                new SpecificReward(specialSwordItem),
                 "What is the scrum board for?",
                 "cooperating", "working together", "planning", "track task statuses"
         );
@@ -159,6 +145,7 @@ public abstract class DataSeeder {
         Task retrospectiveQuestion = new OpenQuestion(
                 retrospectiveRoom,
                 new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("What do cool guys NOT do while slowly walking away from an explosion?")),
+                genericItemPool,
                 "What do you do in a retrospective?",
                 "look back", "find places to improve"
         );
@@ -229,6 +216,7 @@ public abstract class DataSeeder {
 
         //tiaRoom
         tiaRoom.putNeighboringRoom(DOWN_DIRECTION, retrospectiveRoom);
+        tiaRoom.putNeighboringRoom(UP_DIRECTION, endingRoom);
 
         //Assign questions to monster
         planningRoomMonster.setTask(monsterSprintPlanningQuestion2);

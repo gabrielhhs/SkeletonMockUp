@@ -9,7 +9,8 @@ public class EndingRoom extends Room {
 
     @Override
     protected void onEnter() {
-        System.out.println("You won the game! You can keep playing if you want");
+        System.out.printf("You won the game!\nFinal score: %d%n", this.parent.getPlayer().getScore());
+        this.parent.stop();
     }
 
     @Override
