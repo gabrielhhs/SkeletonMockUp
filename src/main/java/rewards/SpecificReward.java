@@ -1,13 +1,13 @@
 package rewards;
 
 public class SpecificReward implements RewardProvider {
-    private String itemID;
+    private final String itemID;
 
     public SpecificReward(String itemID) {
         this.itemID = itemID;
     }
 
-    public String reward() {
+    public String getReward() {
         return this.itemID;
     }
 }
