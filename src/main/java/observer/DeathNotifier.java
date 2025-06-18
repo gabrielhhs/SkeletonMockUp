@@ -2,12 +2,17 @@ package observer;
 
 import core.Player;
 
+import java.io.PrintStream;
+
 public class DeathNotifier implements Player.Observer {
-    public static final DeathNotifier INSTANCE = new DeathNotifier();
-    private DeathNotifier() {}
+    private final PrintStream output;
+
+    public DeathNotifier(PrintStream output) {
+        this.output = output;
+    }
 
     @Override
     public void onDeath(Player player) {
-        System.out.printf("YOU DIED!%nSCORE: %d%n(git gud)", player.getScore());
+        output.printf("YOU DIED!%nSCORE: %d%n(git gud)", player.getScore());
     }
 }
