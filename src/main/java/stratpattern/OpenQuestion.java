@@ -1,35 +1,40 @@
 package stratpattern;
 
+import core.Player;
 import hints.HintProvider;
+import rewards.RewardProvider;
 import rooms.TaskRoom;
 
 public class OpenQuestion extends QuestionTask {
     protected final String question;
     protected final String answer;
 
-    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
-        super(parent, hint);
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint, RewardProvider reward) {
+        super(parent, hint, reward);
         this.question = question;
         this.answer = answer;
     }
+    public OpenQuestion(String question, String answer, TaskRoom parent, RewardProvider reward) {
+        this(question, answer, parent, null, reward);
+    }
+    public OpenQuestion(String question, String answer, TaskRoom parent, HintProvider hint) {
+        this(question, answer, parent, hint, null);
+    }
     public OpenQuestion(String question, String answer, TaskRoom parent) {
-        this(question, answer, parent, null);
+        this(question, answer, parent, null, null);
     }
 
     public void handleCorrectAnswer() {
         System.out.println("Well done you may live");
-        this.getParent().getParent().getPlayer().addScore(10);
-        this.giveReward();
+        Player player = this.getParent().getParent().getPlayer();
+        player.addScore(10);
+        this.giveReward(player);
         this.setCleared();
     }
     public void handleWrongAnswer() {
         System.out.println("You have failed you feel something being taken away from your soul");
         this.getParent().getParent().getPlayer().removeScore(10);
         this.setCleared();
-    }
-
-    protected void giveReward() {
-        //ToDo: implement
     }
 
     @Override

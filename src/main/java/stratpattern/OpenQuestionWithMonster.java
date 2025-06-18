@@ -1,14 +1,21 @@
 package stratpattern;
 
 import hints.HintProvider;
+import rewards.RewardProvider;
 import rooms.TaskRoomWithMonster;
 
 public class OpenQuestionWithMonster extends OpenQuestion {
-    public OpenQuestionWithMonster(String question, String answer, HintProvider hint, TaskRoomWithMonster parent) {
-        super(question, answer, parent, hint);
+    public OpenQuestionWithMonster(String question, String answer, HintProvider hint, TaskRoomWithMonster parent, RewardProvider reward) {
+        super(question, answer, parent, hint, reward);
+    }
+    public OpenQuestionWithMonster(String question, String answer, TaskRoomWithMonster parent, RewardProvider reward) {
+        this(question, answer, null, parent, reward);
+    }
+    public OpenQuestionWithMonster(String question, String answer, HintProvider hint,TaskRoomWithMonster parent) {
+        this(question, answer, hint, parent, null);
     }
     public OpenQuestionWithMonster(String question, String answer, TaskRoomWithMonster parent) {
-        this(question, answer, null, parent);
+        this(question, answer, null, parent, null);
     }
 
     @Override

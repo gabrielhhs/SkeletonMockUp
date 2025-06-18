@@ -1,33 +1,38 @@
 package stratpattern;
 
 import core.GameStatus;
+import core.Player;
 import hints.HintProvider;
 import rooms.TaskRoom;
+import rewards.RewardProvider;
 
 public class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
     protected final int answer;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
-        super(parent, hint);
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider reward) {
+        super(parent, hint, reward);
         this.question = question;
         this.options = options;
         this.answer = answer;
     }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider reward) {
+        this(question, options, answer, null, parent, reward);
+    }
+    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
+        this(question, options, answer, hint, parent, null);
+    }
     public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
-        this(question, options, answer, null, parent);
+        this(question, options, answer, null, parent, null);
     }
 
     public void handleCorrectAnswer() {
         System.out.println("Well done you may live");
-        this.getParent().getParent().getPlayer().addScore(10);
-        this.giveReward();
+        Player player = this.getParent().getParent().getPlayer();
+        player.addScore(10);
+        this.giveReward(player);
         this.setCleared();
-    }
-
-    protected void giveReward() {
-        //ToDo: implement
     }
 
     public void handleWrongAnswer() {
