@@ -76,7 +76,7 @@ class JSONDataSaverTest {
     }
 
     @Test
-    void save_shouldThrowSaverExceptionOnIOExeption() {
+    void save_shouldThrowSaverExceptionOnIOException() {
         try (MockedStatic<Files> mockedFiles = mockStatic(Files.class)) {
             mockedFiles.when(() -> Files.createDirectory(any(Path.class)))
                     .thenThrow(new IOException("Test exception"));

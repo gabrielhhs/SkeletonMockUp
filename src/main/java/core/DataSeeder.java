@@ -106,8 +106,8 @@ public abstract class DataSeeder {
                 planning,
                 new SpecificReward("gambling_potion")
         );
-        OpenQuestion dailyScrumTask = new OpenQuestion("How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42", dailyScrum, new RandomHintProvider(new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS), new SpecificReward("hint_joker"));
-        OpenQuestion sideRoomTask = new OpenQuestion("Hello there I'm a side room", "?", sideRoom, new RandomHintProvider(new LiteralHintProvider("?"), USELESS_HINTS), new SpecificReward("hint_joker"));
+        OpenQuestion dailyScrumTask = new OpenQuestion(dailyScrum, new RandomHintProvider(new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS), new SpecificReward("hint_joker"), "How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42");
+        OpenQuestion sideRoomTask = new OpenQuestion(sideRoom, new RandomHintProvider(new LiteralHintProvider("?"), USELESS_HINTS), new SpecificReward("hint_joker"), "Hello there I'm a side room", "?");
 
         MultipleChoiceQuestionWithMonster monsterRoomQuestion1 = new MultipleChoiceQuestionWithMonster(
                 "What is the airspeed velocity of an unladen swallow? (if you do not get this reference please remove yourself from my vicinity)",
@@ -126,28 +126,28 @@ public abstract class DataSeeder {
         );
 
         OpenQuestion angelRoomQuestion = new OpenQuestion(
-                "What are witches made of?",
-                "wood",
                 angelRoom,
                 new RandomHintProvider(new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS),
-                new SpecificReward("gambling_potion")
+                new SpecificReward("gambling_potion"),
+                "What are witches made of?",
+                "wood"
         );
 
         //Monster Tasks
         OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
-                "What do the Knights Who Say 'Ni!' actually want?",
-                "A shrubbery",
                 new RandomHintProvider(new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), USELESS_HINTS),
                 mainRoomMonster1,
-                new SpecificReward("gambling_potion")
+                new SpecificReward("gambling_potion"),
+                "What do the Knights Who Say 'Ni!' actually want?",
+                "A shrubbery"
         );
 
         OpenQuestionWithMonster monsterQuestion2 = new OpenQuestionWithMonster(
-                "I ran out of question ideas",
-                "...",
                 new RandomHintProvider(new LiteralHintProvider("this dev man ..."), USELESS_HINTS),
                 mainRoomMonster2,
-                new SpecificReward("gambling_potion")
+                new SpecificReward("gambling_potion"),
+                "I ran out of question ideas",
+                "..."
         );
 
         //Assigning Tasks Rooms

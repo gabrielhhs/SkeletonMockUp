@@ -13,6 +13,6 @@ public class DeathNotifier implements Player.Observer {
 
     @Override
     public void onDeath(Player player) {
-        output.printf("YOU DIED!%nSCORE: %d%n(git gud)", player.getScore());
+        this.output.printf("YOU DIED!%nSCORE: %d%n(git gud)", player.getScore());
     }
 }
