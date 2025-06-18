@@ -122,6 +122,15 @@ public class JSONDataSaver implements DataSaver {
 	}
 
 	@Override
+	public void deleteSave() {
+        try {
+            Files.deleteIfExists(this.savesPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+	@Override
 	public boolean saveExists(String saveName) {
 		return this.getSavePath(saveName).toFile().exists();
 	}

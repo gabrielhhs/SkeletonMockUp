@@ -5,26 +5,46 @@ import core.Player;
 import hints.HintProvider;
 import rooms.TaskRoom;
 import rewards.RewardProvider;
+import util.ArrayShuffler;
 
 public class MultipleChoiceQuestion extends QuestionTask {
     protected final String question;
     protected final String[] options;
-    protected final int answer;
+    protected final int answerIndex;
 
-    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent, RewardProvider reward) {
+    private static int[] createShuffledIndexes(int length) {
+        int[] array = new int[length];
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = i;
+        }
+
+        ArrayShuffler.shuffle(array);
+
+        return array;
+    }
+    public MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent, RewardProvider reward) {
         super(parent, hint, reward);
         this.question = question;
-        this.options = options;
-        this.answer = answer;
+
+        final int[] shuffler = createShuffledIndexes(options.length);
+
+        String[] newOptions = new String[options.length];
+        for (int i = 0; i < options.length; i++) {
+            newOptions[shuffler[i]] = options[i];
+        }
+
+        this.options = newOptions;
+        this.answerIndex = shuffler[0];
     }
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent, RewardProvider reward) {
-        this(question, options, answer, null, parent, reward);
+    public MultipleChoiceQuestion(String question, String[] options, TaskRoom parent, RewardProvider reward) {
+        this(question, options, null, parent, reward);
     }
-    public MultipleChoiceQuestion(String question, String[] options, int answer, HintProvider hint, TaskRoom parent) {
-        this(question, options, answer, hint, parent, null);
+    public MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent) {
+        this(question, options, hint, parent, null);
     }
-    public MultipleChoiceQuestion(String question, String[] options, int answer, TaskRoom parent) {
-        this(question, options, answer, null, parent, null);
+    public MultipleChoiceQuestion(String question, String[] options, TaskRoom parent) {
+        this(question, options, null, parent, null);
     }
 
     public void handleCorrectAnswer() {
@@ -58,6 +78,6 @@ public class MultipleChoiceQuestion extends QuestionTask {
 
     @Override
     public boolean isCorrectAnswer(String input) {
-        return Integer.parseInt(input) == this.answer;
+        return Integer.parseInt(input) == this.answerIndex + 1;
     }
 }

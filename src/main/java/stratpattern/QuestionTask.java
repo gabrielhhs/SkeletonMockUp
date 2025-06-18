@@ -48,7 +48,6 @@ public abstract class QuestionTask extends Task {
 		this.getParent().getParent().getStatusManager().revert();
 		if (input.equalsIgnoreCase("Y")) {
 			System.out.println(this.hintProvider.getHint());
-			this.getParent().enter();
 		}
 	}
 

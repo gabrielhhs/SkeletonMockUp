@@ -26,144 +26,230 @@ public abstract class DataSeeder {
 			new LiteralHintProvider("Take a breath. You know this.")
     );
 
+    static final String UP_DIRECTION = "up";
+    static final String DOWN_DIRECTION = "down";
+    static final String LEFT_DIRECTION = "left";
+    static final String RIGHT_DIRECTION = "right";
+
     public static Room generateRooms(Game game) {
-        String up = "up";
-        String down = "down";
-        String left = "left";
-        String right = "right";
+        /*
+            visual overview of room path [DO NOT REMOVE]
+            outside = 0; planning = 1; dailyScrum = 2; assistant? = 3; scrumBoard = 4; sprintReview = 5;
+            genericRoom1 = 6; retrospective = 7; finalRoom = 8; :thumbsup:
 
-        //TODO:
-        //Item IDs (create array)
+                 end
+                  |
+                 {8}
+                  |
+         - {6} - {7} - {5}
+            |           |
+           {4} - {2} - {3} -
+            U     |
+                 {1}
+                  |
+                 {0}     {?}
+         */
 
-        //Monsters
-        QuestionMonster monster1 = new QuestionMonster("Monstro Uno");
-        QuestionMonster monster2 = new QuestionMonster("Monstro Dos");
+        //TODO: make boss room? (TaskRoom but with a list of tasks instead of just one)?
+        /*
+            De Sprint Planning x2 questions bc room contains monster 2/2
+            De Daily Scrum x2 questions bc room contains monster 1/2
+            Het Scrum Board 1/1
+            De Sprint Review 1/1
+            De Sprint Retrospective 1/1
+            Finale TIA Kamer – Waarom Scrum?
+         */
+
+        //Entities
+        QuestionMonster planningRoomMonster = new QuestionMonster("Scope Creep");
+        QuestionMonster dailyScrumMonster = new QuestionMonster("Delay Monster");
         AssistantEntity assistant = new AssistantEntity();
 
         //Events
-        ReverseWeepingAngelEvent angelEvent = new ReverseWeepingAngelEvent(2);
+        ReverseWeepingAngelEvent regressionEvent = new ReverseWeepingAngelEvent(2);
         AssistantEncounterEvent assistantEvent = new AssistantEncounterEvent(assistant);
 
         //Rooms
         Room outside = new Outside(game, "outside");
-        TaskRoom planning = new TaskRoom(game, "planning");
-        TaskRoom dailyScrum = new TaskRoom(game, "daily scrum");
-        TaskRoom sideRoom = new TaskRoom(game, "sideroom");
-        TaskRoomWithMonster mainRoomMonster1 = new TaskRoomWithMonster(game, "MonsterRoom1", monster1);
-        TaskRoomWithMonster mainRoomMonster2 = new TaskRoomWithMonster(game, "MonsterRoom2", monster2);
-        TaskRoomWithEvent angelRoom = new TaskRoomWithEvent(game, "Weeping Room");
-        SpecialEventRoom assistantRoom = new SpecialEventRoom(game, "The Doll Room", assistantEvent);
+        TaskRoomWithMonster planningRoom = new TaskRoomWithMonster(game, "planning", planningRoomMonster);
+        TaskRoomWithMonster dailyScrumRoom = new TaskRoomWithMonster(game, "daily scrum", dailyScrumMonster);
+        TaskRoom scrumBoardRoom = new TaskRoom(game, "scrum board");
+        TaskRoom reviewRoom = new TaskRoom(game, "review");
+        SpecialEventRoom assistantRoom = new SpecialEventRoom(game, "assistant", assistantEvent);
+        TaskRoomWithEvent genericRoom1 = new TaskRoomWithEvent(game, "placeholder", regressionEvent);
+        TaskRoom retrospectiveRoom = new TaskRoom(game, "retrospective");
+        TaskRoom tiaRoom = new TaskRoom(game, "tia room");
+        Room endingRoom = new EndingRoom(game);
 
         /*
             visual overview of room path [DO NOT REMOVE]
-            outside = 0; planning = 1; dailyScrum = 2; sideRoom = 3; mainRoomMonster1 = 4; mainRoomMonster2 = 5;
-            angelRoom = 6; assistantRoom = 7;
+            outside = 0; planning = 1; dailyScrum = 2; assistant? = 3; scrumBoard = 4; sprintReview = 5;
+            genericRoom1 = 6; retrospective = 7; tiaRoom = 8; :thumbsup:
 
-
-                {4}, {5}, {6}, {7}
-                {2}, {3}
-                {1}
-                {0}
+                 end
+                  |
+                 {8}
+                  |
+         - {6} - {7} - {5}
+            |           |
+           {4} - {2} - {3} -
+            U     |
+                 {1}
+                  |
+                 {0}     {?}
          */
-
-        //Outside 'Room'
-        outside.putNeighboringRoom("enter", planning);
-
-        //Planning Room
-        planning.putNeighboringRoom(up, dailyScrum);
-        planning.putNeighboringRoom(down, outside);
-
-        //Daily Scrum Room
-        dailyScrum.putNeighboringRoom(down, planning);
-        dailyScrum.putNeighboringRoom(right, sideRoom);
-        dailyScrum.putNeighboringRoom(up, mainRoomMonster1);
-
-        //Hidden Side Room
-        sideRoom.putNeighboringRoom(left, dailyScrum);
-
-        //mainRoomMonster1
-        mainRoomMonster1.putNeighboringRoom(down, dailyScrum);
-        mainRoomMonster1.putNeighboringRoom(right, mainRoomMonster2);
-
-        //mainRoomMonster2
-        mainRoomMonster2.putNeighboringRoom(left, mainRoomMonster1);
-        mainRoomMonster2.putNeighboringRoom(right, angelRoom);
-
-        //Angel Room
-        angelRoom.putNeighboringRoom(left, mainRoomMonster2);
-        angelRoom.putNeighboringRoom(right, assistantRoom);
-
-        //Assistant Room
-        assistantRoom.putNeighboringRoom(left, angelRoom);
-
-
-        //Room Tasks
-        MultipleChoiceQuestion planningTask = new MultipleChoiceQuestion(
-                "What is 9 + 10?",
-                new String[] {"21", "19", "I refuse to answer math questions"},
-                2,
-                new RandomHintProvider(new LiteralHintProvider("NOT THE MEME (a shame though)"), USELESS_HINTS),
-                planning,
-                new SpecificReward("gambling_potion")
-        );
-        OpenQuestion dailyScrumTask = new OpenQuestion(dailyScrum, new RandomHintProvider(new LiteralHintProvider("Really i dont know with this one"), USELESS_HINTS), new SpecificReward("hint_joker"), "How much wood would a woodchuck chuck if a woodchuck could chuck wood?", "42");
-        OpenQuestion sideRoomTask = new OpenQuestion(sideRoom, new RandomHintProvider(new LiteralHintProvider("?"), USELESS_HINTS), new SpecificReward("hint_joker"), "Hello there I'm a side room", "?");
-
-        MultipleChoiceQuestionWithMonster monsterRoomQuestion1 = new MultipleChoiceQuestionWithMonster(
-                "What is the airspeed velocity of an unladen swallow? (if you do not get this reference please remove yourself from my vicinity)",
-                new String[] {"Over 9000", "African or European?", "I don’t know that—AAAAHHHH (gets yeeted)"},
-                2,
-                mainRoomMonster1,
-                new SpecificReward("hint_joker")
+        //Neighboring Rooms
+        /*
+            ItemId:
+            gambling_potion
+            hint_joker
+            spareribs
+            clearing_staff
+            sword
+         */
+        // TODO: assign to QuestionTasks
+        String[] genericItemPool = {"spareribs", "clearing_staff", "gambling_potion"};
+        String specialSwordItem = "sword";
+        String specialJokerItem = "hint_joker";
+        //MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent, RewardProvider reward)
+        //OpenQuestion(TaskRoom parent, HintProvider hint, RewardProvider reward, String question, String... answers)
+        Task sprintPlanningQuestion1 = new MultipleChoiceQuestionWithMonster(
+                "What do you NOT do while planning a sprint?",
+                new String[]{"Make new user stories", "Collect user stories", "Shorten user stories", "Dealth with thou haggler`s horsesh*t"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Most of the time, you get user stories from your customer")),
+                planningRoom,
+                new SpecificReward(specialJokerItem)
         );
 
-        MultipleChoiceQuestionWithMonster monsterRoomQuestion2 = new MultipleChoiceQuestionWithMonster(
-                "What is love?",
-                new String[] {"Baby don’t hurt me", "A social construct", "Just a burning memory"},
-                1,
-                mainRoomMonster2,
-                new SpecificReward("sword")
+        Task monsterSprintPlanningQuestion2 = new MultipleChoiceQuestionWithMonster(
+                "Why would you play Planning Poker?",
+                new String[]{"To lock in the time estimations", "To feed my gambling addiction", "To kill the hitmen coming after me"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("If I stop now, I'll never win it all back")),
+                planningRoom
         );
 
-        OpenQuestion angelRoomQuestion = new OpenQuestion(
-                angelRoom,
-                new RandomHintProvider(new LiteralHintProvider("Monty Python And The Holy Grail 1974, 18:55"), USELESS_HINTS),
-                new SpecificReward("gambling_potion"),
-                "What are witches made of?",
-                "wood"
+        Task dailyScrumQuestion1 = new MultipleChoiceQuestionWithMonster(
+                "What are standups for?",
+                new String[]{"Discuss your tasks for the day", "Wasting time", "Prevent productivity"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Be civilized")),
+                dailyScrumRoom
         );
 
-        //Monster Tasks
-        OpenQuestionWithMonster monsterQuestion1 = new OpenQuestionWithMonster(
-                new RandomHintProvider(new LiteralHintProvider("The Knights Who Say \"Ni!\", also called the Knights of Ni, are a band of knights encountered by King Arthur and his followers in the 1975 film Monty Python and the Holy Grail"), USELESS_HINTS),
-                mainRoomMonster1,
-                new SpecificReward("gambling_potion"),
-                "What do the Knights Who Say 'Ni!' actually want?",
-                "A shrubbery"
+        Task monsterDailyScrumQuestion2 = new MultipleChoiceQuestion(
+                "Why do scrum daily?",
+                new String[]{"To stay productive", "To appease the scrum gods", "Lowering morale"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("What would the HR like you to say?")),
+                dailyScrumRoom
         );
 
-        OpenQuestionWithMonster monsterQuestion2 = new OpenQuestionWithMonster(
-                new RandomHintProvider(new LiteralHintProvider("this dev man ..."), USELESS_HINTS),
-                mainRoomMonster2,
-                new SpecificReward("gambling_potion"),
-                "I ran out of question ideas",
-                "..."
+        Task scrumBoardQuestion = new OpenQuestion(
+                scrumBoardRoom,
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Most scrum masters keep track of things on their scrum boards")),
+                "What is the scrum board for?",
+                "cooperating", "working together", "planning", "track task statuses"
         );
 
-        //Assigning Tasks Rooms
-        planning.getTaskHandler().setTask(planningTask);
-        dailyScrum.getTaskHandler().setTask(dailyScrumTask);
-        sideRoom.getTaskHandler().setTask(sideRoomTask);
-        mainRoomMonster1.getTaskHandler().setTask(monsterRoomQuestion1);
-        mainRoomMonster2.getTaskHandler().setTask(monsterRoomQuestion2);
-        angelRoom.getTaskHandler().setTask(angelRoomQuestion);
+        Task sprintReviewQuestion = new OpenQuestion(
+                reviewRoom,
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("In what type of scenario do people roast your code in a PR?")),
+                "What do you do once you've completed a sprint?",
+                "review"
+        );
 
-        //Assigning Tasks Monsters
-        monster1.setTask(monsterQuestion1);
-        monster2.setTask(monsterQuestion2);
+        Task retrospectiveQuestion = new OpenQuestion(
+                retrospectiveRoom,
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("What do cool guys NOT do while slowly walking away from an explosion?")),
+                "What do you do in a retrospective?",
+                "look back", "find places to improve"
+        );
 
-        //Assigning Event
-        angelRoom.getEventHandler().setEvent(angelEvent);
+        Task genericQuestion1 = new MultipleChoiceQuestion(
+                "How many people are supposed to work together using scrum?",
+                new String[]{"Any number of people", "0", "935.890275492 novemquadragintillion", "42", "sqrt(-1)"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Yeah idk what that number means either.")),
+                genericRoom1
+        );
+
+        /*Task genericQuestion2 = new MultipleChoiceQuestion(
+                "Doth thine faith falter in the presence of his scrum majesty?",
+                new String[]{"My allegiance lies with the scrum king", "I fear no man", "I fear my colleagues"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("A hint? Filthy heathen.")),
+
+        );
+
+        Task genericQuestion3 = new MultipleChoiceQuestion(
+                "What do you do in russian roulette?",
+                new String[]{"Fratricide", "Spin", "Don't spin"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("There is at least one thing in life that always solves your problems")),
+                room
+        );*/
+
+        Task tiaQuestion = new MultipleChoiceQuestion(
+                "What does 'TIA' stand for?",
+                new String[]{"Transparency, Inspection and Adaptation.", "Tooth Is Aching", "Theory Isn't Apprehensive"},
+                new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("This one is kinda obvious isn't it")),
+                tiaRoom
+        );
+
+        //outside
+        outside.putNeighboringRoom(UP_DIRECTION, planningRoom);
+
+        //planningRoom
+        planningRoom.putNeighboringRoom(UP_DIRECTION, dailyScrumRoom);
+        planningRoom.putNeighboringRoom(DOWN_DIRECTION, outside);
+
+        //dailyScrumRoom
+        dailyScrumRoom.putNeighboringRoom(LEFT_DIRECTION, scrumBoardRoom);
+        dailyScrumRoom.putNeighboringRoom(RIGHT_DIRECTION, assistantRoom);
+        dailyScrumRoom.putNeighboringRoom(DOWN_DIRECTION, planningRoom);
+
+        //scrumBoardRoom
+        scrumBoardRoom.putNeighboringRoom(UP_DIRECTION, genericRoom1);
+        scrumBoardRoom.putNeighboringRoom(RIGHT_DIRECTION, dailyScrumRoom);
+        scrumBoardRoom.putNeighboringRoom(DOWN_DIRECTION, scrumBoardRoom);
+
+        //assistantRoom
+        assistantRoom.putNeighboringRoom(UP_DIRECTION, reviewRoom);
+        assistantRoom.putNeighboringRoom(LEFT_DIRECTION, dailyScrumRoom);
+        assistantRoom.putNeighboringRoom(RIGHT_DIRECTION, genericRoom1);
+
+        //genericRoom1
+        genericRoom1.putNeighboringRoom(RIGHT_DIRECTION, retrospectiveRoom);
+        genericRoom1.putNeighboringRoom(DOWN_DIRECTION, scrumBoardRoom);
+        genericRoom1.putNeighboringRoom(LEFT_DIRECTION, assistantRoom);
+
+        //reviewRoom
+        reviewRoom.putNeighboringRoom(LEFT_DIRECTION, retrospectiveRoom);
+        reviewRoom.putNeighboringRoom(DOWN_DIRECTION, assistantRoom);
+
+        //retrospectiveRoom
+        retrospectiveRoom.putNeighboringRoom(LEFT_DIRECTION, genericRoom1);
+        retrospectiveRoom.putNeighboringRoom(RIGHT_DIRECTION, reviewRoom);
+        retrospectiveRoom.putNeighboringRoom(UP_DIRECTION, tiaRoom);
+
+        //tiaRoom
+        tiaRoom.putNeighboringRoom(DOWN_DIRECTION, retrospectiveRoom);
+
+        //Assign questions to monster
+        planningRoomMonster.setTask(monsterSprintPlanningQuestion2);
+        dailyScrumMonster.setTask(monsterDailyScrumQuestion2);
+
+        /*TaskRoomWithMonster planningRoom = new TaskRoomWithMonster(game, "planning", planningRoomMonster);
+        TaskRoomWithMonster dailyScrumRoom = new TaskRoomWithMonster(game, "daily scrum", dailyScrumMonster);
+        TaskRoom scrumBoardRoom = new TaskRoom(game, "scrum board");
+        TaskRoom reviewRoom = new TaskRoom(game, "review");
+        SpecialEventRoom assistantRoom = new SpecialEventRoom(game, "assistant", assistantEvent);
+        TaskRoomWithEvent genericRoom1 = new TaskRoomWithEvent(game, "placeholder", regressionEvent);
+        TaskRoom retrospectiveRoom = new TaskRoom(game, "retrospective");
+        TaskRoom tiaRoom = new TaskRoom(game, "placeholder");*/
+        //Ass(ign) Tasks
+        planningRoom.setTask(sprintPlanningQuestion1);
+        dailyScrumRoom.setTask(dailyScrumQuestion1);
+        scrumBoardRoom.setTask(scrumBoardQuestion);
+        reviewRoom.setTask(sprintReviewQuestion);
+        genericRoom1.setTask(genericQuestion1);
+        retrospectiveRoom.setTask(retrospectiveQuestion);
+        tiaRoom.setTask(tiaQuestion);
 
         return outside;
     }

@@ -9,4 +9,5 @@ public interface DataSaver {
 	void load(Game game, String saveName) throws SaverException;
 	Set<String> getSaves();
 	boolean saveExists(String saveName);
+	public void deleteSave();
 }

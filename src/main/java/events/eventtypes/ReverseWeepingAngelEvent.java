@@ -14,19 +14,19 @@ public class ReverseWeepingAngelEvent extends Event {
 
     @Override
     public void start() {
-        System.out.println("In the corner of your eye you notice a shadowy figure standing behind you\nDo you turn around to see whats standing behind you? (Y/N)");
+        System.out.println("[Mysterious voice] Are you having doubts about the glory of the Scrum methodology?\n(Y/N)");
     }
 
     @Override
     public void end() {
-        System.out.println("You decide its better to pray than to see what is behind you");
+        System.out.println("[Mysterious voice] Good.");
         this.parent.getParent().chooseRoom();
     }
 
     @Override
     public void consume(String input) {
         if (input.equalsIgnoreCase("Y")) {
-            System.out.println("You quickly turn around, but before you can lay your eyes upon the figure the world goes black");
+            System.out.println("[Mysterious voice] Well then I have no use for you");
             this.parent.getParent().getParent().getPlayer().kill();
         } else this.end();
     }

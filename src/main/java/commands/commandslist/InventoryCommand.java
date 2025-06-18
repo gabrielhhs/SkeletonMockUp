@@ -22,7 +22,7 @@ public class InventoryCommand implements Command {
 
 		System.out.println("Inventory:");
 		for (Map.Entry<String, Integer> stack : player.getInventory().entrySet()) {
-			System.out.printf("%sx %s", stack.getValue(), commandManager.getParent().ITEMS.get(stack.getKey()).map(Item::getName));
+			System.out.printf("%sx %s", stack.getValue(), commandManager.getParent().ITEMS.get(stack.getKey()).map(Item::getName).get());
 		}
 	}
 

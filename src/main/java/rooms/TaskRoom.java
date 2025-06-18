@@ -2,6 +2,7 @@ package rooms;
 
 import core.Game;
 import core.GameStatus;
+import stratpattern.Task;
 import stratpattern.TaskHandler;
 
 public class TaskRoom extends Room {
@@ -24,5 +25,9 @@ public class TaskRoom extends Room {
 
     public TaskHandler getTaskHandler() {
         return this.taskHandler;
+    }
+
+    public void setTask(Task task) {
+        this.taskHandler.setTask(task);
     }
 }

@@ -5,6 +5,8 @@ import core.Player;
 import items.Item;
 import rooms.Room;
 
+import java.io.File;
+
 public class StaffOfClearingItem implements Item {
     @Override
     public void use(Game game) {
@@ -14,7 +16,7 @@ public class StaffOfClearingItem implements Item {
     private void resetGame(Game game) {
         Player player = game.getPlayer();
 
-        //game.getDataSaver().delete("save");
+        game.getDataSaver().deleteSave();
         player.clearInventory();
         player.setCurrentRoom(game.getInitialRoom());
 
