@@ -10,9 +10,10 @@ public class EndingRoom extends Room {
     @Override
     protected void onEnter() {
         System.out.printf("You won the game!\nFinal score: %d%n", this.parent.getPlayer().getScore());
+        this.parent.getPlayer().displayRoomResults();
         this.parent.stop();
     }
-
+//todo: Trigger the ExamSystem class
     @Override
     protected void handleUncleared() {
         // No op

@@ -3,6 +3,7 @@ package stratpattern;
 import core.GameStatus;
 import core.Player;
 import hints.HintProvider;
+import observer.RoomObserver;
 import rooms.TaskRoom;
 import rewards.RewardProvider;
 import util.ArrayShuffler;
@@ -23,8 +24,8 @@ public class MultipleChoiceQuestion extends QuestionTask {
 
         return array;
     }
-    public MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent, RewardProvider reward) {
-        super(parent, hint, reward);
+    public MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent, RewardProvider reward, RoomObserver roomObserver) {
+        super(parent, hint, reward, roomObserver);
         this.question = question;
 
         final int[] shuffler = createShuffledIndexes(options.length);
@@ -38,13 +39,13 @@ public class MultipleChoiceQuestion extends QuestionTask {
         this.answerIndex = shuffler[0];
     }
     public MultipleChoiceQuestion(String question, String[] options, TaskRoom parent, RewardProvider reward) {
-        this(question, options, null, parent, reward);
+        this(question, options, null, parent, reward, null);
     }
     public MultipleChoiceQuestion(String question, String[] options, HintProvider hint, TaskRoom parent) {
-        this(question, options, hint, parent, null);
+        this(question, options, hint, parent, null, null);
     }
     public MultipleChoiceQuestion(String question, String[] options, TaskRoom parent) {
-        this(question, options, null, parent, null);
+        this(question, options, null, parent, null, null);
     }
 
     public void handleCorrectAnswer() {
@@ -52,6 +53,7 @@ public class MultipleChoiceQuestion extends QuestionTask {
         Player player = this.getParent().getParent().getPlayer();
         player.addScore(10);
         this.giveReward(player);
+        this.giveStars(player, 1);
         this.setCleared();
     }
 

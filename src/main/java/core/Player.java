@@ -1,7 +1,6 @@
 package core;
 
-import observer.DeathNotifier;
-import observer.Scoreboard;
+import observer.*;
 import rooms.Room;
 
 import java.util.*;
@@ -11,12 +10,20 @@ public class Player {
         default void onScoreChange(Player player) {}
         default void onHealthChange(Player player) {}
         default void onDeath(Player player) {}
+        default void onResultChange(Player player, int result) {}
     }
     private final Set<Observer> observers = new HashSet<>(); //ToDo: assign observers in DataSeeder or wherever
     private Room currentRoom;
     private int health;
     private int maxHealth;
     private int score = 0;
+    private int planningRoomResult;
+    private int dailyScrumRoomResult;
+    private int scrumBoardRoomResult;
+    private int reviewRoomResult;
+    private int genericRoom1Result;
+    private int retrospectiveRoomResult;
+    private int tiaRoomResult;
     private boolean dead = false;
     private final Map<String, Integer> inventory = new HashMap<>();
 
@@ -28,6 +35,52 @@ public class Player {
 
         this.addObserver(new DeathNotifier(System.out));
         this.addObserver(new Scoreboard(System.out));
+        // this.addObserver(new RoomObserver(System.out));
+    }
+
+    public void setPlanningRoomResult(int planningRoomResult) {
+        this.planningRoomResult = planningRoomResult;
+    }
+
+    public void setDailyScrumRoomResult(int dailyScrumRoomResult) {
+        this.dailyScrumRoomResult = dailyScrumRoomResult;
+    }
+
+    public void setScrumBoardRoomResult(int scrumBoardRoomResult) {
+        this.scrumBoardRoomResult = scrumBoardRoomResult;
+    }
+
+    public void setReviewRoomResult(int reviewRoomResult) {
+        this.reviewRoomResult = reviewRoomResult;
+    }
+
+    public void setGenericRoom1Result(int genericRoom1Result) {
+        this.genericRoom1Result = genericRoom1Result;
+    }
+
+    public void setRetrospectiveRoomResult(int retrospectiveRoomResult) {
+        this.retrospectiveRoomResult = retrospectiveRoomResult;
+    }
+
+    public void setTiaRoomResult(int tiaRoomResult) {
+        this.tiaRoomResult = tiaRoomResult;
+    }
+
+    //planningRoom.setTask(sprintPlanningQuestion1);
+    //        dailyScrumRoom.setTask(dailyScrumQuestion1);
+    //        scrumBoardRoom.setTask(scrumBoardQuestion);
+    //        reviewRoom.setTask(sprintReviewQuestion);
+    //        genericRoom1.setTask(genericQuestion1);
+    //        retrospectiveRoom.setTask(retrospectiveQuestion);
+    //        tiaRoom.setTask(tiaQuestion);
+    public void displayRoomResults() {
+        new PlanningRoomObserver().displayResult(this, this.planningRoomResult);
+        new DailyScrumRoomObserver().displayResult(this, this.dailyScrumRoomResult);
+        new ScrumBoardRoomObserver().displayResult(this, this.scrumBoardRoomResult);
+        new ReviewRoomObserver().displayResult(this, this.reviewRoomResult);
+        new GenericRoom1Observer().displayResult(this, this.genericRoom1Result);
+        new RetrospectiveRoomObserver().displayResult(this, this.retrospectiveRoomResult);
+        new TiaRoomObserver().displayResult(this, this.tiaRoomResult);
     }
 
     public String getInfo() {

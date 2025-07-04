@@ -10,6 +10,7 @@ public abstract class Room {
     protected Game parent;
     protected String name;
     protected boolean cleared = false;
+    protected boolean isVoldoende = false;
     protected final Map<String, Room> neighboringRooms = new HashMap<>();
 
     protected Room(Game parent, String name) {

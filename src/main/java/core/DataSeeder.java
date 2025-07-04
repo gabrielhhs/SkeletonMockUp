@@ -7,6 +7,10 @@ import hints.HintProvider;
 import hints.LiteralHintProvider;
 import entities.QuestionMonster;
 import hints.RandomHintProvider;
+import observer.GenericRoom1Observer;
+import observer.PlanningRoomObserver;
+import observer.RoomObserver;
+import observer.ScrumBoardRoomObserver;
 import rewards.*;
 import rooms.Outside;
 import rooms.*;
@@ -103,7 +107,8 @@ public abstract class DataSeeder {
                 new String[]{"Make new user stories", "Collect user stories", "Shorten user stories", "Dealth with thou haggler`s horsesh*t"},
                 new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Most of the time, you get user stories from your customer")),
                 planningRoom,
-                new SpecificReward(specialJokerItem)
+                new SpecificReward(specialJokerItem),
+                new PlanningRoomObserver()
         );
 
         Task monsterSprintPlanningQuestion2 = new MultipleChoiceQuestionWithMonster(
@@ -131,6 +136,7 @@ public abstract class DataSeeder {
                 scrumBoardRoom,
                 new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("Most scrum masters keep track of things on their scrum boards")),
                 new SpecificReward(specialSwordItem),
+                new ScrumBoardRoomObserver(),
                 "What is the scrum board for?",
                 "cooperating", "working together", "planning", "track task statuses"
         );
@@ -146,6 +152,7 @@ public abstract class DataSeeder {
                 retrospectiveRoom,
                 new RandomHintProvider(USELESS_HINTS, new LiteralHintProvider("What do cool guys NOT do while slowly walking away from an explosion?")),
                 genericItemPool,
+                new ScrumBoardRoomObserver(),
                 "What do you do in a retrospective?",
                 "look back", "find places to improve"
         );

@@ -3,29 +3,32 @@ package stratpattern;
 import core.GameStatus;
 import core.Player;
 import hints.HintProvider;
+import observer.RoomObserver;
 import rewards.RewardProvider;
 import rooms.TaskRoom;
 
 public abstract class QuestionTask extends Task {
 	private final HintProvider hintProvider;
 	private final RewardProvider rewardProvider;
+	private final RoomObserver roomObserver;
 
-	public QuestionTask(TaskRoom parent, HintProvider hint, RewardProvider rewardProvider) {
+	public QuestionTask(TaskRoom parent, HintProvider hint, RewardProvider rewardProvider, RoomObserver roomObserver) {
 		super(parent);
 		this.hintProvider = hint;
 		this.rewardProvider = rewardProvider;
+		this.roomObserver = roomObserver;
 	}
 
 	public QuestionTask(TaskRoom parent, RewardProvider rewardProvider) {
-		this(parent, null, rewardProvider);
+		this(parent, null, rewardProvider, null);
 	}
 
 	public QuestionTask(TaskRoom parent, HintProvider hintProvider) {
-		this(parent, hintProvider,null);
+		this(parent, hintProvider,null, null);
 	}
 
 	public QuestionTask(TaskRoom parent) {
-		this(parent, null, null);
+		this(parent, null, null, null);
 	}
 
 	public abstract void start();
@@ -38,6 +41,16 @@ public abstract class QuestionTask extends Task {
 		if (this.rewardProvider == null) { System.out.println("You leave empty handed."); }
 		else { player.giveItem(rewardProvider.getReward()); }
 	}
+
+	public void giveStars(Player player, int stars) {
+		if (this.roomObserver == null) {
+			System.out.println("You leave with no stars.");
+		} else {
+			roomObserver.onResultChange(player, stars);
+		}
+	}
+
+	//todo: copy this for giveStars
 
 	public void askHint(String input) {
 		if (this.hintProvider == null) {
